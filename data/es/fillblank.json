@@ -1,0 +1,69 @@
+{
+  "language": "es",
+  "prompts": [
+    {
+      "id": "fb_1",
+      "sentence": "Hola, ___ días.",
+      "answer": "buenos",
+      "options": ["buenos", "gracias", "adiós", "café"],
+      "en": "Hello, good morning.",
+      "vocab": "es_buenos_dias"
+    },
+    {
+      "id": "fb_2",
+      "sentence": "Quisiera un café con ___, por favor.",
+      "answer": "leche",
+      "options": ["leche", "silla", "dinero", "lista"],
+      "en": "I would like a coffee with milk, please.",
+      "vocab": "es_con_leche"
+    },
+    {
+      "id": "fb_3",
+      "sentence": "¿Cuánto ___ la manzana?",
+      "answer": "cuesta",
+      "options": ["cuesta", "compra", "busca", "bebe"],
+      "en": "How much does the apple cost?",
+      "vocab": "es_cuanto_cuesta"
+    },
+    {
+      "id": "fb_4",
+      "sentence": "Necesito ___ del mercado: pan, queso y manzanas.",
+      "answer": "tres cosas",
+      "options": ["tres cosas", "una mesa", "el menú", "la cuenta"],
+      "en": "I need three things from the market: bread, cheese, and apples.",
+      "vocab": "es_tres"
+    },
+    {
+      "id": "fb_5",
+      "sentence": "El té está muy ___, ten cuidado.",
+      "answer": "caliente",
+      "options": ["caliente", "barato", "fresco", "frío"],
+      "en": "The tea is very hot, be careful.",
+      "vocab": "es_caliente"
+    },
+    {
+      "id": "fb_6",
+      "sentence": "Gracias por todo. — De ___.",
+      "answer": "nada",
+      "options": ["nada", "aquí", "dos", "leche"],
+      "en": "Thanks for everything. — You're welcome.",
+      "vocab": "es_de_nada"
+    },
+    {
+      "id": "fb_7",
+      "sentence": "¿Para aquí o para ___?",
+      "answer": "llevar",
+      "options": ["llevar", "beber", "vender", "tener"],
+      "en": "For here or to go?",
+      "vocab": "es_para_llevar"
+    },
+    {
+      "id": "fb_8",
+      "sentence": "Doña Rosa vende fruta ___ en su puesto.",
+      "answer": "fresca",
+      "options": ["fresca", "cara", "deliciosa", "azúcar"],
+      "en": "Doña Rosa sells fresh fruit at her stall.",
+      "vocab": "es_fresco"
+    }
+  ]
+}

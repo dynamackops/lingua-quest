@@ -1,0 +1,25 @@
+{
+  "language": "es",
+  "cols": 25,
+  "rows": 18,
+  "tileSize": 32,
+  "zones": [
+    { "id": "home", "label": "Casa", "colStart": 0, "colEnd": 7, "color": "#f4d9a0" },
+    { "id": "market", "label": "El Mercado", "colStart": 8, "colEnd": 16, "color": "#c9e4a0" },
+    { "id": "cafe", "label": "El Café", "colStart": 17, "colEnd": 24, "color": "#d9c2e8" }
+  ],
+  "spawn": { "col": 3, "row": 9 },
+  "npcs": [
+    { "id": "mama", "dialogueId": "mama", "col": 3, "row": 6, "color": "#e07a9e", "label": "Mamá" },
+    { "id": "rosa", "dialogueId": "rosa", "col": 11, "row": 9, "color": "#e0a83a", "label": "Doña Rosa" },
+    { "id": "diego", "dialogueId": "diego", "col": 20, "row": 9, "color": "#4a90a4", "label": "Diego" }
+  ],
+  "objects": [
+    { "id": "obj_apple_stand", "col": 9, "row": 6, "color": "#c0392b", "label": "🍎", "vocab": "es_manzana" },
+    { "id": "obj_bread_stand", "col": 13, "row": 6, "color": "#c9985a", "label": "🍞", "vocab": "es_pan" },
+    { "id": "obj_cheese_stand", "col": 15, "row": 12, "color": "#f1c40f", "label": "🧀", "vocab": "es_queso" },
+    { "id": "obj_coffee_machine", "col": 19, "row": 6, "color": "#6b4226", "label": "☕", "vocab": "es_cafe" },
+    { "id": "obj_cake_display", "col": 22, "row": 12, "color": "#f78fb3", "label": "🍰", "vocab": "es_pastel" },
+    { "id": "obj_stove", "col": 5, "row": 12, "color": "#7f8c8d", "label": "🔥", "vocab": "es_necesitar" }
+  ]
+}

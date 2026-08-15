@@ -1,0 +1,167 @@
+{
+  "language": "es",
+  "npcs": {
+    "mama": {
+      "name": "Mamá",
+      "color": "#e07a9e",
+      "start": "mama_1",
+      "nodes": {
+        "mama_1": {
+          "es": "¡Hola, mi amor! Buenos días.",
+          "en": "Hello, my love! Good morning.",
+          "vocab": ["es_hola", "es_buenos_dias"],
+          "options": [
+            { "es": "Hola, Mamá.", "en": "Hi, Mom.", "next": "mama_2" }
+          ]
+        },
+        "mama_2": {
+          "es": "Necesito manzanas, pan y queso del mercado. ¿Puedes ir?",
+          "en": "I need apples, bread, and cheese from the market. Can you go?",
+          "vocab": ["es_necesitar", "es_manzana", "es_pan", "es_queso", "es_mercado"],
+          "options": [
+            { "es": "Sí, voy al mercado.", "en": "Yes, I'll go to the market.", "next": "mama_3_yes" },
+            { "es": "¿Por qué necesitas eso?", "en": "Why do you need that?", "next": "mama_3_why" }
+          ]
+        },
+        "mama_3_why": {
+          "es": "Quiero cocinar la cena. ¡Necesito ingredientes frescos!",
+          "en": "I want to cook dinner. I need fresh ingredients!",
+          "vocab": ["es_fresco"],
+          "options": [
+            { "es": "Está bien, voy al mercado.", "en": "Okay, I'll go to the market.", "next": "mama_3_yes" }
+          ]
+        },
+        "mama_3_yes": {
+          "es": "¡Perfecto! Aquí tienes una lista y un poco de dinero.",
+          "en": "Perfect! Here's a list and a little money.",
+          "vocab": ["es_lista", "es_dinero"],
+          "quest": "market_list",
+          "options": [
+            { "es": "Gracias, Mamá.", "en": "Thanks, Mom.", "next": "mama_4" }
+          ]
+        },
+        "mama_4": {
+          "es": "De nada. ¡Adiós!",
+          "en": "You're welcome. Bye!",
+          "vocab": ["es_de_nada", "es_adios"],
+          "options": [],
+          "end": true
+        }
+      }
+    },
+    "rosa": {
+      "name": "Doña Rosa",
+      "color": "#e0a83a",
+      "start": "rosa_1",
+      "nodes": {
+        "rosa_1": {
+          "es": "¡Bienvenido a mi puesto! ¿Qué buscas hoy?",
+          "en": "Welcome to my stall! What are you looking for today?",
+          "vocab": ["es_bienvenido", "es_puesto", "es_buscar"],
+          "options": [
+            { "es": "Busco manzanas, pan y queso.", "en": "I'm looking for apples, bread, and cheese.", "next": "rosa_2_correct", "correct": true },
+            { "es": "Busco un pastel.", "en": "I'm looking for a cake.", "next": "rosa_2_wrong" }
+          ]
+        },
+        "rosa_2_wrong": {
+          "es": "Aquí no vendo pasteles, eso es en el café. Pero tengo manzanas, pan y queso, ¿los buscas?",
+          "en": "I don't sell cakes here, that's at the café. But I have apples, bread, and cheese, are you looking for those?",
+          "vocab": ["es_pastel"],
+          "options": [
+            { "es": "Sí, esos busco.", "en": "Yes, those.", "next": "rosa_2_correct", "correct": true }
+          ]
+        },
+        "rosa_2_correct": {
+          "es": "¡Muy bien! Aquí tienes tres cosas frescas y baratas.",
+          "en": "Very good! Here are three fresh and cheap things.",
+          "vocab": ["es_tres", "es_barato", "es_fresco"],
+          "options": [
+            { "es": "¿Cuánto cuesta?", "en": "How much does it cost?", "next": "rosa_3" }
+          ]
+        },
+        "rosa_3": {
+          "es": "Con tu lista, es gratis para ti hoy. ¡Aquí tiene, en su bolsa!",
+          "en": "With your list, it's free for you today. Here you go, in your bag!",
+          "vocab": ["es_aqui_tiene", "es_bolsa"],
+          "questComplete": "market_list",
+          "options": [
+            { "es": "¡Gracias, Doña Rosa!", "en": "Thank you, Doña Rosa!", "next": "rosa_4" }
+          ]
+        },
+        "rosa_4": {
+          "es": "De nada. ¡Ve al café y descansa!",
+          "en": "You're welcome. Go to the café and rest!",
+          "vocab": ["es_gracias"],
+          "options": [],
+          "end": true
+        }
+      }
+    },
+    "diego": {
+      "name": "Diego",
+      "color": "#4a90a4",
+      "start": "diego_1",
+      "nodes": {
+        "diego_1": {
+          "es": "¡Hola! Bienvenido al café. ¿Qué quiere tomar?",
+          "en": "Hello! Welcome to the café. What would you like to drink?",
+          "vocab": ["es_camarero", "es_querer", "es_tomar"],
+          "options": [
+            { "es": "Quisiera un café con leche, por favor.", "en": "I would like a coffee with milk, please.", "next": "diego_2_coffee", "correct": true },
+            { "es": "Quisiera un té, por favor.", "en": "I would like a tea, please.", "next": "diego_2_tea", "correct": true }
+          ]
+        },
+        "diego_2_coffee": {
+          "es": "Muy bien, un café con leche. ¿Para aquí o para llevar?",
+          "en": "Very good, a coffee with milk. For here or to go?",
+          "vocab": ["es_cafe", "es_con_leche", "es_para_aqui", "es_para_llevar"],
+          "options": [
+            { "es": "Para aquí, gracias.", "en": "For here, thanks.", "next": "diego_3" },
+            { "es": "Para llevar, gracias.", "en": "To go, thanks.", "next": "diego_3" }
+          ]
+        },
+        "diego_2_tea": {
+          "es": "Muy bien, un té. ¿Con azúcar o sin azúcar?",
+          "en": "Very good, a tea. With sugar or without sugar?",
+          "vocab": ["es_te", "es_azucar", "es_sin_azucar"],
+          "options": [
+            { "es": "Sin azúcar, gracias.", "en": "Without sugar, thanks.", "next": "diego_3" },
+            { "es": "Con azúcar, gracias.", "en": "With sugar, thanks.", "next": "diego_3" }
+          ]
+        },
+        "diego_3": {
+          "es": "¡Aquí tiene! También tengo un pastel delicioso, ¿lo quiere?",
+          "en": "Here you go! I also have a delicious cake, would you like it?",
+          "vocab": ["es_pastel", "es_delicioso"],
+          "options": [
+            { "es": "Sí, por favor.", "en": "Yes, please.", "next": "diego_4_yes" },
+            { "es": "No, gracias.", "en": "No, thanks.", "next": "diego_4_no" }
+          ]
+        },
+        "diego_4_yes": {
+          "es": "¡Perfecto! Aquí está su pastel. La cuenta es un placer, es gratis hoy.",
+          "en": "Perfect! Here's your cake. The bill is a pleasure, it's free today.",
+          "vocab": ["es_cuenta"],
+          "options": [
+            { "es": "¡Muchas gracias, Diego!", "en": "Thank you so much, Diego!", "next": "diego_5" }
+          ]
+        },
+        "diego_4_no": {
+          "es": "¡Está bien! Disfrute su bebida.",
+          "en": "That's okay! Enjoy your drink.",
+          "vocab": [],
+          "options": [
+            { "es": "¡Muchas gracias, Diego!", "en": "Thank you so much, Diego!", "next": "diego_5" }
+          ]
+        },
+        "diego_5": {
+          "es": "De nada. ¡Vuelva pronto!",
+          "en": "You're welcome. Come back soon!",
+          "vocab": ["es_de_nada"],
+          "options": [],
+          "end": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "language": "es",
+  "quests": {
+    "market_list": {
+      "title": "La lista del mercado",
+      "titleEn": "The Market List",
+      "giver": "mama",
+      "description": "Mamá needs three items from the market: apples, bread, and cheese. Talk to Doña Rosa at the market stall.",
+      "steps": ["Talk to Mamá", "Go to the Market", "Talk to Doña Rosa", "Bring the items home"],
+      "xpReward": 50
+    }
+  }
+}

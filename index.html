@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lingua Quest</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===================== WELCOME (English UI) ===================== -->
+<section id="screen-welcome" class="screen active">
+  <div class="panel">
+    <h1>Lingua Quest</h1>
+    <p class="subtitle">Choose your target language. You'll live inside it — no translations, no switching back.</p>
+    <div id="language-grid" class="card-grid"></div>
+  </div>
+</section>
+
+<!-- ===================== CHARACTER CREATION (English UI) ===================== -->
+<section id="screen-create" class="screen">
+  <div class="panel">
+    <h1>Create Your Character</h1>
+    <p class="subtitle">This is the last screen in English. From here on, the world speaks <span id="create-lang-name">your language</span>.</p>
+
+    <label class="field">
+      <span>Name</span>
+      <input type="text" id="input-name" maxlength="18" placeholder="e.g. Alex">
+    </label>
+
+    <label class="field">
+      <span>Appearance</span>
+      <div id="appearance-grid" class="card-grid small"></div>
+    </label>
+
+    <label class="field">
+      <span>What draws you in?</span>
+      <div id="origin-grid" class="card-grid"></div>
+    </label>
+
+    <div class="actions">
+      <button id="btn-back-welcome" class="btn secondary">Back</button>
+      <button id="btn-start-game" class="btn primary">Begin</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW TO PLAY (English UI, overlay) ===================== -->
+<section id="screen-howto" class="screen">
+  <div class="panel">
+    <h1>How to Play</h1>
+    <ul class="howto-list">
+      <li><strong>Move:</strong> Arrow keys or WASD</li>
+      <li><strong>Interact:</strong> Walk up to an NPC or object — a prompt appears automatically</li>
+      <li><strong>Hint (Tier 3+):</strong> Hold <kbd>H</kbd> to peek at subtitles (limited charges/day)</li>
+      <li><strong>Tap words:</strong> In Tier 2, tap a highlighted word in a subtitle for its meaning</li>
+      <li><strong>Quest Log:</strong> <kbd>Q</kbd></li>
+      <li><strong>Save:</strong> autosaves as you play, per language</li>
+    </ul>
+    <div class="actions"><button id="btn-howto-close" class="btn primary">Let's go</button></div>
+  </div>
+</section>
+
+<!-- ===================== GAME WORLD (target language) ===================== -->
+<section id="screen-game" class="screen">
+  <div id="hud">
+    <div id="hud-left">
+      <span id="hud-name"></span>
+      <span id="hud-level">Lv.1</span>
+      <div id="hud-xpbar"><div id="hud-xpfill"></div></div>
+    </div>
+    <div id="hud-right">
+      <span id="hud-tier" title="Subtitle Fade tier">Tier 1</span>
+      <button id="btn-quest-log" class="icon-btn" title="Quest Log (Q)">📜</button>
+      <button id="btn-match-game" class="icon-btn" title="Practice: Match">🎴</button>
+      <button id="btn-fillblank-game" class="icon-btn" title="Practice: Fill-in-the-blank">✏️</button>
+      <button id="btn-howto-open" class="icon-btn" title="How to Play">?</button>
+      <button id="btn-exit-game" class="icon-btn" title="Exit to menu">⏻</button>
+    </div>
+  </div>
+
+  <div id="world-wrap">
+    <canvas id="game-canvas" width="800" height="576"></canvas>
+    <div id="interact-prompt" class="hidden">Press <kbd>E</kbd></div>
+    <div id="hint-charges" class="hidden"></div>
+  </div>
+
+  <!-- Dialogue overlay -->
+  <div id="dialogue-overlay" class="overlay hidden">
+    <div class="dialogue-box">
+      <div id="dialogue-speaker" class="dialogue-speaker"></div>
+      <div id="dialogue-line" class="dialogue-line"></div>
+      <div id="dialogue-sub" class="dialogue-sub"></div>
+      <div id="dialogue-options" class="dialogue-options"></div>
+    </div>
+  </div>
+
+  <!-- Vocab popup (objects) -->
+  <div id="vocab-popup" class="overlay hidden">
+    <div class="vocab-box">
+      <div id="vocab-icon" class="vocab-icon"></div>
+      <div id="vocab-es" class="vocab-es"></div>
+      <div id="vocab-en" class="vocab-en"></div>
+      <button id="vocab-close" class="btn primary small">OK</button>
+    </div>
+  </div>
+
+  <!-- Quest log -->
+  <div id="quest-overlay" class="overlay hidden">
+    <div class="panel">
+      <h2>Quest Log</h2>
+      <div id="quest-list"></div>
+      <div class="actions"><button id="btn-quest-close" class="btn primary">Close</button></div>
+    </div>
+  </div>
+
+  <!-- Minigame launcher -->
+  <div id="minigame-overlay" class="overlay hidden">
+    <div id="minigame-root" class="panel wide"></div>
+  </div>
+
+  <!-- Level up toast -->
+  <div id="toast" class="hidden"></div>
+</section>
+
+<script src="js/save.js"></script>
+<script src="js/srs.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/world.js"></script>
+<script src="js/dialogue.js"></script>
+<script src="js/minigames/match.js"></script>
+<script src="js/minigames/fillblank.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
