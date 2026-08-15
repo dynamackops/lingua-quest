@@ -17,7 +17,9 @@
   "objects": [
     { "id": "obj_apple_stand", "col": 9, "row": 6, "color": "#c0392b", "label": "🍎", "vocab": "es_manzana" },
     { "id": "obj_bread_stand", "col": 13, "row": 6, "color": "#c9985a", "label": "🍞", "vocab": "es_pan" },
-    { "id": "obj_cheese_stand", "col": 15, "row": 12, "color": "#f1c40f", "label": "🧀", "vocab": "es_queso" },
+    { "id": "obj_cheese_stand", "col": 15, "row": 12, "color": "#f1c40f", "label": "🧀", "vocab": "es_queso",
+      "activityId": "cheese_stand_check",
+      "activeWhen": { "questId": "market_list", "state": "started" } },
     { "id": "obj_coffee_machine", "col": 19, "row": 6, "color": "#6b4226", "label": "☕", "vocab": "es_cafe" },
     { "id": "obj_cake_display", "col": 22, "row": 12, "color": "#f78fb3", "label": "🍰", "vocab": "es_pastel" },
     { "id": "obj_stove", "col": 5, "row": 12, "color": "#7f8c8d", "label": "🔥", "vocab": "es_necesitar" }

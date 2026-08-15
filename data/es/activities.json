@@ -1,0 +1,30 @@
+{
+  "language": "es",
+  "activities": {
+    "market_check": {
+      "id": "market_check",
+      "type": "match",
+      "title": "Verifica la Lista",
+      "titleEn": "Check the List",
+      "intro": "Encuentra las tres cosas de la lista: manzanas, pan y queso.",
+      "vocabIds": ["es_manzana", "es_pan", "es_queso"],
+      "onComplete": { "questEvent": { "kind": "complete", "questId": "market_list" } }
+    },
+    "cheese_stand_check": {
+      "id": "cheese_stand_check",
+      "type": "fillblank",
+      "title": "En el Puesto de Queso",
+      "titleEn": "At the Cheese Stand",
+      "intro": "¿Sabes pedir en el mercado? Completa las frases.",
+      "promptIds": ["fb_3", "fb_8", "fb_9"]
+    },
+    "diego_order_quiz": {
+      "id": "diego_order_quiz",
+      "type": "fillblank",
+      "title": "¿Entendiste el Pedido?",
+      "titleEn": "Did You Follow the Order?",
+      "intro": "Diego quiere confirmar tu pedido. ¡Completa las frases!",
+      "promptIds": ["fb_2", "fb_7"]
+    }
+  }
+}

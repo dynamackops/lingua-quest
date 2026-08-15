@@ -80,10 +80,16 @@
           ]
         },
         "rosa_3": {
-          "es": "Con tu lista, es gratis para ti hoy. ¡Aquí tiene, en su bolsa!",
-          "en": "With your list, it's free for you today. Here you go, in your bag!",
+          "es": "A ver... ¿tienes las tres cosas de la lista? ¡Vamos a comprobarlo!",
+          "en": "Let's see... do you have the three things on the list? Let's check!",
+          "vocab": ["es_lista", "es_tres"],
+          "activity": "market_check",
+          "activityNext": "rosa_3_done"
+        },
+        "rosa_3_done": {
+          "es": "¡Perfecto! Con tu lista, es gratis para ti hoy. ¡Aquí tiene, en su bolsa!",
+          "en": "Perfect! With your list, it's free for you today. Here you go, in your bag!",
           "vocab": ["es_aqui_tiene", "es_bolsa"],
-          "questComplete": "market_list",
           "options": [
             { "es": "¡Gracias, Doña Rosa!", "en": "Thank you, Doña Rosa!", "next": "rosa_4" }
           ]
@@ -116,8 +122,8 @@
           "en": "Very good, a coffee with milk. For here or to go?",
           "vocab": ["es_cafe", "es_con_leche", "es_para_aqui", "es_para_llevar"],
           "options": [
-            { "es": "Para aquí, gracias.", "en": "For here, thanks.", "next": "diego_3" },
-            { "es": "Para llevar, gracias.", "en": "To go, thanks.", "next": "diego_3" }
+            { "es": "Para aquí, gracias.", "en": "For here, thanks.", "next": "diego_order_quiz" },
+            { "es": "Para llevar, gracias.", "en": "To go, thanks.", "next": "diego_order_quiz" }
           ]
         },
         "diego_2_tea": {
@@ -125,9 +131,16 @@
           "en": "Very good, a tea. With sugar or without sugar?",
           "vocab": ["es_te", "es_azucar", "es_sin_azucar"],
           "options": [
-            { "es": "Sin azúcar, gracias.", "en": "Without sugar, thanks.", "next": "diego_3" },
-            { "es": "Con azúcar, gracias.", "en": "With sugar, thanks.", "next": "diego_3" }
+            { "es": "Sin azúcar, gracias.", "en": "Without sugar, thanks.", "next": "diego_order_quiz" },
+            { "es": "Con azúcar, gracias.", "en": "With sugar, thanks.", "next": "diego_order_quiz" }
           ]
+        },
+        "diego_order_quiz": {
+          "es": "Un momento... ¡déjame confirmar tu pedido!",
+          "en": "One moment... let me confirm your order!",
+          "vocab": [],
+          "activity": "diego_order_quiz",
+          "activityNext": "diego_3"
         },
         "diego_3": {
           "es": "¡Aquí tiene! También tengo un pastel delicioso, ¿lo quiere?",

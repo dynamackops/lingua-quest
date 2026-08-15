@@ -25,7 +25,7 @@
   let selectedAppearance = 'a';
   let selectedOrigin = 'food';
   let gameState = null;
-  let langData = null; // { vocab, dialogue, quests, fillblank, world }
+  let langData = null; // { vocab, dialogue, quests, fillblank, world, activities }
   let vocabById = {};
   let questById = {};
 
@@ -118,14 +118,15 @@
 
   // ---------- Data loading ----------
   async function loadLanguageData(code) {
-    const [vocab, dialogue, quests, fillblank, world] = await Promise.all([
+    const [vocab, dialogue, quests, fillblank, world, activities] = await Promise.all([
       fetch(`data/${code}/vocab.json`).then(r => r.json()),
       fetch(`data/${code}/dialogue.json`).then(r => r.json()),
       fetch(`data/${code}/quests.json`).then(r => r.json()),
       fetch(`data/${code}/fillblank.json`).then(r => r.json()),
       fetch(`data/${code}/world.json`).then(r => r.json()),
+      fetch(`data/${code}/activities.json`).then(r => r.json()),
     ]);
-    langData = { vocab, dialogue, quests, fillblank, world };
+    langData = { vocab, dialogue, quests, fillblank, world, activities };
     vocabById = {};
     vocab.items.forEach(v => vocabById[v.id] = v);
     questById = quests.quests;
@@ -146,9 +147,42 @@
   function handleInteract(nearby) {
     if (nearby.kind === 'npc') {
       openNpcDialogue(nearby.entity);
-    } else {
-      openVocabPopup(nearby.entity);
+      return;
     }
+    const obj = nearby.entity;
+    if (obj.activityId && activityIsActive(obj)) {
+      openObjectActivity(obj);
+    } else {
+      openVocabPopup(obj);
+    }
+  }
+
+  function activityIsActive(obj) {
+    if (!obj.activeWhen) return true;
+    return questStateOf(obj.activeWhen.questId) === obj.activeWhen.state;
+  }
+
+  function questStateOf(questId) {
+    const q = gameState.quests[questId];
+    if (!q) return 'not_started';
+    if (q.complete) return 'complete';
+    if (q.started) return 'started';
+    return 'not_started';
+  }
+
+  function openObjectActivity(obj) {
+    World.setBlocked(true);
+    ActivityEngine.run(obj.activityId, langData.activities, langData, gameState, {
+      onQuestEvent: (kind, questId) => {
+        if (kind === 'start') startQuest(questId);
+        if (kind === 'complete') completeQuest(questId);
+      },
+      onDone: (xp) => {
+        addXp(xp);
+        World.setBlocked(false);
+        postUpdate();
+      },
+    });
   }
 
   function openNpcDialogue(npc) {
@@ -163,6 +197,19 @@
       onAnswer: (isCorrect) => {
         addXp(isCorrect ? 8 : 2);
         postUpdate();
+      },
+      onActivity: (activityId, resumeFn) => {
+        ActivityEngine.run(activityId, langData.activities, langData, gameState, {
+          onQuestEvent: (kind, questId) => {
+            if (kind === 'start') startQuest(questId);
+            if (kind === 'complete') completeQuest(questId);
+          },
+          onDone: (xp) => {
+            addXp(xp);
+            resumeFn(); // advances the dialogue node before we persist, so the save reflects where the conversation actually is
+            postUpdate();
+          },
+        });
       },
       onEnd: () => {
         World.setBlocked(false);
@@ -289,24 +336,6 @@
     });
     document.getElementById('quest-overlay').classList.remove('hidden');
   }
-
-  // ---------- Minigames ----------
-  document.getElementById('btn-match-game').addEventListener('click', () => {
-    World.setBlocked(true);
-    MatchGame.open(langData.vocab.items, gameState, (xp) => {
-      addXp(xp);
-      World.setBlocked(false);
-      postUpdate();
-    });
-  });
-  document.getElementById('btn-fillblank-game').addEventListener('click', () => {
-    World.setBlocked(true);
-    FillBlankGame.open(langData.fillblank.prompts, gameState, (xp) => {
-      addXp(xp);
-      World.setBlocked(false);
-      postUpdate();
-    });
-  });
 
   // ---------- Exit ----------
   document.getElementById('btn-exit-game').addEventListener('click', () => {

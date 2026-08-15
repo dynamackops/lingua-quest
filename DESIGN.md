@@ -22,9 +22,12 @@ Explore (walk the hub) → Approach NPC/object → Comprehensible input
   Mastery updates → Tier recalculated → XP/quest progress → repeat
 ```
 
-Minigames (Match, Fill-in-the-blank) are optional, on-demand detours that
-force retrieval of the same vocab pool through a different channel — not a
-separate "study mode" bolted onto the side of the game.
+Minigames (Match, Fill-in-the-blank) are **not** a side menu — there is no
+standalone "practice" button anywhere in the UI. They surface because of what's
+happening in the world: a quest step that's actually played out as a sorting
+challenge, a market stall that quizzes you while a related quest is active, an
+NPC who pauses mid-conversation to test you before continuing the scene. See
+"World-embedded activities" below for how that's wired.
 
 ## The Subtitle Fade — how it actually works
 
@@ -133,6 +136,49 @@ loads `data/{code}/*.json` by language code. Adding a new language is
 engine." See `ROADMAP.md` for what's genuinely reusable vs. what Japanese
 specifically breaks.
 
+## World-embedded activities
+
+`js/activities.js`'s `ActivityEngine.run(activityId, activitiesData, langData,
+gameState, callbacks)` is a thin glue layer, not a third minigame engine —
+`MatchGame`/`FillBlankGame` are unchanged and don't know activities exist.
+`data/es/activities.json` defines named activities: which engine (`type:
+'match'|'fillblank'`), which vocab/prompt ids to filter the global pool down
+to, an in-character `intro` line, and an optional `onComplete.questEvent` to
+fire. Two things point at an activity id:
+
+- **World objects** (`data/es/world.json`'s `objects[].activityId`) — walking
+  up and pressing `E` runs the activity instead of the flat vocab-flashcard
+  popup. An optional `activeWhen: {questId, state}` gates this: the cheese
+  stand in v1 only offers its Fill-in-the-blank challenge while `market_list`
+  is `started`, falling back to the plain flashcard before and after. This
+  gating is load-bearing, not decorative — objects are re-triggerable (walk
+  away, walk back), so an ungated richer-XP activity would be a farm exploit.
+- **Dialogue nodes** (`data/es/dialogue.json`'s `node.activity` +
+  `node.activityNext`) — `DialogueEngine.renderNode()` detects this, shows a
+  "Continuar" prompt instead of normal options, and on completion resumes the
+  tree at `activityNext` via the same `nodeId = ...; renderNode()` mechanism
+  `choose()` already uses. This is how an NPC "challenges" the player
+  mid-conversation (see Diego confirming a drink order) and how a quest step
+  becomes the minigame itself (see Doña Rosa's `rosa_3`, which runs the
+  `market_check` Match activity and fires `market_list`'s completion from the
+  activity's `onComplete`, not from reaching a text node).
+
+One real bug worth knowing about if you touch this code: while an activity
+runs on top of an open dialogue, `DialogueEngine`'s module-level `current`
+stays non-null, so the global Escape/H-key listeners would otherwise fire
+*through* the minigame overlay. `current.activityLocked` (set before invoking
+`onActivity`, cleared inside the resume callback) guards both. A second bug
+caught during testing: the `onDone` callback in `main.js`'s `onActivity` wiring
+must call `resumeFn()` *before* `postUpdate()` — `postUpdate()` is what
+persists `gameState` to `localStorage`, and `resumeFn()` is what advances
+`seenNpcs[npcId]` to the post-activity node. Saving first would persist a
+dialogue resume position that's one node behind reality.
+
+There is no standalone "practice anytime" surface anymore — the HUD's old
+🎴/✏️ buttons are gone. If Phase 2 content wants a pure-grinding option back,
+it should be a new world object (e.g. a notice board), not a menu button,
+to keep the "everything is a mechanic in a place" principle consistent.
+
 ## Save model
 
 `js/save.js`. One `localStorage` key per language: `linguaquest_<code>`.
@@ -162,7 +208,9 @@ currently aren't any, keep it that way.
   broken.
 - **Timed Sorting and Listening Race minigames** are not built — the scope
   doc calls for 2 of the 3–4 minigames for v1. Match and Fill-in-the-blank
-  are complete and reskin-ready (swap the data file, not the code).
+  are complete, reskin-ready (swap the data file, not the code), and now
+  reachable only through world-embedded activities (see above), not a HUD
+  menu.
 - **Speech input** is Phase 3, not started — see the abstraction note
   above for how it should slot in.
 - **Origin selection** (food vs. travel) currently only stores a flavor

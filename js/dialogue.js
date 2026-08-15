@@ -38,7 +38,7 @@ const DialogueEngine = (() => {
       if (e.key.toLowerCase() === 'h') onHintKeyUp();
     });
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && current) {
+      if (e.key === 'Escape' && current && !current.activityLocked) {
         const cb = current.callbacks;
         close();
         if (cb.onEnd) cb.onEnd();
@@ -91,6 +91,23 @@ const DialogueEngine = (() => {
     if (node.questComplete && current.callbacks.onQuestEvent) current.callbacks.onQuestEvent('complete', node.questComplete);
 
     current.gameState.seenNpcs[current.npcId] = current.nodeId;
+
+    if (node.activity) {
+      current.activityLocked = true;
+      els.options.innerHTML = '';
+      const btn = document.createElement('button');
+      btn.textContent = 'Continuar';
+      btn.className = 'dialogue-end-btn';
+      els.options.appendChild(btn);
+      btn.addEventListener('click', () => {
+        current.callbacks.onActivity(node.activity, () => {
+          current.activityLocked = false;
+          current.nodeId = node.activityNext;
+          renderNode();
+        });
+      }, { once: true });
+      return;
+    }
 
     if (node.end || (node.options || []).length === 0) {
       const btn = document.createElement('button');
@@ -164,7 +181,7 @@ const DialogueEngine = (() => {
   }
 
   function onHintKeyDown() {
-    if (!current || els.overlay.classList.contains('hidden')) return;
+    if (!current || current.activityLocked || els.overlay.classList.contains('hidden')) return;
     const tier = current.gameState.tier;
     if (tier !== 3) return; // tier 4 has no hint fallback; tier 1-2 don't need it
     if (hintTimer) return; // already showing

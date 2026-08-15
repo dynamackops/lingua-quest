@@ -64,6 +64,14 @@
       "options": ["fresca", "cara", "deliciosa", "azúcar"],
       "en": "Doña Rosa sells fresh fruit at her stall.",
       "vocab": "es_fresco"
+    },
+    {
+      "id": "fb_9",
+      "sentence": "¿Tiene queso fresco? Necesito ___ para la cena.",
+      "answer": "queso",
+      "options": ["queso", "pescado", "arroz", "bolsa"],
+      "en": "Do you have fresh cheese? I need cheese for dinner.",
+      "vocab": "es_queso"
     }
   ]
 }
