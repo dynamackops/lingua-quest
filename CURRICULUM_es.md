@@ -1,3 +1,13 @@
+# Current 3D chapter
+
+The active Valdeluz chapter is in `data/es/chapter.json`. It introduces eight focus entries: hola, la mesa, el pan, los tomates, el aceite de oliva, el agua, la manzana and el queso. The main quest exercises bread, tomatoes and oil in collection, delivery and later neighbour requests. The other entries provide context or visual distractors. This is a starter episode, not a 500-word course.
+
+Grammar is encountered through requests (¿Puedes…?, por favor), identification (esto es / estos son), and simple action instructions (pon, lleva, añade). There is not yet a separate grammar mastery model. Culture is introduced through a shared meal, a plaza, a local bakery and olive oil with bread and tomato. The voices request es-ES.
+
+The curriculum below belongs to the preserved original 2D prototype and is a content backlog for future 3D chapters. Its full vocabulary pool is not yet integrated into Valdeluz.
+
+---
+
 # CURRICULUM_es — Spanish v1
 
 Template for the other four languages' curriculum docs. Source of truth for

@@ -1,134 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lingua Quest</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#eee6d4"><title>Lingua Quest · Valdeluz</title><link rel="stylesheet" href="css/town.css"></head>
 <body>
-
-<!-- ===================== WELCOME (English UI) ===================== -->
-<section id="screen-welcome" class="screen active">
-  <div class="panel">
-    <h1>Lingua Quest</h1>
-    <p class="subtitle">Choose your target language. You'll live inside it — no translations, no switching back.</p>
-    <div id="language-grid" class="card-grid"></div>
-  </div>
-</section>
-
-<!-- ===================== CHARACTER CREATION (English UI) ===================== -->
-<section id="screen-create" class="screen">
-  <div class="panel">
-    <h1>Create Your Character</h1>
-    <p class="subtitle">This is the last screen in English. From here on, the world speaks <span id="create-lang-name">your language</span>.</p>
-
-    <label class="field">
-      <span>Name</span>
-      <input type="text" id="input-name" maxlength="18" placeholder="e.g. Alex">
-    </label>
-
-    <label class="field">
-      <span>Appearance</span>
-      <div id="appearance-grid" class="card-grid small"></div>
-    </label>
-
-    <label class="field">
-      <span>What draws you in?</span>
-      <div id="origin-grid" class="card-grid"></div>
-    </label>
-
-    <div class="actions">
-      <button id="btn-back-welcome" class="btn secondary">Back</button>
-      <button id="btn-start-game" class="btn primary">Begin</button>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== HOW TO PLAY (English UI, overlay) ===================== -->
-<section id="screen-howto" class="screen">
-  <div class="panel">
-    <h1>How to Play</h1>
-    <ul class="howto-list">
-      <li><strong>Move:</strong> Arrow keys or WASD</li>
-      <li><strong>Interact:</strong> Walk up to an NPC or object — a prompt appears automatically</li>
-      <li><strong>Hint (Tier 3+):</strong> Hold <kbd>H</kbd> to peek at subtitles (limited charges/day)</li>
-      <li><strong>Tap words:</strong> In Tier 2, tap a highlighted word in a subtitle for its meaning</li>
-      <li><strong>Quest Log:</strong> <kbd>Q</kbd></li>
-      <li><strong>Save:</strong> autosaves as you play, per language</li>
-    </ul>
-    <div class="actions"><button id="btn-howto-close" class="btn primary">Let's go</button></div>
-  </div>
-</section>
-
-<!-- ===================== GAME WORLD (target language) ===================== -->
-<section id="screen-game" class="screen">
-  <div id="hud">
-    <div id="hud-left">
-      <span id="hud-name"></span>
-      <span id="hud-level">Lv.1</span>
-      <div id="hud-xpbar"><div id="hud-xpfill"></div></div>
-    </div>
-    <div id="hud-right">
-      <span id="hud-tier" title="Subtitle Fade tier">Tier 1</span>
-      <button id="btn-quest-log" class="icon-btn" title="Quest Log (Q)">📜</button>
-      <button id="btn-howto-open" class="icon-btn" title="How to Play">?</button>
-      <button id="btn-exit-game" class="icon-btn" title="Exit to menu">⏻</button>
-    </div>
-  </div>
-
-  <div id="world-wrap">
-    <canvas id="game-canvas" width="800" height="576"></canvas>
-    <div id="interact-prompt" class="hidden">Press <kbd>E</kbd></div>
-    <div id="hint-charges" class="hidden"></div>
-  </div>
-
-  <!-- Dialogue overlay -->
-  <div id="dialogue-overlay" class="overlay hidden">
-    <div class="dialogue-box">
-      <div id="dialogue-speaker" class="dialogue-speaker"></div>
-      <div id="dialogue-line" class="dialogue-line"></div>
-      <div id="dialogue-sub" class="dialogue-sub"></div>
-      <div id="dialogue-options" class="dialogue-options"></div>
-    </div>
-  </div>
-
-  <!-- Vocab popup (objects) -->
-  <div id="vocab-popup" class="overlay hidden">
-    <div class="vocab-box">
-      <div id="vocab-icon" class="vocab-icon"></div>
-      <div id="vocab-es" class="vocab-es"></div>
-      <div id="vocab-en" class="vocab-en"></div>
-      <button id="vocab-close" class="btn primary small">OK</button>
-    </div>
-  </div>
-
-  <!-- Quest log -->
-  <div id="quest-overlay" class="overlay hidden">
-    <div class="panel">
-      <h2>Quest Log</h2>
-      <div id="quest-list"></div>
-      <div class="actions"><button id="btn-quest-close" class="btn primary">Close</button></div>
-    </div>
-  </div>
-
-  <!-- Minigame launcher -->
-  <div id="minigame-overlay" class="overlay hidden">
-    <div id="minigame-root" class="panel wide"></div>
-  </div>
-
-  <!-- Level up toast -->
-  <div id="toast" class="hidden"></div>
-</section>
-
-<script src="js/save.js"></script>
-<script src="js/srs.js"></script>
-<script src="js/tts.js"></script>
-<script src="js/world.js"></script>
-<script src="js/dialogue.js"></script>
-<script src="js/minigames/match.js"></script>
-<script src="js/minigames/fillblank.js"></script>
-<script src="js/activities.js"></script>
-<script src="js/main.js"></script>
-</body>
-</html>
+<canvas id="world" aria-label="Explorable 3D Spanish town. Use WASD to walk, drag to rotate the camera, and E to interact." tabindex="0"></canvas>
+<div class="vignette"></div>
+<header><a class="brand" href="#" aria-label="Lingua Quest home"><span class="brand-symbol">✳</span><span>lingua<span class="brand-light">quest</span><small>A WORLD OF WORDS</small></span></a><div class="location"><span class="sun">☀</span><span>Valdeluz <small>ESPAÑA · A NEW BEGINNING</small></span></div><nav><button id="sound" class="round" aria-label="Toggle voice audio" title="Voice audio">♫</button><button id="journal" class="round" aria-label="Open journal" title="Journal (J)">▤</button><button id="wardrobe" class="round" aria-label="Edit character" title="Edit character">♙</button><button id="help" class="round" aria-label="Help and controls">?</button></nav></header>
+<div id="labels"></div>
+<aside id="quest-hud" hidden><div class="eyebrow"><span class="tiny-star">✦</span> TU PRIMER CAPÍTULO</div><h2>Una mesa para todos</h2><p id="quest-line"></p><div class="quest-track"><span id="quest-progress"></span></div><span id="quest-english" class="muted"></span></aside>
+<div id="welcome" class="welcome"><div class="eyebrow">YOUR SPANISH STORY STARTS HERE</div><h1>A little town.<br>A whole new<br><em>language.</em></h1><p>Make yourself at home in Valdeluz.<br>Meet your neighbours. Find your words.<br>Take it one conversation at a time.</p><button id="begin" class="primary">Create your character <span>↗</span></button><button id="continue" class="secondary" hidden>Continue your story →</button><div class="welcome-foot"><span>☀ Spanish · Beginner friendly</span><span>Saved on this device</span></div></div>
+<div id="creator" class="modal-backdrop" hidden><section class="creator-panel" role="dialog" aria-modal="true" aria-labelledby="creator-title"><div class="creator-left"><div class="eyebrow">A NEW FACE IN VALDELUZ</div><h2 id="creator-title">Make yourself<br><em>at home.</em></h2><p>Your story. Your character.<br>You can change your look anytime.</p><canvas id="avatar-preview" aria-label="Live 3D preview of your character"></canvas><span class="preview-caption">A LITTLE MORE YOU</span></div><form id="character-form"><label>Your name<input id="character-name" maxlength="24" placeholder="What should your neighbours call you?" required autocomplete="off"></label><fieldset><legend>Skin tone</legend><div id="skin-options" class="swatches"></div></fieldset><div class="field-row"><label>Hair<select id="hair-style"><option value="bob">Soft bob</option><option value="crop">Short crop</option><option value="curls">Curls</option><option value="long">Long hair</option><option value="bun">High bun</option><option value="none">No hair</option></select></label><label>Build<select id="body-style"><option value="regular">Regular</option><option value="slim">Slender</option><option value="broad">Broad</option></select></label></div><fieldset><legend>Hair colour</legend><div id="hair-options" class="swatches"></div></fieldset><fieldset><legend>Outfit colour</legend><div id="shirt-options" class="swatches"></div></fieldset><div class="field-row"><label>Eyes<select id="eyes-style"><option value="#443526">Brown</option><option value="#5f7e62">Green</option><option value="#528099">Blue</option></select></label><label>Accessory<select id="accessory"><option value="none">None</option><option value="glasses">Round glasses</option><option value="scarf">Neck scarf</option></select></label></div><div class="form-actions"><button type="button" id="creator-cancel" class="secondary">Back</button><button type="submit" class="primary" id="creator-save">Start my story →</button></div></form></section></div>
+<div id="dialogue" class="dialogue" role="dialog" aria-modal="true" aria-labelledby="speaker" hidden><div class="dialogue-top"><div><span class="eyebrow" id="dialogue-place">VALDELUZ</span><h2 id="speaker"></h2></div><div><button id="replay" class="round" aria-label="Replay Spanish audio">♫</button><button id="close-dialogue" class="round" aria-label="Close conversation">×</button></div></div><p id="spanish-line" lang="es"></p><p id="english-line" class="translation"></p><button id="translate" class="text-button">Show English help</button><div id="choices" class="choices"></div><p id="feedback" role="status"></p><div class="dialogue-foot"><span id="learning-note">Take your time. You're getting to know this place.</span><span>✧</span></div></div>
+<div id="sheet" class="modal-backdrop" hidden><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><button id="sheet-close" class="round close" aria-label="Close panel">×</button><div class="eyebrow">YOUR LITTLE CORNER OF SPAIN</div><h2 id="sheet-title"></h2><div id="sheet-content"></div></section></div>
+<div id="interaction" hidden><button id="interact"><kbd>E</kbd><span id="interact-label">Hablar</span></button></div>
+<footer id="game-footer"><div class="world-tag"><span class="status-dot"></span><span id="status">A quiet afternoon in Valdeluz</span></div><div class="controls"><span><kbd>W A S D</kbd> walk</span><span><kbd>DRAG</kbd> look around</span><span><kbd>E</kbd> interact</span></div><div id="save-status">LOCAL SAVE · SPANISH</div></footer>
+<div id="touch-controls" hidden><button data-move="w" aria-label="Walk forward">↑</button><div><button data-move="a" aria-label="Walk left">←</button><button data-move="s" aria-label="Walk backward">↓</button><button data-move="d" aria-label="Walk right">→</button></div></div>
+<div id="toast" role="status" hidden></div><div id="loading"><span class="brand-symbol">✳</span><p>Opening the shutters in Valdeluz…</p></div>
+<script type="module" src="js/v2/app.js"></script>
+</body></html>
