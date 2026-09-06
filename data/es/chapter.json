@@ -1,16 +1,28 @@
 {
   "id":"valdeluz-dinner","language":"es","ttsLang":"es-ES","title":"Una mesa para todos","titleEn":"A table for everyone",
+  "ui":{
+    "language":"Spanish","town":"Valdeluz","country":"ESPAÑA","tagline":"A NEW BEGINNING","place":"VALDELUZ",
+    "chapterEyebrow":"TU PRIMER CAPÍTULO","cornerEyebrow":"YOUR LITTLE CORNER OF SPAIN","creatorEyebrow":"A NEW FACE IN VALDELUZ",
+    "canvasLabel":"Explorable 3D Spanish town. Use WASD to walk, drag to rotate the camera, and E to interact.",
+    "talk":"Hablar con {name}","traveller":"viajero","status":"Hola, {name} · Take your time","statusDone":"Valdeluz feels a little more like home","statusIdle":"A quiet afternoon in Valdeluz",
+    "questStart":"A new quest · Una mesa para todos","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"Mi casa · Visit the wardrobe to change your look",
+    "voiceOn":"Spanish voice on","voiceOff":"Spanish voice off","voiceNote":"Voice uses your browser’s Spanish speech voice. It may sound different between devices. Reading works even when no voice is available.",
+    "noteChallenge":"Choose what you understand. English help is always here.","noteSupport":"English support · familiar words will need less help over time.","noteFading":"You know these words. Your English support is fading.","noteHelped":"A little help is part of learning. Take your time.",
+    "routes":[["lucia","Find Lucía"],["mateo","Bakery"],["ines","Market"],["cafe","Café"],["table","Dinner table"],["home","Home"]],
+    "journalDone":"You helped prepare dinner. Visit your neighbours again: they will bring familiar words back when a review is due."
+  },
+  "quest":{"items":["pan","tomates","aceite"],"reviewPool":["pan","tomates","aceite","agua"]},
   "items":{
     "pan":{"es":"el pan","en":"bread","icon":"bread","place":"mateo"},
     "tomates":{"es":"los tomates","en":"tomatoes","icon":"tomato","place":"ines"},
-    "aceite":{"es":"el aceite de oliva","en":"olive oil","icon":"oil","place":"cafe"},
+    "aceite":{"es":"el aceite de oliva","en":"olive oil","icon":"oil","place":"diego"},
     "agua":{"es":"el agua","en":"water","icon":"water","place":"fountain"},
     "manzana":{"es":"la manzana","en":"apple","icon":"apple","place":"ines"},
     "queso":{"es":"el queso","en":"cheese","icon":"cheese","place":"mateo"},
     "mesa":{"es":"la mesa","en":"table","icon":"table","place":"table"},
     "hola":{"es":"hola","en":"hello","icon":"sun","place":"lucia"}
   },
-  "people":{"lucia":{"name":"Lucía","place":"LA PLAZA"},"mateo":{"name":"Mateo","place":"LA PANADERÍA"},"ines":{"name":"Inés","place":"EL MERCADO"},"cafe":{"name":"Diego","place":"CAFÉ AZAHAR"}},
+  "people":{"lucia":{"name":"Lucía","place":"LA PLAZA","role":"host"},"mateo":{"name":"Mateo","place":"LA PANADERÍA","item":"pan"},"ines":{"name":"Inés","place":"EL MERCADO","item":"tomates"},"diego":{"name":"Diego","place":"CAFÉ AZAHAR","item":"aceite"}},
   "intro":[
     {"es":"¡Hola! Soy Lucía. Te doy la bienvenida a Valdeluz.","en":"Hello! I'm Lucía. Welcome to Valdeluz.","words":["hola"],"next":"¡Hola, Lucía!","nextEn":"Hello, Lucía!"},
     {"es":"Esta tarde cenamos juntos en la plaza. Hay una mesa para ti.","en":"This afternoon we're having dinner together in the square. There's a place at the table for you.","words":["mesa"],"next":"¡Qué bien!","nextEn":"How lovely!"},
@@ -25,6 +37,11 @@
     "pan":{"es":"¿Puedes coger el pan para la cena?","en":"Can you pick up the bread for dinner?","words":["pan"],"options":["pan","manzana","queso"],"correct":"pan","correction":"El pan es largo y dorado. Mira la cesta. Prueba otra vez.","correctionEn":"The bread is long and golden. Look at the basket. Try again."},
     "tomates":{"es":"¿Puedes poner los tomates en tu cesta?","en":"Can you put the tomatoes in your basket?","words":["tomates"],"options":["manzana","tomates","pan"],"correct":"tomates","correction":"Los tomates son rojos. La manzana es verde. Prueba otra vez.","correctionEn":"The tomatoes are red. The apple is green. Try again."},
     "aceite":{"es":"Lleva el aceite de oliva a la plaza, por favor.","en":"Take the olive oil to the square, please.","words":["aceite"],"options":["agua","queso","aceite"],"correct":"aceite","correction":"El aceite está en la botella verde. Prueba otra vez.","correctionEn":"The oil is in the green bottle. Try again."}
+  },
+  "received":{
+    "pan":{"es":"¡Muy bien! Aquí tienes el pan. ¡Hasta luego!","en":"Very good! Here is your bread. See you later!","words":["pan"],"illustrations":["pan"],"next":"¡Gracias!","nextEn":"Thank you!"},
+    "tomates":{"es":"¡Muy bien! Aquí tienes los tomates. ¡Hasta luego!","en":"Very good! Here are your tomatoes. See you later!","words":["tomates"],"illustrations":["tomates"],"next":"¡Gracias!","nextEn":"Thank you!"},
+    "aceite":{"es":"¡Muy bien! Aquí tienes el aceite de oliva. ¡Hasta luego!","en":"Very good! Here is your olive oil. See you later!","words":["aceite"],"illustrations":["aceite"],"next":"¡Gracias!","nextEn":"Thank you!"}
   },
   "delivery":{
     "pan":{"es":"Pon el pan en el plato, por favor.","en":"Put the bread on the plate, please.","words":["pan"]},
@@ -46,5 +63,19 @@
     {"es":"Busca pan, tomates y aceite de oliva.","en":"Visit the bakery, market and café."},
     {"es":"Lleva la cesta a la mesa de la plaza.","en":"Bring your basket to the dinner table."},
     {"es":"¡A la mesa! Ya eres parte de Valdeluz.","en":"Dinner is ready. You're part of Valdeluz."}
-  ]
+  ],
+  "lines":{
+    "continue":{"es":"Continuar","en":"Continue"},
+    "correction":{"es":"Mira: {item}. Prueba otra vez.","en":"Look for {item}. Try again."},
+    "notYet":{"es":"¡Hola! Lucía te espera en la plaza, junto a la fuente.","en":"Hello! Lucía is waiting for you in the square, beside the fountain.","words":["hola"],"next":"Voy a verla.","nextEn":"I'll go and see her."},
+    "reviewIdle":{"es":"¡Qué gusto verte! Todo está tranquilo. Puedes dar un paseo y volver más tarde.","en":"Lovely to see you! All is quiet. You can take a walk and come back later.","words":[],"next":"¡Hasta luego!","nextEn":"See you later!"},
+    "reviewDone":{"es":"¡Eso es! Muchas gracias. Qué bien nos entendemos.","en":"That's it! Thank you. We're understanding each other well.","words":[],"next":"¡De nada!","nextEn":"You're welcome!"},
+    "tableEarly":{"es":"Aquí está la mesa. Todavía necesitamos pan, tomates y aceite de oliva.","en":"Here is the table. We still need bread, tomatoes and olive oil.","words":["mesa","pan","tomates","aceite"],"next":"Voy a buscarlos.","nextEn":"I'll go and get them."},
+    "hostReady":{"es":"¡Tienes todo! Vamos a la mesa, al lado de la panadería.","en":"You have everything! Let’s go to the table next to the bakery.","words":["mesa"],"next":"¡Vamos!","nextEn":"Let's go!"},
+    "hostHint":{"es":"Mateo tiene pan, Inés tiene tomates y Diego tiene aceite de oliva en el café.","en":"Mateo has bread, Inés has tomatoes, and Diego has olive oil at the café.","words":["pan","tomates","aceite"],"next":"¡Gracias, Lucía!","nextEn":"Thank you, Lucía!"},
+    "cafeDoor":{"who":"Café Azahar","es":"La puerta está abierta. ¡Pasa!","en":"The door is open. Come in!","words":[],"option":{"es":"Entrar al café","en":"Enter the café"}},
+    "cafeGreeting":{"es":"¡Hola! Te doy la bienvenida al café. Soy Diego.","en":"Hello! Welcome to the café. I'm Diego.","words":["hola"],"next":"¡Hola, Diego!","nextEn":"Hello, Diego!"},
+    "homeDoor":{"who":"Mi casa","es":"Tu casa en Valdeluz. Un lugar para empezar de nuevo.","en":"Your home in Valdeluz. A place for a fresh start.","words":[],"option":{"es":"Entrar en casa","en":"Go inside"}},
+    "fountain":{"who":"La fuente","es":"El agua de la fuente brilla al sol. Escucha… qué tranquilidad.","en":"The water in the fountain sparkles in the sun. Listen… how peaceful.","words":["agua"],"illustrations":["agua"],"next":"Me quedo un momento.","nextEn":"I'll stay a moment."}
+  }
 }

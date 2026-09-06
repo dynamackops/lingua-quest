@@ -1,14 +1,9 @@
-# Verification — 6 September 2026
+# Verification — 6 September 2026 (Japanese world)
 
-- Eleven Node tests pass: focus-word familiarity, assisted attempts, rapid repetition, multiple contexts, lapse recovery, due reviews, local-save isolation, corrupt/unavailable storage, and chapter content references.
-- Browser playthrough completed: create a test character; start and resume; meet Lucía; learn and collect bread, tomatoes and oil; enter café; serve all three ingredients; finish the dinner chapter.
-- Wrong bread choice showed a gentle correction and translation, allowed a successful retry and granted no independent-recall credit.
-- English-help button revealed the oil request's translation without blocking story progress. The assisted attempt was not counted as independent.
-- Journal reflected the basket, story XP and different independent-recall counts.
-- Due review request appeared in the café after completion.
-- Home wardrobe opened the existing character; changing shirt and glasses persisted across reload. Completed quest persisted across reload.
-- Café exit placement was corrected to avoid an outdoor table collision, and the exit-to-plaza route was retested.
-- Compact and medium preview layouts inspected. Desktop layout checked separately during handoff. No mobile hardware or Safari-specific testing performed.
-- Spanish speech synthesis is wired, but pronunciation quality and availability have not been independently assessed.
+- Eighteen Node tests pass: focus-word familiarity, assisted attempts, rapid repetition, multiple contexts, lapse recovery, due reviews, per-language save isolation (Spanish and Japanese keys, corrupt or unavailable storage, invalid reading settings), the hiragana-to-katakana conversion, and content validation for both chapters (target text, English, romaji, next-line and correction fields, vocabulary references, quest wiring, people, routes, engine lines, interface strings, and a kana-only check for Japanese).
+- Headless Chromium playthrough (Playwright, software WebGL) of the Japanese world: choose Japan on the welcome screen (town rebuilds behind it); create a character; meet あおい; toggle a line to katakana and back; learn and collect ごはん, さけ and おちゃ; a wrong choice (りんご) showed the kana, romaji and English correction, revealed English and granted no independent-recall credit; enter the tea house through the noren; deliver all three ingredients; finish the chapter with onigiri and tea visible on the table; journal showed XP, title with romaji and word list; hiding romaji in Help removed it from the next conversation; home, tansu wardrobe, exit, reload (Continue as the saved name), then the Spanish world created its own character and collected bread while the Japanese save stayed untouched; returning to the welcome screen showed both characters; a 390px viewport rendered the picker and dialogue.
+- No page errors or console errors were reported during the playthrough.
+- Screenshots reviewed for the welcome overview, town, dialogue, correction feedback, tea house interior and completed table.
+- Speech synthesis is wired to ja-JP but Japanese pronunciation quality and voice availability were not assessed in the headless browser. No native-speaker review of the Japanese lines has taken place yet; the register and particles were written to beginner-textbook conventions. No mobile hardware or Safari-specific testing performed.
 
 This is a starter chapter with a small focus vocabulary pool. Learning efficacy and wider curriculum coverage require further playtesting and content work.

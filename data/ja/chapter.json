@@ -1,0 +1,81 @@
+{
+  "id":"hinata-onigiri","language":"ja","ttsLang":"ja-JP","reading":"romaji","title":"みんなで おにぎり","titleRomaji":"Minna de onigiri","titleEn":"Rice balls for everyone",
+  "ui":{
+    "language":"Japanese","town":"Hinata","country":"にほん","tagline":"A NEW BEGINNING","place":"ひなた",
+    "chapterEyebrow":"はじめての チャプター","cornerEyebrow":"YOUR LITTLE CORNER OF JAPAN","creatorEyebrow":"A NEW FACE IN HINATA",
+    "canvasLabel":"Explorable 3D Japanese town. Use WASD to walk, drag to rotate the camera, and E to interact.",
+    "talk":"{name}さんと はなす","traveller":"たびびと","status":"こんにちは、{name}さん · Take your time","statusDone":"Hinata feels a little more like home","statusIdle":"A quiet afternoon in Hinata",
+    "questStart":"A new quest · みんなで おにぎり","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"わたしのいえ · Visit the tansu wardrobe to change your look",
+    "voiceOn":"Japanese voice on","voiceOff":"Japanese voice off","voiceNote":"Voice uses your browser’s Japanese speech voice. It reads the kana aloud, and may sound different between devices. Reading works even when no voice is available.",
+    "noteChallenge":"Choose what you understand. Romaji stays, and English help is always here.","noteSupport":"English support · familiar words will need less help over time.","noteFading":"You know these words. Your English support is fading.","noteHelped":"A little help is part of learning. Take your time.",
+    "routes":[["aoi","Find Aoi"],["kenji","Rice shop"],["yui","Fish stall"],["cafe","Tea house"],["table","Dinner table"],["home","Home"]],
+    "journalDone":"You helped make onigiri. Visit your neighbours again: they will bring familiar words back when a review is due."
+  },
+  "quest":{"items":["gohan","sake","ocha"],"reviewPool":["gohan","sake","ocha","mizu"]},
+  "items":{
+    "gohan":{"ja":"ごはん","romaji":"gohan","en":"rice","icon":"rice","place":"kenji"},
+    "sake":{"ja":"さけ","romaji":"sake","en":"salmon","icon":"salmon","place":"yui"},
+    "ocha":{"ja":"おちゃ","romaji":"ocha","en":"green tea","icon":"tea","place":"haruto"},
+    "mizu":{"ja":"みず","romaji":"mizu","en":"water","icon":"water","place":"fountain"},
+    "ringo":{"ja":"りんご","romaji":"ringo","en":"apple","icon":"apple","place":"yui"},
+    "tamago":{"ja":"たまご","romaji":"tamago","en":"egg","icon":"egg","place":"kenji"},
+    "teeburu":{"ja":"テーブル","romaji":"tēburu","en":"table","icon":"table","place":"table"},
+    "konnichiwa":{"ja":"こんにちは","romaji":"konnichiwa","en":"hello","icon":"sun","place":"aoi"}
+  },
+  "people":{"aoi":{"name":"あおい","place":"ひろば","role":"host"},"kenji":{"name":"けんじ","place":"こめや","item":"gohan"},"yui":{"name":"ゆい","place":"さかなや","item":"sake"},"haruto":{"name":"はると","place":"ちゃや かえで","item":"ocha"}},
+  "intro":[
+    {"ja":"こんにちは！ わたしは あおいです。 ひなたへ ようこそ。","romaji":"Konnichiwa! Watashi wa Aoi desu. Hinata e yōkoso.","en":"Hello! I'm Aoi. Welcome to Hinata.","words":["konnichiwa"],"next":"こんにちは、あおいさん！","nextRomaji":"Konnichiwa, Aoi-san!","nextEn":"Hello, Aoi!"},
+    {"ja":"きょうの よる、みんなで おにぎりを つくります。 テーブルに あなたの せきも ありますよ。","romaji":"Kyō no yoru, minna de onigiri o tsukurimasu. Tēburu ni anata no seki mo arimasu yo.","en":"Tonight we're all making rice balls together. There's a seat at the table for you too.","words":["teeburu"],"next":"わあ、うれしいです！","nextRomaji":"Wā, ureshii desu!","nextEn":"How lovely!"},
+    {"ja":"ごはんと さけと おちゃが いります。 けんじさんは ごはん、ゆいさんは さけ、はるとさんは ちゃやで おちゃを もっています。","romaji":"Gohan to sake to ocha ga irimasu. Kenji-san wa gohan, Yui-san wa sake, Haruto-san wa chaya de ocha o motte imasu.","en":"We need rice, salmon and green tea. Kenji has rice, Yui has salmon, and Haruto has tea at the tea house.","words":["gohan","sake","ocha"],"next":"とってきます。","nextRomaji":"Totte kimasu.","nextEn":"I'll go and get them.","illustrations":["gohan","sake","ocha"]}
+  ],
+  "teach":{
+    "gohan":{"ja":"これは ごはんです。 けさ たきました。 みてください、ごはんは おひつの なかです。","romaji":"Kore wa gohan desu. Kesa takimashita. Mite kudasai, gohan wa ohitsu no naka desu.","en":"This is rice. I cooked it this morning. Look: the rice is in the wooden tub.","words":["gohan"],"next":"ごはん。 いい においですね！","nextRomaji":"Gohan. Ii nioi desu ne!","nextEn":"Rice. It smells lovely!","illustrations":["gohan"]},
+    "sake":{"ja":"みてください、これは さけです。 あたらしい さかなです。 おにぎりに いれます。","romaji":"Mite kudasai, kore wa sake desu. Atarashii sakana desu. Onigiri ni iremasu.","en":"Look, this is salmon. It's fresh fish. It goes inside the rice balls.","words":["sake"],"next":"さけですね。","nextRomaji":"Sake desu ne.","nextEn":"Salmon, I see.","illustrations":["sake"]},
+    "ocha":{"ja":"これは おちゃです。 にほんでは ごはんと いっしょに おちゃを のみます。 はい、どうぞ。","romaji":"Kore wa ocha desu. Nihon de wa gohan to issho ni ocha o nomimasu. Hai, dōzo.","en":"This is green tea. In Japan we drink tea together with our rice. Here you are.","words":["ocha","gohan"],"next":"おちゃ。 ありがとうございます！","nextRomaji":"Ocha. Arigatō gozaimasu!","nextEn":"Tea. Thank you!","illustrations":["ocha"]}
+  },
+  "checks":{
+    "gohan":{"ja":"ごはんを とってください。","romaji":"Gohan o totte kudasai.","en":"Please take the rice.","words":["gohan"],"options":["gohan","ringo","tamago"],"correct":"gohan","correction":"ごはんは しろいです。 おひつを みてください。 もういちど。","correctionRomaji":"Gohan wa shiroi desu. Ohitsu o mite kudasai. Mō ichido.","correctionEn":"The rice is white. Look at the wooden tub. Try again."},
+    "sake":{"ja":"さけを かごに いれてください。","romaji":"Sake o kago ni irete kudasai.","en":"Please put the salmon in your basket.","words":["sake"],"options":["ringo","sake","gohan"],"correct":"sake","correction":"さけは ピンクの さかなです。 りんごは あかいです。 もういちど。","correctionRomaji":"Sake wa pinku no sakana desu. Ringo wa akai desu. Mō ichido.","correctionEn":"Salmon is a pink fish. The apple is red. Try again."},
+    "ocha":{"ja":"おちゃを ひろばに もっていってください。","romaji":"Ocha o hiroba ni motte itte kudasai.","en":"Please take the tea to the square.","words":["ocha"],"options":["mizu","tamago","ocha"],"correct":"ocha","correction":"おちゃは みどりの かんに あります。 もういちど。","correctionRomaji":"Ocha wa midori no kan ni arimasu. Mō ichido.","correctionEn":"The tea is in the green tin. Try again."}
+  },
+  "received":{
+    "gohan":{"ja":"はい、どうぞ。 ごはんです。 またね！","romaji":"Hai, dōzo. Gohan desu. Mata ne!","en":"Here you are. The rice. See you later!","words":["gohan"],"illustrations":["gohan"],"next":"ありがとうございます！","nextRomaji":"Arigatō gozaimasu!","nextEn":"Thank you!"},
+    "sake":{"ja":"はい、どうぞ。 さけです。 またね！","romaji":"Hai, dōzo. Sake desu. Mata ne!","en":"Here you are. The salmon. See you later!","words":["sake"],"illustrations":["sake"],"next":"ありがとうございます！","nextRomaji":"Arigatō gozaimasu!","nextEn":"Thank you!"},
+    "ocha":{"ja":"はい、どうぞ。 おちゃです。 またね！","romaji":"Hai, dōzo. Ocha desu. Mata ne!","en":"Here you are. The tea. See you later!","words":["ocha"],"illustrations":["ocha"],"next":"ありがとうございます！","nextRomaji":"Arigatō gozaimasu!","nextEn":"Thank you!"}
+  },
+  "delivery":{
+    "gohan":{"ja":"ごはんを おさらに おいてください。","romaji":"Gohan o osara ni oite kudasai.","en":"Please put the rice on the plate.","words":["gohan"]},
+    "sake":{"ja":"つぎに、さけを ごはんの となりに おいてください。","romaji":"Tsugi ni, sake o gohan no tonari ni oite kudasai.","en":"Now put the salmon next to the rice.","words":["sake","gohan"]},
+    "ocha":{"ja":"さいごに、おちゃを いれてください。","romaji":"Saigo ni, ocha o irete kudasai.","en":"Finally, pour the tea.","words":["ocha"]}
+  },
+  "ending":[
+    {"ja":"ぜんぶ そろいました！ ごはん、さけ、おちゃ。 さあ、テーブルへ！","romaji":"Zenbu soroimashita! Gohan, sake, ocha. Sā, tēburu e!","en":"Everything is here! Rice, salmon and tea. To the table!","words":["gohan","sake","ocha","teeburu"],"next":"いただきます！","nextRomaji":"Itadakimasu!","nextEn":"Let's eat!","illustrations":["gohan","sake","ocha"]},
+    {"ja":"てつだってくれて ありがとう。 ここは あなたの いえでも あります。 いつでも きてくださいね。","romaji":"Tetsudatte kurete arigatō. Koko wa anata no ie demo arimasu. Itsudemo kite kudasai ne.","en":"Thank you for helping. This is your home too. Come back whenever you like.","words":[],"next":"ここに いられて うれしいです。","nextRomaji":"Koko ni irarete ureshii desu.","nextEn":"I'm happy to be here."}
+  ],
+  "review":{
+    "gohan":{"ja":"きょうは おべんとうを つくります。 ごはんを とってくれますか。","romaji":"Kyō wa obentō o tsukurimasu. Gohan o totte kuremasu ka.","en":"Today we're making a bento box. Could you pass me the rice?","words":["gohan"]},
+    "sake":{"ja":"おにぎりに さけが いります。 もっていますか。","romaji":"Onigiri ni sake ga irimasu. Motte imasu ka.","en":"I need salmon for the rice balls. Do you have it?","words":["sake"]},
+    "ocha":{"ja":"おちゃが ありません。 おちゃを とってくれますか。","romaji":"Ocha ga arimasen. Ocha o totte kuremasu ka.","en":"There's no tea. Could you pass me the tea?","words":["ocha"]},
+    "mizu":{"ja":"のどが かわきました。 みずを ください。","romaji":"Nodo ga kawakimashita. Mizu o kudasai.","en":"I'm thirsty. Water, please.","words":["mizu"]}
+  },
+  "questSteps":[
+    {"ja":"ひろばで あおいさんに あいさつしましょう。","romaji":"Hiroba de Aoi-san ni aisatsu shimashō.","en":"Meet Aoi beside the pond."},
+    {"ja":"ごはんと さけと おちゃを さがしましょう。","romaji":"Gohan to sake to ocha o sagashimashō.","en":"Visit the rice shop, fish stall and tea house."},
+    {"ja":"かごを ひろばの テーブルに もっていきましょう。","romaji":"Kago o hiroba no tēburu ni motte ikimashō.","en":"Bring your basket to the dinner table."},
+    {"ja":"いただきます！ もう ひなたの なかまです。","romaji":"Itadakimasu! Mō Hinata no nakama desu.","en":"Dinner is ready. You're part of Hinata."}
+  ],
+  "lines":{
+    "continue":{"ja":"つづける","romaji":"Tsuzukeru","en":"Continue"},
+    "correction":{"ja":"みてください： {item}。 もういちど。","romaji":"Mite kudasai: {item}. Mō ichido.","en":"Look for {item}. Try again."},
+    "notYet":{"ja":"こんにちは！ あおいさんが ひろばで まっていますよ。 いけの そばです。","romaji":"Konnichiwa! Aoi-san ga hiroba de matte imasu yo. Ike no soba desu.","en":"Hello! Aoi is waiting for you in the square, beside the pond.","words":["konnichiwa"],"next":"いってきます。","nextRomaji":"Itte kimasu.","nextEn":"I'll go and see her."},
+    "reviewIdle":{"ja":"あえて うれしいです！ きょうは しずかですね。 さんぽして、また きてください。","romaji":"Aete ureshii desu! Kyō wa shizuka desu ne. Sanpo shite, mata kite kudasai.","en":"Lovely to see you! It's quiet today. Take a walk and come back later.","words":[],"next":"またね！","nextRomaji":"Mata ne!","nextEn":"See you later!"},
+    "reviewDone":{"ja":"そうです！ ありがとうございます。 よく わかりましたね。","romaji":"Sō desu! Arigatō gozaimasu. Yoku wakarimashita ne.","en":"That's it! Thank you. You understood that well.","words":[],"next":"どういたしまして！","nextRomaji":"Dō itashimashite!","nextEn":"You're welcome!"},
+    "tableEarly":{"ja":"ここが テーブルです。 まだ ごはんと さけと おちゃが いります。","romaji":"Koko ga tēburu desu. Mada gohan to sake to ocha ga irimasu.","en":"Here is the table. We still need rice, salmon and tea.","words":["teeburu","gohan","sake","ocha"],"next":"とってきます。","nextRomaji":"Totte kimasu.","nextEn":"I'll go and get them."},
+    "hostReady":{"ja":"ぜんぶ ありますね！ テーブルへ いきましょう。 こめやの となりです。","romaji":"Zenbu arimasu ne! Tēburu e ikimashō. Komeya no tonari desu.","en":"You have everything! Let's go to the table next to the rice shop.","words":["teeburu"],"next":"いきましょう！","nextRomaji":"Ikimashō!","nextEn":"Let's go!"},
+    "hostHint":{"ja":"けんじさんは ごはん、ゆいさんは さけ、はるとさんは ちゃやで おちゃを もっています。","romaji":"Kenji-san wa gohan, Yui-san wa sake, Haruto-san wa chaya de ocha o motte imasu.","en":"Kenji has rice, Yui has salmon, and Haruto has tea at the tea house.","words":["gohan","sake","ocha"],"next":"ありがとう、あおいさん！","nextRomaji":"Arigatō, Aoi-san!","nextEn":"Thank you, Aoi!"},
+    "cafeDoor":{"who":"ちゃや かえで","ja":"のれんが でています。 どうぞ、はいってください！","romaji":"Noren ga dete imasu. Dōzo, haitte kudasai!","en":"The curtain is out. Please come in!","words":[],"option":{"ja":"ちゃやに はいる","romaji":"Chaya ni hairu","en":"Enter the tea house"}},
+    "cafeGreeting":{"ja":"いらっしゃいませ！ ちゃや かえでへ ようこそ。 はるとです。","romaji":"Irasshaimase! Chaya Kaede e yōkoso. Haruto desu.","en":"Welcome! Welcome to the Kaede tea house. I'm Haruto.","words":[],"next":"こんにちは、はるとさん！","nextRomaji":"Konnichiwa, Haruto-san!","nextEn":"Hello, Haruto!"},
+    "homeDoor":{"who":"わたしのいえ","ja":"ひなたの あなたの いえです。 あたらしい はじまりの ばしょ。","romaji":"Hinata no anata no ie desu. Atarashii hajimari no basho.","en":"Your home in Hinata. A place for a fresh start.","words":[],"option":{"ja":"いえに はいる","romaji":"Ie ni hairu","en":"Go inside"}},
+    "fountain":{"who":"いけ","ja":"いけの みずが ひかっています。 きいてください… しずかですね。","romaji":"Ike no mizu ga hikatte imasu. Kiite kudasai… shizuka desu ne.","en":"The water in the pond sparkles. Listen… how peaceful.","words":["mizu"],"illustrations":["mizu"],"next":"すこし ここに います。","nextRomaji":"Sukoshi koko ni imasu.","nextEn":"I'll stay a moment."}
+  }
+}

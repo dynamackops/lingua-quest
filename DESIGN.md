@@ -2,7 +2,11 @@
 
 ## Agreed experience
 
-A cozy, freely explorable third-person 3D world inspired by Spain. Begin Spanish as a beginner. Create a character that feels personal and edit it later. A future Japanese world must have a separate character, local save and curriculum. Spanish is the sole active world in this release.
+Cozy, freely explorable third-person 3D worlds: Valdeluz, inspired by Spain, and Hinata, inspired by a small Japanese town. Begin either language as a beginner. Create a character that feels personal in each world and edit it later. The two worlds share the engine, interface and quest shape but never share a character, save or curriculum.
+
+## World picker
+
+The welcome screen shows one card per world and rebuilds the town behind it when the choice changes. The last world played is remembered. Every story and interface string comes from that world's chapter file, so `app.js` contains no language-specific text.
 
 ## Playable slice
 
@@ -11,6 +15,12 @@ Valdeluz is a small sunlit square with cream plaster houses, terracotta roofs, a
 Home and café have separate small interiors. The character editor offers name, six skin colours, six hair styles, hair and shirt colours, body width, eye colour, glasses and scarf. Saving an edit rebuilds the character while preserving quest state and position.
 
 The first quest is a shared dinner: greeting → contextual ingredient introductions → choosing the requested object → carrying three inventory items → placing them at the table → a completed dinner. Completion is persisted, and resumed delivery skips already-delivered items. Neighbours can offer short review requests after collection or completion.
+
+Hinata uses the same footprint with its own geometry: timber-framed houses with dark tiled hip roofs and shoji doors, a koi pond with a bamboo spout in place of the fountain, a fish stall under a blue and white awning, a rice shop and a tea house with noren, stone lanterns, pines, maples, a bamboo grove, paper lanterns strung across the courtyard, a torii and shrine at the end of the east path, a tatami home with a tansu wardrobe, and a tea house interior. The dinner is onigiri, salmon and tea at a low table with cushions.
+
+## Japanese reading support
+
+Japanese lines are hiragana with spaces between words, katakana for loanwords and no kanji. Romaji is always shown under lines, choices and illustrations and can be hidden in Help. A toggle converts a line to katakana as a reading drill. Romaji is a reading aid rather than a translation, so it never marks an attempt as assisted; English support fades under the same rules as Spanish. Neighbours use the polite です / ます register.
 
 ## Learning evidence and English support
 
@@ -24,6 +34,6 @@ The tags represent focus vocabulary, not every grammatical feature in a sentence
 
 ## Data and migration
 
-The new chapter is in `data/es/chapter.json`; legacy Spanish content remains intact. Engine UI and some reusable short transitional lines are in app.js; migrate these to locale resources before another language ships. New persistence key: `linguaquest_v2_es`, schema 2. No automatic mastery migration from the older, less reliable model. The old save and original entry point remain accessible through legacy.html.
+Chapters live in `data/es/chapter.json` and `data/ja/chapter.json`, including interface strings, engine lines and quest item lists; legacy Spanish content remains intact. Persistence keys: `linguaquest_v2_es` and `linguaquest_v2_ja`, schema 2, validated per language against that chapter's item ids. No automatic mastery migration from the older, less reliable model. The old save and original entry point remain accessible through legacy.html.
 
 The original design is retained in DESIGN_2D.md for history. README.md describes the actual current scope.
