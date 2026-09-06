@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
+const c=JSON.parse(fs.readFileSync(new URL('../data/es/chapter.json',import.meta.url)));
+test('all chapter lines have bilingual support and valid vocabulary references',()=>{const visit=v=>{if(Array.isArray(v))v.forEach(visit);else if(v&&typeof v==='object'){if(v.words){assert.equal(typeof v.es,'string');assert.equal(typeof v.en,'string');for(const id of v.words)assert.ok(c.items[id],id)}Object.values(v).forEach(visit)}};visit(c)});
+test('all three ingredients can be taught, checked and delivered with valid choices',()=>{for(const id of ['pan','tomates','aceite']){assert.ok(c.teach[id]);assert.ok(c.delivery[id]);assert.ok(c.review[id]);assert.equal(c.checks[id].correct,id);assert.ok(c.checks[id].options.includes(id));assert.equal(new Set(c.checks[id].options).size,c.checks[id].options.length);for(const choice of c.checks[id].options)assert.ok(c.items[choice])}});

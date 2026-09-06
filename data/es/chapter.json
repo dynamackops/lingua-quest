@@ -1,0 +1,50 @@
+{
+  "id":"valdeluz-dinner","language":"es","ttsLang":"es-ES","title":"Una mesa para todos","titleEn":"A table for everyone",
+  "items":{
+    "pan":{"es":"el pan","en":"bread","icon":"bread","place":"mateo"},
+    "tomates":{"es":"los tomates","en":"tomatoes","icon":"tomato","place":"ines"},
+    "aceite":{"es":"el aceite de oliva","en":"olive oil","icon":"oil","place":"cafe"},
+    "agua":{"es":"el agua","en":"water","icon":"water","place":"fountain"},
+    "manzana":{"es":"la manzana","en":"apple","icon":"apple","place":"ines"},
+    "queso":{"es":"el queso","en":"cheese","icon":"cheese","place":"mateo"},
+    "mesa":{"es":"la mesa","en":"table","icon":"table","place":"table"},
+    "hola":{"es":"hola","en":"hello","icon":"sun","place":"lucia"}
+  },
+  "people":{"lucia":{"name":"Lucía","place":"LA PLAZA"},"mateo":{"name":"Mateo","place":"LA PANADERÍA"},"ines":{"name":"Inés","place":"EL MERCADO"},"cafe":{"name":"Diego","place":"CAFÉ AZAHAR"}},
+  "intro":[
+    {"es":"¡Hola! Soy Lucía. Te doy la bienvenida a Valdeluz.","en":"Hello! I'm Lucía. Welcome to Valdeluz.","words":["hola"],"next":"¡Hola, Lucía!","nextEn":"Hello, Lucía!"},
+    {"es":"Esta tarde cenamos juntos en la plaza. Hay una mesa para ti.","en":"This afternoon we're having dinner together in the square. There's a place at the table for you.","words":["mesa"],"next":"¡Qué bien!","nextEn":"How lovely!"},
+    {"es":"Necesitamos pan, tomates y aceite de oliva. Mateo tiene pan. Inés tiene tomates. Diego tiene aceite en el café.","en":"We need bread, tomatoes and olive oil. Mateo has bread. Inés has tomatoes. Diego has oil at the café.","words":["pan","tomates","aceite"],"next":"Voy a buscarlos.","nextEn":"I'll go and get them.","illustrations":["pan","tomates","aceite"]}
+  ],
+  "teach":{
+    "pan":{"es":"Este es el pan. Lo he hecho esta mañana. Mira: el pan está en la cesta.","en":"This is the bread. I made it this morning. Look: the bread is in the basket.","words":["pan"],"next":"El pan. ¡Qué bien huele!","nextEn":"The bread. It smells lovely!","illustrations":["pan"]},
+    "tomates":{"es":"Mira, estos son los tomates. Son rojos y están maduros. Son para la cena.","en":"Look, these are the tomatoes. They're red and ripe. They're for dinner.","words":["tomates"],"next":"Los tomates rojos.","nextEn":"The red tomatoes.","illustrations":["tomates"]},
+    "aceite":{"es":"Esto es aceite de oliva. En España lo usamos con pan y tomate. Aquí tienes una botella.","en":"This is olive oil. In Spain we use it with bread and tomato. Here's a bottle.","words":["aceite","pan","tomates"],"next":"Aceite de oliva. ¡Gracias!","nextEn":"Olive oil. Thank you!","illustrations":["aceite"]}
+  },
+  "checks":{
+    "pan":{"es":"¿Puedes coger el pan para la cena?","en":"Can you pick up the bread for dinner?","words":["pan"],"options":["pan","manzana","queso"],"correct":"pan","correction":"El pan es largo y dorado. Mira la cesta. Prueba otra vez.","correctionEn":"The bread is long and golden. Look at the basket. Try again."},
+    "tomates":{"es":"¿Puedes poner los tomates en tu cesta?","en":"Can you put the tomatoes in your basket?","words":["tomates"],"options":["manzana","tomates","pan"],"correct":"tomates","correction":"Los tomates son rojos. La manzana es verde. Prueba otra vez.","correctionEn":"The tomatoes are red. The apple is green. Try again."},
+    "aceite":{"es":"Lleva el aceite de oliva a la plaza, por favor.","en":"Take the olive oil to the square, please.","words":["aceite"],"options":["agua","queso","aceite"],"correct":"aceite","correction":"El aceite está en la botella verde. Prueba otra vez.","correctionEn":"The oil is in the green bottle. Try again."}
+  },
+  "delivery":{
+    "pan":{"es":"Pon el pan en el plato, por favor.","en":"Put the bread on the plate, please.","words":["pan"]},
+    "tomates":{"es":"Ahora, pon los tomates junto al pan.","en":"Now put the tomatoes next to the bread.","words":["tomates","pan"]},
+    "aceite":{"es":"Por último, añade el aceite de oliva.","en":"Finally, add the olive oil.","words":["aceite"]}
+  },
+  "ending":[
+    {"es":"¡Ya está todo! Pan, tomates y aceite de oliva. ¡A la mesa!","en":"Everything is ready! Bread, tomatoes and olive oil. Let's eat!","words":["pan","tomates","aceite","mesa"],"next":"¡Buen provecho!","nextEn":"Enjoy your meal!","illustrations":["pan","tomates","aceite"]},
+    {"es":"Gracias por ayudarnos. Esta también es tu casa. Vuelve cuando quieras.","en":"Thank you for helping us. This is your home too. Come back whenever you like.","words":[],"next":"Me alegro de estar aquí.","nextEn":"I'm happy to be here."}
+  ],
+  "review":{
+    "pan":{"es":"Hoy preparamos una merienda. ¿Me pasas el pan?","en":"Today we're preparing a snack. Can you pass me the bread?","words":["pan"]},
+    "tomates":{"es":"Para la ensalada, necesito los tomates. ¿Los tienes?","en":"For the salad, I need the tomatoes. Do you have them?","words":["tomates"]},
+    "aceite":{"es":"A esta ensalada le falta aceite de oliva. ¿Me lo pasas?","en":"This salad needs olive oil. Can you pass it to me?","words":["aceite"]},
+    "agua":{"es":"Tengo sed. ¿Me das agua, por favor?","en":"I'm thirsty. Can you give me water, please?","words":["agua"]}
+  },
+  "questSteps":[
+    {"es":"Saluda a Lucía en la plaza.","en":"Meet Lucía beside the fountain."},
+    {"es":"Busca pan, tomates y aceite de oliva.","en":"Visit the bakery, market and café."},
+    {"es":"Lleva la cesta a la mesa de la plaza.","en":"Bring your basket to the dinner table."},
+    {"es":"¡A la mesa! Ya eres parte de Valdeluz.","en":"Dinner is ready. You're part of Valdeluz."}
+  ]
+}
