@@ -26,6 +26,7 @@
     "continue": { "en": "Continue" },
     "guideRepeat": { "en": "Valdeluz is through the sunlit door, Hinata through the quiet one with the pond. Press J for your journal, E to talk to someone nearby, and look for a shop if you're saving up coins. Take your time — there's no wrong door.", "words": [], "next": "Thanks, Aya.", "nextEn": "Thanks, Aya." },
     "doorEs": { "who": "Valdeluz", "en": "Sunlight, plazas, and a table waiting for you. Step through to begin your Spanish story.", "words": [], "option": { "en": "Enter Valdeluz" } },
-    "doorJa": { "who": "Hinata", "en": "A quiet pond, paper lanterns, and neighbours who speak gently. Step through to begin your Japanese story.", "words": [], "option": { "en": "Enter Hinata" } }
+    "doorJa": { "who": "Hinata", "en": "A quiet pond, paper lanterns, and neighbours who speak gently. Step through to begin your Japanese story.", "words": [], "option": { "en": "Enter Hinata" } },
+    "comingSoon": { "en": "This door isn't open yet — {lang} is on its way. Check back soon!", "words": [], "next": "Can't wait.", "nextEn": "Can't wait." }
   }
 }

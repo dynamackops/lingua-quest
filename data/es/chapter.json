@@ -6,7 +6,7 @@
     "canvasLabel":"Explorable 3D Spanish town. Use WASD to walk, drag to rotate the camera, and E to interact.",
     "talk":"Hablar con {name}","traveller":"viajero","status":"Hola, {name} · Take your time","statusDone":"Valdeluz feels a little more like home","statusIdle":"A quiet afternoon in Valdeluz",
     "questStart":"A new quest · Una mesa para todos","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"Mi casa · Visit the wardrobe to change your look",
-    "voiceOn":"Spanish voice on","voiceOff":"Spanish voice off","voiceNote":"Voice uses your browser’s Spanish speech voice. It may sound different between devices. Reading works even when no voice is available.",
+    "voiceOn":"Spanish voice on","voiceOff":"Spanish voice off","voiceNote":"Uses a premium recorded voice where one's available, or your browser's Spanish speech voice otherwise — it may sound different between devices. Reading works even when no voice is available.",
     "noteChallenge":"Choose what you understand. English help is always here.","noteSupport":"English support · familiar words will need less help over time.","noteFading":"You know these words. Your English support is fading.","noteHelped":"A little help is part of learning. Take your time.",
     "routes":[["lucia","Find Lucía"],["mateo","Bakery"],["ines","Market"],["cafe","Café"],["table","Dinner table"],["home","Home"]],
     "journalDone":"You helped prepare dinner. Visit your neighbours again: they will bring familiar words back when a review is due."

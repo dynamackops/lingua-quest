@@ -6,7 +6,7 @@
     "canvasLabel":"Explorable 3D Japanese town. Use WASD to walk, drag to rotate the camera, and E to interact.",
     "talk":"{name}さんと はなす","traveller":"たびびと","status":"こんにちは、{name}さん · Take your time","statusDone":"Hinata feels a little more like home","statusIdle":"A quiet afternoon in Hinata",
     "questStart":"A new quest · みんなで おにぎり","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"わたしのいえ · Visit the tansu wardrobe to change your look",
-    "voiceOn":"Japanese voice on","voiceOff":"Japanese voice off","voiceNote":"Voice uses your browser’s Japanese speech voice. It reads the kana aloud, and may sound different between devices. Reading works even when no voice is available.",
+    "voiceOn":"Japanese voice on","voiceOff":"Japanese voice off","voiceNote":"Uses a premium recorded voice where one's available, or your browser's Japanese speech voice otherwise, reading the kana aloud — it may sound different between devices. Reading works even when no voice is available.",
     "noteChallenge":"Choose what you understand. Romaji stays, and English help is always here.","noteSupport":"English support · familiar words will need less help over time.","noteFading":"You know these words. Your English support is fading.","noteHelped":"A little help is part of learning. Take your time.",
     "routes":[["aoi","Find Aoi"],["kenji","Rice shop"],["yui","Fish stall"],["cafe","Tea house"],["table","Dinner table"],["home","Home"]],
     "journalDone":"You helped make onigiri. Visit your neighbours again: they will bring familiar words back when a review is due."
