@@ -18,6 +18,11 @@ export const hub={
   // radiating outward in different directions and has room for more doors later.
   archway(t,-15,0,'#c98457','ESPAÑA');
   archway(t,15,0,'#5c7a86','日本');
+  // Two more archways, greyed out rather than painted in a language's own colour,
+  // sitting in the ring's open back quadrants (away from the entry path) so the
+  // hub visibly has room to grow without anything behind these doors working yet.
+  archway(t,-10.6,-10.6,'#b5ae9b','ITALIA');
+  archway(t,10.6,-10.6,'#b5ae9b','FRANCE');
   for(const [x,z]of [[-9,6],[9,6]])bench(t,x,z);
   for(const [x,z]of [[-11,-2],[11,-2]])lamp(t,x,z);
   for(let i=0;i<10;i++){const a=i/10*Math.PI*2;const x=Math.cos(a)*28,z=Math.sin(a)*28;ball(s,x,1.6,z,2.4,'#a9b09a',1).scale.y=.7}
@@ -28,6 +33,8 @@ export const hub={
   // walking, and interacting near it (not literally passing through it) fires the event.
   t.addEntity('door_es','Puerta de España',-11,0,'door',2.2);
   t.addEntity('door_ja','日本の扉',11,0,'door',2.2);
+  t.addEntity('door_it','Italia (presto)',-7.8,-7.8,'door',2.2);
+  t.addEntity('door_fr','France (bientôt)',7.8,-7.8,'door',2.2);
  },
  rooms(t){
   // The hub has no interiors of its own yet — placeholder empty groups satisfy

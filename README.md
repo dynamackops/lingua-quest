@@ -12,7 +12,18 @@ python3 -m http.server 8766 --bind 127.0.0.1
 
 Then open http://127.0.0.1:8766 in a browser with WebGL enabled. On macOS, `Start Lingua Quest.command` starts the same server. Keep its terminal open while playing; Ctrl+C stops it. If the port is in use, close the previous server or choose another port (a different port uses a separate browser save).
 
-Do not open index.html directly as a file: the chapter JSON needs a local server. All graphics and engine assets are bundled locally; no npm install, API key, backend, or remote CDN is required. Speech quality and offline voice availability depend on your browser's installed Spanish and Japanese voices.
+Do not open index.html directly as a file: the chapter JSON needs a local server. All graphics and engine assets are bundled locally; no npm install, API key, backend, or remote CDN is required to *play*. Speech uses a premium recorded voice for any line that's been pre-generated (see Voice quality below), and falls back to your browser's installed Spanish/Japanese voices for everything else.
+
+## Voice quality (optional)
+
+By default every line is spoken with your browser's built-in `speechSynthesis` voice, which varies a lot between devices and can sound robotic. If you have an [ElevenLabs](https://elevenlabs.io) API key, `npm run tts` (or `node scripts/generate-tts.mjs`) pre-generates a premium recorded clip for every line of dialogue in both chapters and saves them as static `.mp3` files under `audio/`, plus a `audio/manifest.json` the game reads at startup. This is a one-time local build step, not something the game calls at runtime: your key only ever touches your own machine, never the repo or a live server.
+
+```sh
+ELEVENLABS_API_KEY=sk_... npm run tts        # both languages
+DRY_RUN=1 npm run tts                        # preview what would be generated, and its character count (ElevenLabs' billing unit), without calling the API
+```
+
+Once `audio/` exists, every player gets the premium voice automatically — nobody else needs a key. Re-run the script (it's cheap: unchanged lines are skipped) whenever chapter text changes. Pick your own voices with `ELEVENLABS_VOICE_ES`/`ELEVENLABS_VOICE_JA` env vars; see the comments at the top of `scripts/generate-tts.mjs`. Without a generated `audio/` folder the game works exactly as before, on browser voices alone.
 
 ## Controls
 
@@ -30,6 +41,8 @@ Do not open index.html directly as a file: the chapter JSON needs a local server
 ## The Crossing
 
 "Create your character" leads into The Crossing, a plain plaza with a guide who explains the game and two archways — one to Valdeluz, one to Hinata. Walk up to a door and confirm to step through. Your character (name and look) is the same everywhere; each world still keeps its own save and progress, independent of the others, by design. The brand logo in the header takes you back to The Crossing from inside a world, and back to the welcome screen from The Crossing itself.
+
+Two more archways, ITALIA and FRANCE, sit greyed out in the plaza's back quadrants — a preview of what's coming, not playable yet. Walking up to one just shows a short "on its way" notice.
 
 Aya, the guide, gives a one-time six-line welcome the first time you talk to her — covering movement, the journal, the wardrobe and coins — then a short reminder on any later visit.
 
