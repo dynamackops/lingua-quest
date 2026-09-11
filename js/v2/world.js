@@ -3,8 +3,9 @@ import * as T from '../../vendor/three.module.js';
 import {makeAvatar} from './parts.js';
 import {valdeluz} from './valdeluz.js';
 import {hinata} from './hinata.js';
+import {hub} from './hub.js';
 export {AvatarPreview} from './preview.js';
-const builders={es:valdeluz,ja:hinata};
+const builders={es:valdeluz,ja:hinata,hub};
 export class Town{
  constructor(canvas,{theme='es',onNear,onInteract,onMove,onTravelFailed}={}){
  this.canvas=canvas;this.onNear=onNear;this.onInteract=onInteract;this.onMove=onMove;this.onTravelFailed=onTravelFailed;

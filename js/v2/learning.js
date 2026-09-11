@@ -19,3 +19,14 @@ export const saveKey=lang=>`linguaquest_v2_${lang}`;
 export function freshState(lang='es'){return {version:2,language:lang,character:null,position:{x:0,z:10,room:'town'},quest:'new',inventory:[],delivered:[],srs:{},xp:0,audio:true,support:'auto',romaji:true,script:'hiragana',startedAt:Date.now()}}
 export function loadState(storage,lang='es',items=['pan','tomates','aceite']){try{const data=JSON.parse(storage.getItem(saveKey(lang)));if(!data||data.version!==2||data.language!==lang)return freshState(lang);const s={...freshState(lang),...data,language:lang};if(!['new','gather','dinner','complete'].includes(s.quest))s.quest='new';s.inventory=Array.isArray(s.inventory)?s.inventory.filter(x=>items.includes(x)):[];s.delivered=Array.isArray(s.delivered)?s.delivered.filter(x=>items.includes(x)):[];s.srs=s.srs&&typeof s.srs==='object'&&!Array.isArray(s.srs)?s.srs:{};for(const [id,r]of Object.entries(s.srs)){if(!r||!Array.isArray(r.contexts)||!Number.isFinite(r.successes)||!Number.isFinite(r.exposures))delete s.srs[id]}s.character=s.character&&typeof s.character.name==='string'?s.character:null;if(!s.position||!['town','home','cafe'].includes(s.position.room)||!Number.isFinite(s.position.x)||!Number.isFinite(s.position.z))s.position=freshState(lang).position;s.xp=Number.isFinite(s.xp)&&s.xp>=0?s.xp:0;s.support=['auto','full'].includes(s.support)?s.support:'auto';s.romaji=s.romaji!==false;s.script=['hiragana','katakana'].includes(s.script)?s.script:'hiragana';return s}catch{return freshState(lang)}}
 export function saveState(storage,state){try{storage.setItem(saveKey(state.language),JSON.stringify(state));return true}catch{return false}}
+// One character shared across every world, kept separate from each language's own
+// save. Per-language state.character (above) still exists and still round-trips
+// exactly as before — this is an additive layer, not a replacement, so a returning
+// player's existing per-language look survives migration into the shared record.
+export const CHARACTER_KEY='linguaquest_v2_character';
+export function loadCharacter(storage,fallbackLangs=['es','ja']){
+ try{const c=JSON.parse(storage.getItem(CHARACTER_KEY));if(c&&typeof c.name==='string')return c}catch{}
+ for(const lang of fallbackLangs){try{const data=JSON.parse(storage.getItem(saveKey(lang)));if(data&&data.character&&typeof data.character.name==='string')return data.character}catch{}}
+ return null;
+}
+export function saveCharacter(storage,character){try{storage.setItem(CHARACTER_KEY,JSON.stringify(character));return true}catch{return false}}

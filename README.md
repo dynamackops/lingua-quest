@@ -1,6 +1,6 @@
 # Lingua Quest — Valdeluz and Hinata
 
-A playable, cozy third-person 3D language-learning prototype with two worlds. Pick Spanish and explore Valdeluz, a fictional Spanish town, or pick Japanese and explore Hinata, a small Japanese town with a pond and a tea house. Create and edit a character in each world, meet neighbours, and help prepare a shared dinner.
+A playable, cozy third-person 3D language-learning prototype with two worlds. Create one character at The Crossing, a small neutral hub, then step through an archway into Valdeluz for Spanish or Hinata for Japanese — meet neighbours, and help prepare a shared dinner in whichever you choose.
 
 ## Play locally
 
@@ -26,9 +26,9 @@ Do not open index.html directly as a file: the chapter JSON needs a local server
 - Touch devices also get directional buttons.
 - Japanese only: the あ / ア button in a conversation switches the line between hiragana and katakana.
 
-## Choosing a world
+## The Crossing
 
-The welcome screen shows a card for each world. Each world has its own character, save and progress, and the town behind the welcome screen changes with your choice. Spanish and Japanese are independent: nothing carries over, by design.
+"Create your character" leads into The Crossing, a plain plaza with a guide who explains the game and two archways — one to Valdeluz, one to Hinata. Walk up to a door and confirm to step through. Your character (name and look) is the same everywhere; each world still keeps its own save and progress, independent of the others, by design. The brand logo in the header takes you back to The Crossing from inside a world, and back to the welcome screen from The Crossing itself.
 
 ## Spanish chapter: Una mesa para todos
 
@@ -44,7 +44,7 @@ Lines are hiragana with spaces between words; loanwords such as テーブル kee
 
 ## Saves
 
-The Spanish world uses `linguaquest_v2_es` and the Japanese world uses `linguaquest_v2_ja` in browser localStorage; the last chosen world is remembered under `linguaquest_world`. Neither replaces the earlier `linguaquest_es` save. Saves are local to this browser and origin; clearing site data removes them. There is no cloud account or cross-device sync.
+The Spanish world uses `linguaquest_v2_es`, Japanese uses `linguaquest_v2_ja`, and The Crossing itself uses `linguaquest_v2_hub`, all in browser localStorage; the last chosen world is remembered under `linguaquest_world`. Your character (name and appearance) lives in a separate shared key, `linguaquest_v2_character`, so it's the same wherever you go — a returning player's existing per-world look is adopted into it automatically the first time. None of these replace the earlier `linguaquest_es` save. Saves are local to this browser and origin; clearing site data removes them. There is no cloud account or cross-device sync.
 
 `legacy.html` preserves the original 2D game, its content, and its old save key.
 
@@ -52,10 +52,11 @@ The Spanish world uses `linguaquest_v2_es` and the Japanese world uses `linguaqu
 
 - `js/v2/world.js`: the shared Three.js engine: movement, camera, path search, labels and interiors, rebuilt from a themed builder.
 - `js/v2/valdeluz.js` and `js/v2/hinata.js`: procedural geometry for the Spanish and Japanese towns and their interiors.
+- `js/v2/hub.js`: procedural geometry for The Crossing — a plain neutral plaza with two archways, built as just another themed builder.
 - `js/v2/parts.js`: primitive helpers, painted signs (with a kana-capable font stack) and the character.
-- `js/v2/app.js`: world picker, screen flow, dialogue, quest and inventory, editor, speech and saves. All story and interface text comes from the chapter files.
-- `js/v2/learning.js`: per-language save validation, conservative focus-word learning evidence and the kana conversion.
-- `data/es/chapter.json` and `data/ja/chapter.json`: each chapter's dialogue, romaji (Japanese), translations, word references and interface strings.
+- `js/v2/app.js`: hub/world flow, dialogue, quest and inventory, editor, speech and saves. All story and interface text comes from the chapter files, the hub included.
+- `js/v2/learning.js`: per-language save validation, the shared character record, conservative focus-word learning evidence and the kana conversion.
+- `data/es/chapter.json`, `data/ja/chapter.json` and `data/hub.json`: each chapter's dialogue, romaji (Japanese), translations, word references and interface strings — the hub's chapter has no quest, just a guide and two doors.
 - `css/town.css`: responsive game interface.
 - `vendor/`: Three.js 0.169.0 and its MIT license.
 - `tests/`: learning, save isolation and chapter validation tests. Run `npm test` or `node --test tests/*.test.js` with Node.js.
