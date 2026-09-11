@@ -2,7 +2,7 @@
   "id":"hinata-onigiri","language":"ja","ttsLang":"ja-JP","reading":"romaji","title":"みんなで おにぎり","titleRomaji":"Minna de onigiri","titleEn":"Rice balls for everyone",
   "ui":{
     "language":"Japanese","town":"Hinata","country":"にほん","tagline":"A NEW BEGINNING","place":"ひなた",
-    "chapterEyebrow":"はじめての チャプター","cornerEyebrow":"YOUR LITTLE CORNER OF JAPAN","creatorEyebrow":"A NEW FACE IN HINATA",
+    "chapterEyebrow":"はじめての チャプター","cornerEyebrow":"YOUR LITTLE CORNER OF JAPAN","creatorEyebrow":"A NEW FACE IN HINATA","coinName":"えん",
     "canvasLabel":"Explorable 3D Japanese town. Use WASD to walk, drag to rotate the camera, and E to interact.",
     "talk":"{name}さんと はなす","traveller":"たびびと","status":"こんにちは、{name}さん · Take your time","statusDone":"Hinata feels a little more like home","statusIdle":"A quiet afternoon in Hinata",
     "questStart":"A new quest · みんなで おにぎり","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"わたしのいえ · Visit the tansu wardrobe to change your look",
@@ -22,7 +22,8 @@
     "teeburu":{"ja":"テーブル","romaji":"tēburu","en":"table","icon":"table","place":"table"},
     "konnichiwa":{"ja":"こんにちは","romaji":"konnichiwa","en":"hello","icon":"sun","place":"aoi"}
   },
-  "people":{"aoi":{"name":"あおい","place":"ひろば","role":"host"},"kenji":{"name":"けんじ","place":"こめや","item":"gohan"},"yui":{"name":"ゆい","place":"さかなや","item":"sake"},"haruto":{"name":"はると","place":"ちゃや かえで","item":"ocha"}},
+  "people":{"aoi":{"name":"あおい","place":"ひろば","role":"host"},"kenji":{"name":"けんじ","place":"こめや","item":"gohan"},"yui":{"name":"ゆい","place":"さかなや","item":"sake"},"haruto":{"name":"はると","place":"ちゃや かえで","item":"ocha"},"sora":{"name":"そら","place":"ぼうしや","role":"shopkeeper"}},
+  "shop":{"title":"そらの ぼうしや","intro":"いらっしゃい！ ここには ぼうしが いろいろ ありますよ。","introEn":"Welcome! We have all kinds of hats here.","introRomaji":"Irasshai! Koko ni wa bōshi ga iroiro arimasu yo.","items":{"beret":{"ja":"ベレーぼうし","romaji":"beree-bōshi","en":"beret","price":20},"flowercrown":{"ja":"はなの かんむり","romaji":"hana no kanmuri","en":"flower crown","price":25},"sombrero":{"ja":"ソンブレロ","romaji":"sonburero","en":"sombrero","price":35}}},
   "intro":[
     {"ja":"こんにちは！ わたしは あおいです。 ひなたへ ようこそ。","romaji":"Konnichiwa! Watashi wa Aoi desu. Hinata e yōkoso.","en":"Hello! I'm Aoi. Welcome to Hinata.","words":["konnichiwa"],"next":"こんにちは、あおいさん！","nextRomaji":"Konnichiwa, Aoi-san!","nextEn":"Hello, Aoi!"},
     {"ja":"きょうの よる、みんなで おにぎりを つくります。 テーブルに あなたの せきも ありますよ。","romaji":"Kyō no yoru, minna de onigiri o tsukurimasu. Tēburu ni anata no seki mo arimasu yo.","en":"Tonight we're all making rice balls together. There's a seat at the table for you too.","words":["teeburu"],"next":"わあ、うれしいです！","nextRomaji":"Wā, ureshii desu!","nextEn":"How lovely!"},
@@ -76,6 +77,7 @@
     "cafeDoor":{"who":"ちゃや かえで","ja":"のれんが でています。 どうぞ、はいってください！","romaji":"Noren ga dete imasu. Dōzo, haitte kudasai!","en":"The curtain is out. Please come in!","words":[],"option":{"ja":"ちゃやに はいる","romaji":"Chaya ni hairu","en":"Enter the tea house"}},
     "cafeGreeting":{"ja":"いらっしゃいませ！ ちゃや かえでへ ようこそ。 はるとです。","romaji":"Irasshaimase! Chaya Kaede e yōkoso. Haruto desu.","en":"Welcome! Welcome to the Kaede tea house. I'm Haruto.","words":[],"next":"こんにちは、はるとさん！","nextRomaji":"Konnichiwa, Haruto-san!","nextEn":"Hello, Haruto!"},
     "homeDoor":{"who":"わたしのいえ","ja":"ひなたの あなたの いえです。 あたらしい はじまりの ばしょ。","romaji":"Hinata no anata no ie desu. Atarashii hajimari no basho.","en":"Your home in Hinata. A place for a fresh start.","words":[],"option":{"ja":"いえに はいる","romaji":"Ie ni hairu","en":"Go inside"}},
-    "fountain":{"who":"いけ","ja":"いけの みずが ひかっています。 きいてください… しずかですね。","romaji":"Ike no mizu ga hikatte imasu. Kiite kudasai… shizuka desu ne.","en":"The water in the pond sparkles. Listen… how peaceful.","words":["mizu"],"illustrations":["mizu"],"next":"すこし ここに います。","nextRomaji":"Sukoshi koko ni imasu.","nextEn":"I'll stay a moment."}
+    "fountain":{"who":"いけ","ja":"いけの みずが ひかっています。 きいてください… しずかですね。","romaji":"Ike no mizu ga hikatte imasu. Kiite kudasai… shizuka desu ne.","en":"The water in the pond sparkles. Listen… how peaceful.","words":["mizu"],"illustrations":["mizu"],"next":"すこし ここに います。","nextRomaji":"Sukoshi koko ni imasu.","nextEn":"I'll stay a moment."},
+    "doorHub":{"who":"クロッシング","ja":"ここから クロッシングに もどれます。","romaji":"Koko kara Kurosshingu ni modoremasu.","en":"You can return to The Crossing from here.","words":[],"option":{"ja":"クロッシングに もどる","romaji":"Kurosshingu ni modoru","en":"Return to The Crossing"}}
   }
 }

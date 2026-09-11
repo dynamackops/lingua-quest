@@ -31,6 +31,18 @@ Do not open index.html directly as a file: the chapter JSON needs a local server
 
 "Create your character" leads into The Crossing, a plain plaza with a guide who explains the game and two archways — one to Valdeluz, one to Hinata. Walk up to a door and confirm to step through. Your character (name and look) is the same everywhere; each world still keeps its own save and progress, independent of the others, by design. The brand logo in the header takes you back to The Crossing from inside a world, and back to the welcome screen from The Crossing itself.
 
+Aya, the guide, gives a one-time six-line welcome the first time you talk to her — covering movement, the journal, the wardrobe and coins — then a short reminder on any later visit.
+
+## Coins and hats
+
+Every quest milestone (meeting the host, collecting an item, finishing the chapter) and every correct in-conversation answer earns a little of that world's own currency — `monedas` in Valdeluz, `えん` in Hinata — alongside XP. XP is a pure progress readout; coins are what you spend. Both towns have a shopkeeper — Marta in Valdeluz, Sora in Hinata — who sells the same three hat cosmetics (a beret, a flower crown, a sombrero), named in that world's own language. Buy one and it's added to your shared wardrobe — wearable from any world's character editor, the same as any other look choice — while the coins spent come only from that world's own balance.
+
+Coins aren't only earned by finishing the story once: the fountain in Valdeluz and the pond in Hinata double as a small repeatable check on that world's water vocabulary. It's available the moment you first visit, then only again once that word comes due for review — the same rhythm as revisiting a neighbour whose item you already collected — so there's always a little something to do for coins, just not enough to grind.
+
+## Entrances that go both ways
+
+The Crossing's two archways sit on opposite sides of its circular plaza — Valdeluz to the west, Hinata to the east — rather than side by side. Each world also builds a matching archway of its own, in the same plain style and labelled THE CROSSING, near the edge of its own plaza: walk up and confirm to head home, the same way you walked through a door to arrive. That's in addition to the ↩ button in the header, not instead of it.
+
 ## Spanish chapter: Una mesa para todos
 
 Meet Lucía by the fountain. Get bread from Mateo at the bakery, tomatoes from Inés at the market, and olive oil from Diego inside the café. Bring the basket to the dinner table near the bakery and follow Lucía's instructions. The table gains food when the chapter is complete. Visit neighbours again for due vocabulary reviews.

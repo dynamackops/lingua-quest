@@ -1,6 +1,6 @@
 // Hinata: a small Japanese town with a pond, a rice shop, a fish stall, a tea house, a torii on the east path, and tatami interiors.
 import * as T from '../../vendor/three.module.js';
-import {box,ball,cyl,sign,mat,mesh,signStyles} from './parts.js';
+import {box,ball,cyl,sign,mat,mesh,signStyles,archway} from './parts.js';
 const wood='#4a3a2c',tile='#4f5663',stone='#8f8a7c';
 const kanban=(p,text,x,y,z,w=2.5)=>sign(p,text,x,y,z,w,null,signStyles.ja);
 export const hinata={
@@ -44,8 +44,11 @@ export const hinata={
  t.dinnerFood=new T.Group();dinner.add(t.dinnerFood);t.dinnerFood.visible=false;for(let i=0;i<4;i++){const x=-1.05+i*.7;cyl(t.dinnerFood,x,.87,-.3,0,.2,.34,'#f6f2e8',3);box(t.dinnerFood,x,.76,-.18,.2,.12,.16,'#2b2f2a')}for(const x of [-.9,.3]){cyl(t.dinnerFood,x,.72,.4,.3,.3,.03,'#eef2f2',16);const f=ball(t.dinnerFood,x,.78,.4,.14,'#e08a7a');f.scale.set(1.6,.5,.8)}cyl(t.dinnerFood,1.1,.78,.4,.14,.11,.18,'#7d8f7a');ball(t.dinnerFood,1.1,.93,.4,.07,'#7d8f7a');for(const x of [-1.2,-.4,.4,1.2])cyl(t.dinnerFood,x,.74,.95,.09,.07,.12,'#eae1c9');t.obstacle(-6,-6,3.3,1.6);
  // Paper lanterns strung across the courtyard.
  const points=[];for(let i=0;i<=24;i++){const x=-14+i*28/24,y=7-Math.sin(i/24*Math.PI)*1.9;points.push(new T.Vector3(x,y,-5));if(i%3===0)chochin(t,s,x,y-.45,-5,i%2?'#d9603f':'#f0e6d2')}s.add(new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:'#5a4a3a'})));
- t.npc('aoi','あおい',-3,4,{shirt:'#a94a4a',hair:'#2b2622',style:'long',skin:'#e8c4a4'});t.npc('kenji','けんじ',-11,-4.5,{shirt:'#4b5a78',hair:'#2a2622',style:'crop',skin:'#d9b28f'});t.npc('yui','ゆい',9,5.2,{shirt:'#5a8a8f',hair:'#3a2f2a',style:'bob',skin:'#e4c1a0'});
+ t.npc('aoi','あおい',-3,4,{shirt:'#a94a4a',hair:'#2b2622',style:'long',skin:'#e8c4a4'});t.npc('kenji','けんじ',-11,-4.5,{shirt:'#4b5a78',hair:'#2a2622',style:'crop',skin:'#d9b28f'});t.npc('yui','ゆい',9,5.2,{shirt:'#5a8a8f',hair:'#3a2f2a',style:'bob',skin:'#e4c1a0'});t.npc('sora','そら',10,8,{shirt:'#7a6a94',hair:'#3a2f2a',style:'curls',skin:'#e0b590',hat:'flowercrown'});
  t.addEntity('home','わたしのいえ',-15,8.8,'door',1.8);t.addEntity('cafe','ちゃや かえで',14,-4.5,'door',2);t.addEntity('table','テーブル',-6,-4.3,'table',1.8);t.addEntity('fountain','いけ',0,3,'object',1.2);
+ // A plain gate back to The Crossing — the same shape and neutral colour as the hub's
+ // own archways, so both ends of the trip look like the same place.
+ archway(t,0,24,'#8d8a7d','THE CROSSING');t.addEntity('door_hub','クロッシング',0,20,'door',2.2);
  },
  rooms(t){
  // Home: tatami, a futon, a low table, a tokonoma alcove and the tansu wardrobe.

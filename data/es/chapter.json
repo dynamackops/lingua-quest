@@ -2,7 +2,7 @@
   "id":"valdeluz-dinner","language":"es","ttsLang":"es-ES","title":"Una mesa para todos","titleEn":"A table for everyone",
   "ui":{
     "language":"Spanish","town":"Valdeluz","country":"ESPAÑA","tagline":"A NEW BEGINNING","place":"VALDELUZ",
-    "chapterEyebrow":"TU PRIMER CAPÍTULO","cornerEyebrow":"YOUR LITTLE CORNER OF SPAIN","creatorEyebrow":"A NEW FACE IN VALDELUZ",
+    "chapterEyebrow":"TU PRIMER CAPÍTULO","cornerEyebrow":"YOUR LITTLE CORNER OF SPAIN","creatorEyebrow":"A NEW FACE IN VALDELUZ","coinName":"monedas",
     "canvasLabel":"Explorable 3D Spanish town. Use WASD to walk, drag to rotate the camera, and E to interact.",
     "talk":"Hablar con {name}","traveller":"viajero","status":"Hola, {name} · Take your time","statusDone":"Valdeluz feels a little more like home","statusIdle":"A quiet afternoon in Valdeluz",
     "questStart":"A new quest · Una mesa para todos","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"Mi casa · Visit the wardrobe to change your look",
@@ -22,7 +22,8 @@
     "mesa":{"es":"la mesa","en":"table","icon":"table","place":"table"},
     "hola":{"es":"hola","en":"hello","icon":"sun","place":"lucia"}
   },
-  "people":{"lucia":{"name":"Lucía","place":"LA PLAZA","role":"host"},"mateo":{"name":"Mateo","place":"LA PANADERÍA","item":"pan"},"ines":{"name":"Inés","place":"EL MERCADO","item":"tomates"},"diego":{"name":"Diego","place":"CAFÉ AZAHAR","item":"aceite"}},
+  "people":{"lucia":{"name":"Lucía","place":"LA PLAZA","role":"host"},"mateo":{"name":"Mateo","place":"LA PANADERÍA","item":"pan"},"ines":{"name":"Inés","place":"EL MERCADO","item":"tomates"},"diego":{"name":"Diego","place":"CAFÉ AZAHAR","item":"aceite"},"marta":{"name":"Marta","place":"LA TIENDA","role":"shopkeeper"}},
+  "shop":{"title":"La Tienda de Marta","intro":"¡Bienvenido! Aquí tenemos sombreros y boinas.","introEn":"Welcome! Here we have hats and berets.","items":{"beret":{"es":"la boina","en":"beret","price":20},"flowercrown":{"es":"la corona de flores","en":"flower crown","price":25},"sombrero":{"es":"el sombrero","en":"sombrero","price":35}}},
   "intro":[
     {"es":"¡Hola! Soy Lucía. Te doy la bienvenida a Valdeluz.","en":"Hello! I'm Lucía. Welcome to Valdeluz.","words":["hola"],"next":"¡Hola, Lucía!","nextEn":"Hello, Lucía!"},
     {"es":"Esta tarde cenamos juntos en la plaza. Hay una mesa para ti.","en":"This afternoon we're having dinner together in the square. There's a place at the table for you.","words":["mesa"],"next":"¡Qué bien!","nextEn":"How lovely!"},
@@ -76,6 +77,7 @@
     "cafeDoor":{"who":"Café Azahar","es":"La puerta está abierta. ¡Pasa!","en":"The door is open. Come in!","words":[],"option":{"es":"Entrar al café","en":"Enter the café"}},
     "cafeGreeting":{"es":"¡Hola! Te doy la bienvenida al café. Soy Diego.","en":"Hello! Welcome to the café. I'm Diego.","words":["hola"],"next":"¡Hola, Diego!","nextEn":"Hello, Diego!"},
     "homeDoor":{"who":"Mi casa","es":"Tu casa en Valdeluz. Un lugar para empezar de nuevo.","en":"Your home in Valdeluz. A place for a fresh start.","words":[],"option":{"es":"Entrar en casa","en":"Go inside"}},
-    "fountain":{"who":"La fuente","es":"El agua de la fuente brilla al sol. Escucha… qué tranquilidad.","en":"The water in the fountain sparkles in the sun. Listen… how peaceful.","words":["agua"],"illustrations":["agua"],"next":"Me quedo un momento.","nextEn":"I'll stay a moment."}
+    "fountain":{"who":"La fuente","es":"El agua de la fuente brilla al sol. Escucha… qué tranquilidad.","en":"The water in the fountain sparkles in the sun. Listen… how peaceful.","words":["agua"],"illustrations":["agua"],"next":"Me quedo un momento.","nextEn":"I'll stay a moment."},
+    "doorHub":{"who":"El Cruce","es":"Desde aquí puedes volver al Cruce, si quieres visitar otro mundo.","en":"From here you can return to The Crossing, if you'd like to visit another world.","words":[],"option":{"es":"Volver al Cruce","en":"Return to The Crossing"}}
   }
 }
