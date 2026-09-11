@@ -2,7 +2,7 @@
   "id":"hinata-onigiri","language":"ja","ttsLang":"ja-JP","reading":"romaji","title":"みんなで おにぎり","titleRomaji":"Minna de onigiri","titleEn":"Rice balls for everyone",
   "ui":{
     "language":"Japanese","town":"Hinata","country":"にほん","tagline":"A NEW BEGINNING","place":"ひなた",
-    "chapterEyebrow":"はじめての チャプター","cornerEyebrow":"YOUR LITTLE CORNER OF JAPAN","creatorEyebrow":"A NEW FACE IN HINATA",
+    "chapterEyebrow":"はじめての チャプター","cornerEyebrow":"YOUR LITTLE CORNER OF JAPAN","creatorEyebrow":"A NEW FACE IN HINATA","coinName":"えん",
     "canvasLabel":"Explorable 3D Japanese town. Use WASD to walk, drag to rotate the camera, and E to interact.",
     "talk":"{name}さんと はなす","traveller":"たびびと","status":"こんにちは、{name}さん · Take your time","statusDone":"Hinata feels a little more like home","statusIdle":"A quiet afternoon in Hinata",
     "questStart":"A new quest · みんなで おにぎり","chapterDone":"Chapter complete · Welcome to the neighbourhood!","added":"{item} · added to your basket","homeTip":"わたしのいえ · Visit the tansu wardrobe to change your look",

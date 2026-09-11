@@ -15,7 +15,7 @@ export function sign(p,text,x,y,z,w=2.5,color,style=signStyles.es){
  const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=style.bg;ctx.fillRect(0,0,512,128);ctx.strokeStyle=style.border;ctx.lineWidth=8;ctx.strokeRect(6,6,500,116);ctx.fillStyle=color||style.color;ctx.font=style.font;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,256,67,474);const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;const m=new T.Mesh(new T.PlaneGeometry(w,w/4),new T.MeshBasicMaterial({map:tex}));m.position.set(x,y,z);p.add(m);return m;
 }
 export function makeAvatar(config={}){
- const c={skin:'#c98f68',hair:'#403027',shirt:'#819273',style:'bob',body:'regular',eyes:'#443526',accessory:'none',...config};
+ const c={skin:'#c98f68',hair:'#403027',shirt:'#819273',style:'bob',body:'regular',eyes:'#443526',accessory:'none',hat:'none',...config};
  const g=new T.Group(),skin=c.skin,hair=c.hair; const width=c.body==='broad'?1.18:c.body==='slim'?.87:1;
  const torso=cyl(g,0,1.02,0,.26*width,.32*width,.6,c.shirt); const head=ball(g,0,1.68,.01,.29,skin,2);head.scale.set(.88,1.08,.9);
  cyl(g,0,1.39,0,.10,.10,.16,skin);
@@ -36,5 +36,8 @@ export function makeAvatar(config={}){
  }
  if(c.accessory==='glasses'){for(const side of [-1,1]){const ring=mesh(new T.TorusGeometry(.076,.012,6,16),'#65543a',side*.1,1.73,.27,g)}box(g,0,1.73,.27,.055,.013,.013,'#65543a')}
  if(c.accessory==='scarf'){cyl(g,0,1.4,0,.14,.18,.1,'#c77552');box(g,.13,1.24,.24,.13,.30,.06,'#c77552')}
+ if(c.hat==='beret'){const beret=cyl(g,.03,1.92,-.03,.31,.30,.09,'#7a2f3d',16);beret.rotation.z=.12;ball(g,.15,1.965,-.05,.045,'#7a2f3d')}
+ if(c.hat==='flowercrown'){const petals=['#e8879f','#f4c96b','#eef2df'];for(let i=0;i<10;i++){const a=i/10*Math.PI*2;ball(g,Math.sin(a)*.30,1.87+Math.cos(a*4)*.02,.02+Math.cos(a)*.28,.052,petals[i%petals.length])}}
+ if(c.hat==='sombrero'){cyl(g,0,1.99,0,.55,.58,.035,'#d9b26a',20);cyl(g,0,2.05,0,.19,.24,.14,'#d9b26a',16);cyl(g,0,2.115,0,.20,.20,.02,'#a9522f',16)}
  const shadow=new T.Mesh(new T.CircleGeometry(.34,24),new T.MeshBasicMaterial({color:'#3b3b26',transparent:true,opacity:.13,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.065;g.add(shadow);g.userData={legs,arms};return g;
 }

@@ -35,7 +35,7 @@ export const valdeluz={
  t.dinnerFood=new T.Group();dinner.add(t.dinnerFood);t.dinnerFood.visible=false;for(let i=0;i<6;i++)ball(t.dinnerFood,(i%3-1)*.6,1.28,Math.floor(i/3)*.3-.15,.17,i%2?'#bd6249':'#d7ad65');t.obstacle(-6,-6,3.3,1.6);
  // Bunting strung across the plaza.
  const points=[];for(let i=0;i<=24;i++){const x=-14+i*28/24,y=7-Math.sin(i/24*Math.PI)*1.9;points.push(new T.Vector3(x,y,-5));if(i%2===0){const geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute([x-.25,y,-5,x+.25,y,-5,x,y-.55,-5],3));geo.computeVertexNormals();const flag=new T.Mesh(geo,new T.MeshStandardMaterial({color:['#c17857','#a7ac77','#d8bd79','#789a91'][i/2%4],side:T.DoubleSide}));s.add(flag)}}s.add(new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:'#8e876d'})));
- t.npc('lucia','Lucía',-3,4,{shirt:'#b98665',hair:'#6c4a36',style:'bun',skin:'#d6a17a'});t.npc('mateo','Mateo',-11,-4.5,{shirt:'#e5dbbd',hair:'#564431',style:'crop',skin:'#c99873'});t.npc('ines','Inés',9,5.2,{shirt:'#688c83',hair:'#49372c',style:'bob',skin:'#bb825e'});
+ t.npc('lucia','Lucía',-3,4,{shirt:'#b98665',hair:'#6c4a36',style:'bun',skin:'#d6a17a'});t.npc('mateo','Mateo',-11,-4.5,{shirt:'#e5dbbd',hair:'#564431',style:'crop',skin:'#c99873'});t.npc('ines','Inés',9,5.2,{shirt:'#688c83',hair:'#49372c',style:'bob',skin:'#bb825e'});t.npc('marta','Marta',10,8,{shirt:'#a9789a',hair:'#5b4432',style:'curls',skin:'#caa377',hat:'flowercrown'});
  t.addEntity('home','Mi casa',-15,8.8,'door',1.8);t.addEntity('cafe','Café Azahar',14,-4.5,'door',2);t.addEntity('table','La mesa',-6,-4.3,'table',1.8);t.addEntity('fountain','La fuente',0,3,'object',1.2);
  },
  rooms(t){
