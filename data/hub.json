@@ -1,0 +1,29 @@
+{
+  "id": "hub-plaza", "language": "en", "ttsLang": "en-US", "title": "The Crossing", "titleEn": "The Crossing",
+  "ui": {
+    "language": "English", "town": "The Crossing", "country": "YOUR STORY", "tagline": "PICK A DOOR", "place": "THE CROSSING",
+    "chapterEyebrow": "WELCOME", "cornerEyebrow": "YOUR JOURNEY SO FAR", "creatorEyebrow": "WHO ARE YOU?",
+    "canvasLabel": "Explorable 3D hub. Use WASD to walk, drag to rotate the camera, and E to interact.",
+    "talk": "Talk to {name}", "traveller": "traveller", "status": "Hello, {name} · take your time", "statusDone": "The Crossing feels like home", "statusIdle": "A quiet moment at The Crossing",
+    "questStart": "Welcome to The Crossing", "chapterDone": "", "added": "{item} added", "homeTip": "",
+    "voiceOn": "Voice on", "voiceOff": "Voice off", "voiceNote": "Voice uses your browser's English speech voice.",
+    "noteChallenge": "", "noteSupport": "", "noteFading": "", "noteHelped": "",
+    "routes": [["guide", "Find the guide"], ["door_es", "Spanish door"], ["door_ja", "Japanese door"]],
+    "journalDone": ""
+  },
+  "quest": { "items": [], "reviewPool": [] },
+  "items": {},
+  "people": { "guide": { "name": "Aya", "place": "THE CROSSING", "role": "guide" } },
+  "intro": [
+    { "en": "Hi there — I'm Aya. Welcome to The Crossing.", "words": [], "next": "Hi, Aya.", "nextEn": "Hi, Aya." },
+    { "en": "This is where every story starts. Two doors lead to two towns, each lived entirely in its own language — no translations once you're inside.", "words": [], "next": "How does that work?", "nextEn": "How does that work?" },
+    { "en": "You'll pick up words the way you actually learn a language: by hearing them in context, and by choosing what you understand. English help is always nearby if you need it.", "words": [], "next": "What do I do here?", "nextEn": "What do I do here?" },
+    { "en": "Walk through a door to begin — Valdeluz for Spanish, or Hinata for Japanese. You keep the same look and face everywhere, but each town keeps its own story, its own words, and its own pace.", "words": [], "next": "I'm ready.", "nextEn": "I'm ready." }
+  ],
+  "lines": {
+    "continue": { "en": "Continue" },
+    "guideRepeat": { "en": "Valdeluz is through the sunlit door. Hinata is through the quiet one with the pond. Take your time — there's no wrong door.", "words": [], "next": "Thanks, Aya.", "nextEn": "Thanks, Aya." },
+    "doorEs": { "who": "Valdeluz", "en": "Sunlight, plazas, and a table waiting for you. Step through to begin your Spanish story.", "words": [], "option": { "en": "Enter Valdeluz" } },
+    "doorJa": { "who": "Hinata", "en": "A quiet pond, paper lanterns, and neighbours who speak gently. Step through to begin your Japanese story.", "words": [], "option": { "en": "Enter Hinata" } }
+  }
+}

@@ -2,11 +2,13 @@
 
 ## Agreed experience
 
-Cozy, freely explorable third-person 3D worlds: Valdeluz, inspired by Spain, and Hinata, inspired by a small Japanese town. Begin either language as a beginner. Create a character that feels personal in each world and edit it later. The two worlds share the engine, interface and quest shape but never share a character, save or curriculum.
+Cozy, freely explorable third-person 3D worlds: Valdeluz, inspired by Spain, and Hinata, inspired by a small Japanese town. Begin either language as a beginner. Create one character — shared everywhere you go — and edit it later. The worlds share the engine, interface and quest shape but never share a save, quest progress or curriculum; only the character (name, look, wardrobe) is common between them.
 
-## World picker
+## The Crossing: hub and doors
 
-The welcome screen shows one card per world and rebuilds the town behind it when the choice changes. The last world played is remembered. Every story and interface string comes from that world's chapter file, so `app.js` contains no language-specific text.
+The welcome screen no longer offers a card per language. Instead, "Create your character" / "Continue your story" both lead into **The Crossing**, a small, deliberately plain plaza (`js/v2/hub.js`) — no language flavor, so it doesn't pre-bias the choice. A guide NPC there (role `guide`, distinct from a chapter's `host`) gives a short one-time welcome the first time you talk to her, then a brief reminder on any later visit. Two archways lead out: walking up to one and confirming (the same one-line-then-choose pattern as an existing home/cafe door) calls `enterWorld(code)`, which is just `selectWorld(code)` — the exact function the old welcome-screen cards used to call — followed by `start()`. Nothing about *entering* a language world changed; only *how you get there* did. The brand logo in the header now means "go up one level": from a language world it returns to the hub (`returnToHub()`), and only from the hub itself does it fully exit to the welcome screen (`leave()`).
+
+The hub is implemented as its own minimal chapter (`data/hub.json`, `language:'en'`) satisfying the same schema every real chapter does — same `ui`/`people`/`lines` shape, `quest.items` just empty — so `app.js`'s dialogue/interact machinery needs almost no hub-specific branching. The two exceptions: `updateHud()`/`start()` check `chapter.questSteps` before touching quest-HUD elements (the hub has none, so quest-hud stays hidden there), and `showLine()`'s "helped" calculation checks `L!=='en'` so a chapter whose target language *is* English never shows a redundant duplicate "translation" of itself.
 
 ## Playable slice
 
@@ -34,6 +36,8 @@ The tags represent focus vocabulary, not every grammatical feature in a sentence
 
 ## Data and migration
 
-Chapters live in `data/es/chapter.json` and `data/ja/chapter.json`, including interface strings, engine lines and quest item lists; legacy Spanish content remains intact. Persistence keys: `linguaquest_v2_es` and `linguaquest_v2_ja`, schema 2, validated per language against that chapter's item ids. No automatic mastery migration from the older, less reliable model. The old save and original entry point remain accessible through legacy.html.
+Chapters live in `data/es/chapter.json`, `data/ja/chapter.json` and `data/hub.json`, including interface strings, engine lines and quest item lists; legacy Spanish content remains intact. Persistence keys: `linguaquest_v2_es`, `linguaquest_v2_ja` and `linguaquest_v2_hub`, schema 2, validated per language against that chapter's item ids. No automatic mastery migration from the older, less reliable model. The old save and original entry point remain accessible through legacy.html.
+
+The character is a fourth, separate record: `linguaquest_v2_character` (`learning.js`'s `loadCharacter`/`saveCharacter`), deliberately kept apart from `loadState`/`saveState` rather than folded into them — every existing per-language save still round-trips its own `state.character` field exactly as before (protected by tests), so nothing about the old schema changed. `app.js` simply overwrites `state.character` with the shared record after loading any world's state, and writes both the shared record and (unchanged) the per-language one whenever the creator saves. A player with an existing pre-hub save has no shared record yet; `loadCharacter()` falls back to scanning `es`/`ja` saves for one and `init()` commits that fallback back to the shared key immediately, so migration happens once, not on every load, and existing quest/inventory/XP progress in that language is completely untouched.
 
 The original design is retained in DESIGN_2D.md for history. README.md describes the actual current scope.
