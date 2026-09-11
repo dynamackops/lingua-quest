@@ -77,6 +77,7 @@
     "cafeDoor":{"who":"Café Azahar","es":"La puerta está abierta. ¡Pasa!","en":"The door is open. Come in!","words":[],"option":{"es":"Entrar al café","en":"Enter the café"}},
     "cafeGreeting":{"es":"¡Hola! Te doy la bienvenida al café. Soy Diego.","en":"Hello! Welcome to the café. I'm Diego.","words":["hola"],"next":"¡Hola, Diego!","nextEn":"Hello, Diego!"},
     "homeDoor":{"who":"Mi casa","es":"Tu casa en Valdeluz. Un lugar para empezar de nuevo.","en":"Your home in Valdeluz. A place for a fresh start.","words":[],"option":{"es":"Entrar en casa","en":"Go inside"}},
-    "fountain":{"who":"La fuente","es":"El agua de la fuente brilla al sol. Escucha… qué tranquilidad.","en":"The water in the fountain sparkles in the sun. Listen… how peaceful.","words":["agua"],"illustrations":["agua"],"next":"Me quedo un momento.","nextEn":"I'll stay a moment."}
+    "fountain":{"who":"La fuente","es":"El agua de la fuente brilla al sol. Escucha… qué tranquilidad.","en":"The water in the fountain sparkles in the sun. Listen… how peaceful.","words":["agua"],"illustrations":["agua"],"next":"Me quedo un momento.","nextEn":"I'll stay a moment."},
+    "doorHub":{"who":"El Cruce","es":"Desde aquí puedes volver al Cruce, si quieres visitar otro mundo.","en":"From here you can return to The Crossing, if you'd like to visit another world.","words":[],"option":{"es":"Volver al Cruce","en":"Return to The Crossing"}}
   }
 }

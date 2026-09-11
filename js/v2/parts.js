@@ -14,6 +14,18 @@ export const signStyles={
 export function sign(p,text,x,y,z,w=2.5,color,style=signStyles.es){
  const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=style.bg;ctx.fillRect(0,0,512,128);ctx.strokeStyle=style.border;ctx.lineWidth=8;ctx.strokeRect(6,6,500,116);ctx.fillStyle=color||style.color;ctx.font=style.font;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,256,67,474);const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;const m=new T.Mesh(new T.PlaneGeometry(w,w/4),new T.MeshBasicMaterial({map:tex}));m.position.set(x,y,z);p.add(m);return m;
 }
+// A freestanding painted archway: two posts, a lintel and a sign. Used for the
+// hub's doors to each language world, and for the matching gate every world
+// builds back to the hub, so both ends of a crossing look like the same place.
+export function archway(t,x,z,color,label,style){
+ const g=new T.Group();g.position.set(x,0,z);t.scene.add(g);
+ for(const side of [-1,1])box(g,side*1.5,1.8,0,.5,3.6,.5,color);
+ box(g,0,3.5,0,3.9,.5,.5,color);
+ sign(g,label,0,4.35,0,2.6,'#fff',style||{bg:color,border:'#00000022',font:'bold 46px Georgia',color:'#fff'});
+ t.cameraBlockers.push(box(g,0,1.8,-.6,.1,3.6,.1,color));
+ t.obstacle(x,z,3,1.2);
+ return g;
+}
 export function makeAvatar(config={}){
  const c={skin:'#c98f68',hair:'#403027',shirt:'#819273',style:'bob',body:'regular',eyes:'#443526',accessory:'none',hat:'none',...config};
  const g=new T.Group(),skin=c.skin,hair=c.hair; const width=c.body==='broad'?1.18:c.body==='slim'?.87:1;

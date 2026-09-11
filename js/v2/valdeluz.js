@@ -1,6 +1,6 @@
 // Valdeluz: the sunlit Spanish plaza, its bakery, market, café and home, plus the two interiors.
 import * as T from '../../vendor/three.module.js';
-import {box,ball,cyl,sign,mat,makeAvatar} from './parts.js';
+import {box,ball,cyl,sign,mat,makeAvatar,archway} from './parts.js';
 export const valdeluz={
  sky:{background:'#dce6df',fog:[42,105],hemi:['#fffae8','#829176',2.1],sun:['#fff0cf',3.1,[-17,30,14]]},
  doors:{home:{x:-15,z:10},cafe:{x:14,z:-4}},
@@ -37,6 +37,9 @@ export const valdeluz={
  const points=[];for(let i=0;i<=24;i++){const x=-14+i*28/24,y=7-Math.sin(i/24*Math.PI)*1.9;points.push(new T.Vector3(x,y,-5));if(i%2===0){const geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute([x-.25,y,-5,x+.25,y,-5,x,y-.55,-5],3));geo.computeVertexNormals();const flag=new T.Mesh(geo,new T.MeshStandardMaterial({color:['#c17857','#a7ac77','#d8bd79','#789a91'][i/2%4],side:T.DoubleSide}));s.add(flag)}}s.add(new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:'#8e876d'})));
  t.npc('lucia','Lucía',-3,4,{shirt:'#b98665',hair:'#6c4a36',style:'bun',skin:'#d6a17a'});t.npc('mateo','Mateo',-11,-4.5,{shirt:'#e5dbbd',hair:'#564431',style:'crop',skin:'#c99873'});t.npc('ines','Inés',9,5.2,{shirt:'#688c83',hair:'#49372c',style:'bob',skin:'#bb825e'});t.npc('marta','Marta',10,8,{shirt:'#a9789a',hair:'#5b4432',style:'curls',skin:'#caa377',hat:'flowercrown'});
  t.addEntity('home','Mi casa',-15,8.8,'door',1.8);t.addEntity('cafe','Café Azahar',14,-4.5,'door',2);t.addEntity('table','La mesa',-6,-4.3,'table',1.8);t.addEntity('fountain','La fuente',0,3,'object',1.2);
+ // A plain gate back to The Crossing — the same shape and neutral colour as the hub's
+ // own archways, so both ends of the trip look like the same place.
+ archway(t,0,24,'#8d8a7d','THE CROSSING');t.addEntity('door_hub','El Cruce',0,20,'door',2.2);
  },
  rooms(t){
  t.homeRoom=new T.Group();t.scene.add(t.homeRoom);const s=t.homeRoom;box(s,100,-.08,0,12,.2,10,'#c4ad89');box(s,100,2,-5,12,4,.2,'#ede0c5');box(s,94,2,0,.2,4,10,'#e3d3b6');box(s,106,2,0,.2,4,10,'#e3d3b6');for(let i=0;i<12;i++)box(s,94.5+i,.035,0,.025,.01,10,'#b39a79');box(s,100,.04,0,5,.035,4,'#b98168');for(let i=0;i<4;i++)box(s,100,.065,-1.6+i,4.5,.02,.07,'#dbc3a0');
