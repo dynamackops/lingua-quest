@@ -23,6 +23,7 @@ Do not open index.html directly as a file: the chapter JSON needs a local server
 - J: journal, basket and routes to destinations.
 - Escape: close the current panel.
 - Character button or the wardrobe at home: edit appearance.
+- ↩ button in the header (shown inside a language world, hidden at The Crossing): return to the hub. The brand logo does the same, plus goes one level further to the welcome screen from the hub itself.
 - Touch devices also get directional buttons.
 - Japanese only: the あ / ア button in a conversation switches the line between hiragana and katakana.
 
