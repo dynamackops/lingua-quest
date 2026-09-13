@@ -24,6 +24,19 @@
   },
   "people":{"aoi":{"name":"あおい","place":"ひろば","role":"host"},"kenji":{"name":"けんじ","place":"こめや","item":"gohan"},"yui":{"name":"ゆい","place":"さかなや","item":"sake"},"haruto":{"name":"はると","place":"ちゃや かえで","item":"ocha"},"sora":{"name":"そら","place":"ぼうしや","role":"shopkeeper"}},
   "shop":{"title":"そらの ぼうしや","intro":"いらっしゃい！ ここには ぼうしが いろいろ ありますよ。","introEn":"Welcome! We have all kinds of hats here.","introRomaji":"Irasshai! Koko ni wa bōshi ga iroiro arimasu yo.","items":{"beret":{"ja":"ベレーぼうし","romaji":"beree-bōshi","en":"beret","price":20},"flowercrown":{"ja":"はなの かんむり","romaji":"hana no kanmuri","en":"flower crown","price":25},"sombrero":{"ja":"ソンブレロ","romaji":"sonburero","en":"sombrero","price":35}}},
+  "kana":{
+    "intro":[
+      {"ja":"こんにちは！ わたしは あおいです。 ひらがなを いっしょに みましょう。","romaji":"Konnichiwa! Watashi wa Aoi desu. Hiragana o issho ni mimashō.","en":"Hello! I'm Aoi. Let's look at hiragana together first.","words":["konnichiwa"],"next":"はい、おねがいします。","nextRomaji":"Hai, onegai shimasu.","nextEn":"Yes, please."},
+      {"ja":"ひらがなは おとの もじです。 したの ローマじで よみます。","romaji":"Hiragana wa oto no moji desu. Shita no rōmaji de yomimasu.","en":"Each hiragana letter is a sound. The romaji underneath is how to read it.","words":[],"next":"わかりました。","nextRomaji":"Wakarimashita.","nextEn":"Got it."},
+      {"ja":"これは こんにちは。 こ・ん・に・ち・は。 この は は wa です。","romaji":"Kore wa konnichiwa. Ko, n, ni, chi, wa. Kono ha wa “wa” desu.","en":"This is hello: ko-n-ni-chi-wa. In this word the letter は sounds like “wa.”","words":["konnichiwa"],"glyphs":[{"ja":"こ","romaji":"ko","en":"ko"},{"ja":"ん","romaji":"n","en":"n"},{"ja":"に","romaji":"ni","en":"ni"},{"ja":"ち","romaji":"chi","en":"chi"},{"ja":"は","romaji":"wa","en":"wa"}],"next":"こんにちは。","nextRomaji":"Konnichiwa.","nextEn":"Hello."},
+      {"ja":"ごはん。 ご・は・ん。 しろい ごはんです。","romaji":"Gohan. Go, ha, n. Shiroi gohan desu.","en":"Rice: go-ha-n. White rice.","words":["gohan"],"glyphs":[{"ja":"ご","romaji":"go","en":"go"},{"ja":"は","romaji":"ha","en":"ha"},{"ja":"ん","romaji":"n","en":"n"}],"illustrations":["gohan"],"next":"ごはん。","nextRomaji":"Gohan.","nextEn":"Rice."},
+      {"ja":"さけ。 さ・け。 ピンクの さかなです。","romaji":"Sake. Sa, ke. Pinku no sakana desu.","en":"Salmon: sa-ke. Pink fish.","words":["sake"],"glyphs":[{"ja":"さ","romaji":"sa","en":"sa"},{"ja":"け","romaji":"ke","en":"ke"}],"illustrations":["sake"],"next":"さけ。","nextRomaji":"Sake.","nextEn":"Salmon."},
+      {"ja":"おちゃ。 お・ちゃ。 ち と ちいさい ゃ で cha です。","romaji":"Ocha. O, cha. Chi to chiisai ya de cha desu.","en":"Tea: o-cha. The small ゃ turns ち into “cha.”","words":["ocha"],"glyphs":[{"ja":"お","romaji":"o","en":"o"},{"ja":"ちゃ","romaji":"cha","en":"cha"}],"illustrations":["ocha"],"next":"おちゃ。","nextRomaji":"Ocha.","nextEn":"Tea."},
+      {"ja":"いけの みず。 み・ず。","romaji":"Ike no mizu. Mi, zu.","en":"The pond’s water: mi-zu.","words":["mizu"],"glyphs":[{"ja":"み","romaji":"mi","en":"mi"},{"ja":"ず","romaji":"zu","en":"zu"}],"illustrations":["mizu"],"next":"みず。","nextRomaji":"Mizu.","nextEn":"Water."},
+      {"ja":"テーブルは カタカナです。 がいこくの ことばに つかいます。","romaji":"Tēburu wa katakana desu. Gaikoku no kotoba ni tsukaimasu.","en":"テーブル is katakana — a different alphabet, used for borrowed words like “table.”","words":["teeburu"],"glyphs":[{"ja":"テーブル","romaji":"tēburu","en":"table"}],"illustrations":["teeburu"],"next":"テーブル。","nextRomaji":"Tēburu.","nextEn":"Table."}
+    ],
+    "check":{"ja":"ごはんは どれですか。","romaji":"Gohan wa dore desu ka.","en":"Which one is rice?","words":["gohan"],"options":["gohan","sake","mizu"],"correct":"gohan","correction":"ごはんは しろいです。 ご・は・ん。 もういちど。","correctionRomaji":"Gohan wa shiroi desu. Go, ha, n. Mō ichido.","correctionEn":"Rice is white. Go-ha-n. Try again."}
+  },
   "intro":[
     {"ja":"こんにちは！ わたしは あおいです。 ひなたへ ようこそ。","romaji":"Konnichiwa! Watashi wa Aoi desu. Hinata e yōkoso.","en":"Hello! I'm Aoi. Welcome to Hinata.","words":["konnichiwa"],"next":"こんにちは、あおいさん！","nextRomaji":"Konnichiwa, Aoi-san!","nextEn":"Hello, Aoi!"},
     {"ja":"きょうの よる、みんなで おにぎりを つくります。 テーブルに あなたの せきも ありますよ。","romaji":"Kyō no yoru, minna de onigiri o tsukurimasu. Tēburu ni anata no seki mo arimasu yo.","en":"Tonight we're all making rice balls together. There's a seat at the table for you too.","words":["teeburu"],"next":"わあ、うれしいです！","nextRomaji":"Wā, ureshii desu!","nextEn":"How lovely!"},
@@ -60,7 +73,7 @@
     "mizu":{"ja":"のどが かわきました。 みずを ください。","romaji":"Nodo ga kawakimashita. Mizu o kudasai.","en":"I'm thirsty. Water, please.","words":["mizu"]}
   },
   "questSteps":[
-    {"ja":"ひろばで あおいさんに あいさつしましょう。","romaji":"Hiroba de Aoi-san ni aisatsu shimashō.","en":"Meet Aoi beside the pond."},
+    {"ja":"あおいさんと ひらがなを みましょう。","romaji":"Aoi-san to hiragana o mimashō.","en":"Look at the hiragana letters with Aoi."},
     {"ja":"ごはんと さけと おちゃを さがしましょう。","romaji":"Gohan to sake to ocha o sagashimashō.","en":"Visit the rice shop, fish stall and tea house."},
     {"ja":"かごを ひろばの テーブルに もっていきましょう。","romaji":"Kago o hiroba no tēburu ni motte ikimashō.","en":"Bring your basket to the dinner table."},
     {"ja":"いただきます！ もう ひなたの なかまです。","romaji":"Itadakimasu! Mō Hinata no nakama desu.","en":"Dinner is ready. You're part of Hinata."}
