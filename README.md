@@ -12,7 +12,7 @@ python3 -m http.server 8766 --bind 127.0.0.1
 
 Then open http://127.0.0.1:8766 in a browser with WebGL enabled. On macOS, `Start Lingua Quest.command` starts the same server. Keep its terminal open while playing; Ctrl+C stops it. If the port is in use, close the previous server or choose another port (a different port uses a separate browser save).
 
-Do not open index.html directly as a file: the chapter JSON needs a local server. All graphics and engine assets are bundled locally; no npm install, API key, backend, or remote CDN is required to *play*. Speech uses a premium recorded voice for any line that's been pre-generated (see Voice quality below), and falls back to your browser's installed Spanish/Japanese voices for everything else.
+Do not open index.html directly as a file: the chapter JSON needs a local server. All graphics and engine assets are bundled locally; no npm install, API key, build step, or remote CDN is required to *play*. Signing in and cloud saves do talk to a Supabase project (see Accounts below) — that is the one piece of the game with a server behind it, and the game stays fully playable as a guest when it is unreachable. Speech uses a premium recorded voice for any line that's been pre-generated (see Voice quality below), and falls back to your browser's installed Spanish/Japanese voices for everything else.
 
 ## Voice quality (optional)
 
@@ -69,9 +69,21 @@ Meet Aoi by the pond. She first walks you through the hiragana in tonight’s wo
 
 Lines are hiragana with spaces between words; loanwords such as テーブル keep their katakana. Romaji is always shown underneath so you can sound everything out, and can be hidden in Help. English fades exactly as in the Spanish world. Neighbours use the polite です / ます form. See `CURRICULUM_ja.md` for the reasoning.
 
+## Accounts and saved progress
+
+Anyone can play immediately as a guest — the welcome screen, The Crossing and both worlds open with no account. What a guest doesn't get is a save: their progress lives in memory for that tab only, and the footer says so plainly (`PLAYING AS A GUEST · NOT SAVED`). Finishing a chapter is the one moment the game asks for an account, because that's the first thing genuinely worth keeping.
+
+Accounts are email and password, with email confirmation on, so a forgotten password can be reset. Sign in from the ✦ Account button in the header or the link on the welcome screen. Signing in on a device you've played on before brings your story with you: progress is stored per player in Postgres and syncs on a short debounce, so the same account picks up where it left off on a phone, a laptop or a fresh browser.
+
+Because a sign-up can't open a session until the email is confirmed, a run in progress would otherwise be lost while the player checks their inbox. The game holds that one run under `linguaquest_pending_save` and adopts it the moment the confirmation link opens a session. It's a handoff for a sign-up already underway, not a guest save, and it's cleared as soon as it's used (or after 24 hours).
+
+When you sign in, the game never blends two stories. If the account has no saves yet it adopts the run you're signing in to keep; if the account already has saves, those win and the guest run is discarded, because silently overwriting real progress from another device is the one mistake there's no undo for. The game tells you which happened.
+
 ## Saves
 
-The Spanish world uses `linguaquest_v2_es`, Japanese uses `linguaquest_v2_ja`, and The Crossing itself uses `linguaquest_v2_hub`, all in browser localStorage; the last chosen world is remembered under `linguaquest_world`. Your character (name and appearance) lives in a separate shared key, `linguaquest_v2_character`, so it's the same wherever you go — a returning player's existing per-world look is adopted into it automatically the first time. None of these replace the earlier `linguaquest_es` save. Saves are local to this browser and origin; clearing site data removes them. There is no cloud account or cross-device sync.
+Signed in, the four records — Spanish, Japanese, The Crossing and your shared character, plus the last world you chose — are rows in the `saves` table, one per player per slot, guarded by row-level security policies that compare `auth.uid()` to the row's `user_id`. A player can only ever read or write their own saves.
+
+The save *format* is unchanged: the same JSON `learning.js` always wrote to localStorage is what's stored, and `learning.js` itself was not modified. The game reads and writes through a `storage` object with localStorage's `getItem`/`setItem` shape; accounts simply swap what's behind it (`js/v2/cloud.js`). Only the auth session itself now uses browser localStorage, under `linguaquest_auth`. The earlier `linguaquest_es` save is still untouched.
 
 `legacy.html` preserves the original 2D game, its content, and its old save key.
 
@@ -82,10 +94,12 @@ The Spanish world uses `linguaquest_v2_es`, Japanese uses `linguaquest_v2_ja`, a
 - `js/v2/hub.js`: procedural geometry for The Crossing — a plain neutral plaza with two archways, built as just another themed builder.
 - `js/v2/parts.js`: primitive helpers, painted signs (with a kana-capable font stack) and the character.
 - `js/v2/app.js`: hub/world flow, dialogue, quest and inventory, editor, speech and saves. All story and interface text comes from the chapter files, the hub included.
-- `js/v2/learning.js`: per-language save validation, the shared character record, conservative focus-word learning evidence and the kana conversion.
+- `js/v2/learning.js`: per-language save validation, the shared character record, conservative focus-word learning evidence and the kana conversion. Unchanged by accounts — it only ever needed something with `getItem`/`setItem`.
+- `js/v2/cloud.js`: accounts and cloud saves. A guest's store is an in-memory Map that is never written anywhere; a signed-in player's is the same Map, hydrated from Postgres and flushed back on a debounce.
+- `js/v2/config.js`: the Supabase project URL and publishable key. The publishable key is meant to be public — row-level security, not secrecy, is what protects saves. Never put a service-role key here.
 - `data/es/chapter.json`, `data/ja/chapter.json` and `data/hub.json`: each chapter's dialogue, romaji (Japanese), translations, word references and interface strings — the hub's chapter has no quest, just a guide and two doors.
 - `css/town.css`: responsive game interface.
-- `vendor/`: Three.js 0.169.0 and its MIT license.
-- `tests/`: learning, save isolation and chapter validation tests. Run `npm test` or `node --test tests/*.test.js` with Node.js.
+- `vendor/`: Three.js 0.169.0 and `supabase.module.js` — `@supabase/auth-js` and `@supabase/postgrest-js` bundled to one ESM file (realtime, storage and functions excluded) so the game keeps its no-CDN, no-install property. Both MIT; licenses and regeneration steps are alongside.
+- `tests/`: learning, save isolation, cloud-store and chapter validation tests. Run `npm test` or `node --test tests/*.test.js` with Node.js.
 
 Each world is one complete starter quest and two small interiors, using eight focus vocabulary entries (three are exercised throughout the main quest). Hinata’s first conversation is a kana onboarding: the letters of those words, then a simple rice check, then dinner. The older 60-item Spanish curriculum remains in the legacy prototype; it is not all integrated into the 3D chapter yet. Additional chapters, rich relationships, broader curricula, speech input and advanced character sculpting are future work. The characters and architecture are procedural stylized geometry, not imported production art.

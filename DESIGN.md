@@ -68,4 +68,18 @@ At runtime, `app.js`'s `speak(text)` looks up `ttsManifest[lang][text]` first; i
 
 Two more archways at The Crossing — ITALIA and FRANCE — sit in the ring's back quadrants, painted a muted grey rather than a language's own colour to read as "not open yet" without needing separate UI. They're built with the exact same shared `archway()` helper as the real doors, just registered under `door_it`/`door_fr` entity ids. `interact()`'s switch routes those ids to a small `comingSoon(name)` helper instead of `enterWorld()` — it shows one line (`hub.json`'s `lines.comingSoon`, with `{lang}` filled in) and returns to the hub with nothing else changed, rather than touching `chapters{}`/`selectWorld()` at all. Adding a real language later is exactly the work of the four-phase plan the first two doors went through, not a rework of these — the placeholder is functionally inert on purpose.
 
+## Accounts: progress is the reason to have one
+
+Guests play the whole game; what they don't get is a save. That is a deliberate product line rather than a technical limit — an account has to be worth making, and "your town is still here tomorrow" is the honest version of that. So the prompt appears once, after a chapter is finished, when the player has something they'd mind losing. Nothing gates The Crossing or either world.
+
+The implementation leans on a seam that already existed. `learning.js` never touched `localStorage` directly: every save goes through a `storage` argument with `getItem`/`setItem`. `js/v2/cloud.js` supplies a different object behind that seam and nothing else changes — not the save format, not the per-language validation, not the tests that pin them. A guest's store is an in-memory `Map` that is never written anywhere, which is what "guests don't get saves" means literally. A signed-in player's store is the same `Map`, hydrated from Postgres on sign-in and flushed back on a 1.2s debounce plus a `keepalive` write on tab close. Keeping the `Map` as the working copy is what lets the synchronous `getItem`/`setItem` contract survive an asynchronous backend.
+
+Two rules protect real progress. Signing in adopts exactly one story, never a blend: an account with no saves takes the guest run the player is signing in to keep, while an account that already has saves wins outright and the guest run is discarded, because overwriting progress made on another device is the one unrecoverable mistake available here. And `leave()` grew a `save=false` path used only after that second case, since its usual closing `persist()` would otherwise write the abandoned guest run straight over the story just loaded.
+
+Email confirmation is on, so that a forgotten password can be reset — but it means `signUp()` returns a user and no session, and the run the player just finished would evaporate while they check their inbox. `linguaquest_pending_save` carries that single run across the gap and is consumed the moment a session opens. It is scoped to a sign-up already in progress and expires after a day; it is not a back door to guest saves.
+
+Row-level security, not the key in `config.js`, is what protects saves: the publishable key is meant to be public, and every policy compares `auth.uid()` to the row's `user_id`. Verified by acting as two separate users against the live policies — each sees only their own row, and an insert on another player's behalf is rejected.
+
+Supabase being unreachable is a playable state, not an error. Auth resolution is awaited during boot but bounded, and a blocked-network run boots in about 1.3 seconds straight to a guest session with no console errors.
+
 The original design is retained in DESIGN_2D.md for history. README.md describes the actual current scope.
