@@ -1,0 +1,2 @@
+@supabase/auth-js 2.116.0
+@supabase/postgrest-js 2.116.0

@@ -1,5 +1,6 @@
 import {Town,AvatarPreview} from './world.js';
 import {expose,answer,known,support,due,loadState,saveState,toKatakana,loadCharacter,saveCharacter} from './learning.js';
+import * as cloud from './cloud.js';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pictures={
@@ -19,7 +20,11 @@ const pictures={
 function art(id){return `<svg viewBox="0 0 64 50" aria-hidden="true">${pictures[id]||pictures.sun}</svg>`}
 const worlds={es:{file:'data/es/chapter.json',symbol:'☀'},ja:{file:'data/ja/chapter.json',symbol:'⛩'}};
 const HUB={file:'data/hub.json',symbol:'✦'};
-let storage;try{storage=window.localStorage}catch{storage={getItem:()=>null,setItem:()=>{throw Error('Storage unavailable')}}}
+// Every save read and write goes through cloud.store. For a guest that is an
+// in-memory Map that is never written anywhere; for a signed-in player it is the
+// same Map, hydrated from and flushed to their account. learning.js is unchanged:
+// it only ever needed something with getItem/setItem.
+const storage=cloud.store;
 const chapters={};let lang,chapter,state,L,ui,town,preview,draft,editing=false,currentLine=null,assisted=false,voiceReady=false,timer,saveTimer=0,sessionStarted=false;
 // A line plays a premium pre-recorded clip (see scripts/generate-tts.mjs) when one
 // exists for its exact text; otherwise it falls back to the browser's own voice.
@@ -39,7 +44,14 @@ const word=s=>`<span lang="${lang}" data-raw="${escape(s)}">${escape(kana(s))}</
 const romaji=(s,force)=>chapter.reading&&(state.romaji||force)&&s?`<small class="romaji">${escape(s)}</small>`:'';
 function refreshScript(){document.querySelectorAll('[data-raw]').forEach(el=>el.textContent=kana(el.dataset.raw));$('script-toggle').textContent=state.script==='katakana'?'ア':'あ';$('script-toggle').setAttribute('aria-pressed',String(state.script==='katakana'));if(currentLine)$('target-line').textContent=kana(currentLine[L]);if(sessionStarted)updateHud()}
 function notify(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('toast').hidden=true,3800)}
-function persist(){const okay=saveState(storage,state);$('save-status').textContent=okay?`SAVED ON THIS DEVICE · ${ui.language.toUpperCase()}`:'SAVE UNAVAILABLE · KEEP THIS TAB OPEN';return okay}
+function persist(){const okay=saveState(storage,state);updateSaveStatus();return okay}
+let saveStatus='guest';
+function updateSaveStatus(){const tag=ui?` · ${ui.language.toUpperCase()}`:'';
+ $('save-status').textContent=saveStatus==='guest'?'PLAYING AS A GUEST · NOT SAVED':saveStatus==='saving'?`SAVING…${tag}`:saveStatus==='error'?'OFFLINE · NOT SAVED YET':`SAVED TO YOUR ACCOUNT${tag}`;
+ $('save-status').classList.toggle('unsaved',saveStatus==='guest'||saveStatus==='error');
+ const guest=!cloud.signedIn();
+ $('welcome-save-note').textContent=guest?'Playing as a guest · progress is not saved':'Saved to your account · one character, every world';
+ $('welcome-signin').hidden=!guest;}
 function stopVoice(){if('speechSynthesis'in window)speechSynthesis.cancel();if(premiumAudio){premiumAudio.pause();premiumAudio=null}}
 function speak(text){if(!state.audio||!voiceReady)return;stopVoice();const clip=ttsManifest[lang]?.[text];if(clip){premiumAudio=new Audio(`audio/${lang}/${clip}.mp3`);premiumAudio.play().catch(()=>{});return}if(!('speechSynthesis'in window))return;const u=new SpeechSynthesisUtterance(text);u.lang=chapter.ttsLang;u.rate=.84;const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang===chapter.ttsLang)||voices.find(v=>v.lang.replace('_','-').startsWith(lang))||null;speechSynthesis.speak(u)}
 function lock(value){town.blocked=value;town.keys.clear();town.path=[];$('interaction').hidden=value||!sessionStarted||!town.near}
@@ -83,7 +95,8 @@ function host(){return Object.keys(chapter.people).find(id=>chapter.people[id].r
 function dinner(){
  const h=host();if(state.quest==='complete'){review(h,items()[0]);return}
  if(!collected()){script(h,[chapter.lines.tableEarly],closeDialogue);return}
- const remaining=items().filter(id=>!state.delivered.includes(id));const serve=()=>{if(!remaining.length){script(h,chapter.ending,()=>{state.quest='complete';state.xp+=30;state.coins+=15;closeDialogue();updateHud();persist();notify(ui.chapterDone)});return}const id=remaining[0];check(h,id,chapter.delivery[id],'dinner-table',()=>{state.delivered.push(id);state.inventory=state.inventory.filter(k=>k!==id);remaining.shift();persist();serve()},items())};serve();
+ const remaining=items().filter(id=>!state.delivered.includes(id));const serve=()=>{if(!remaining.length){script(h,chapter.ending,()=>{state.quest='complete';state.xp+=30;state.coins+=15;closeDialogue();updateHud();persist();notify(ui.chapterDone);
+  if(!cloud.signedIn())promptTimer=setTimeout(()=>openAccount('signup',`You finished ${chapter.titleEn||'a chapter'}. Make an account and it will be here next time.`),1600)});return}const id=remaining[0];check(h,id,chapter.delivery[id],'dinner-table',()=>{state.delivered.push(id);state.inventory=state.inventory.filter(k=>k!==id);remaining.shift();persist();serve()},items())};serve();
 }
 function door(key,room,after){const line=chapter.lines[key];showLine(line.who,line,{options:[line.option],onChoice:()=>{closeDialogue();town.enter(room);state.position=town.position();persist();after?.()}})}
 function interact(e){
@@ -140,11 +153,106 @@ function help(){const reading=chapter.reading?`<h3>Reading Japanese</h3><p>Aoi f
 // they all share one character record — see loadCharacter/saveCharacter.
 function selectWorld(code){lang=code;chapter=chapters[code];L=chapter.language;ui=chapter.ui;state=loadState(storage,code,chapter.quest.items);if(sharedCharacter)state.character=sharedCharacter;if(!('speechSynthesis'in window))state.audio=false;if(town.theme!==code)town.build(code);try{storage.setItem('linguaquest_world',code)}catch{}
  $('world-symbol').textContent=code==='hub'?HUB.symbol:worlds[code].symbol;$('world-name').textContent=ui.town;$('world-sub').textContent=`${ui.country} · ${ui.tagline}`;$('hud-eyebrow').textContent=ui.chapterEyebrow;$('hud-title').textContent=kana(chapter.title);$('hud-title').lang=lang;$('sheet-eyebrow').textContent=ui.cornerEyebrow;$('creator-eyebrow').textContent=ui.creatorEyebrow;$('world').setAttribute('aria-label',ui.canvasLabel);$('welcome-note').textContent=`${code==='hub'?HUB.symbol:worlds[code].symbol} ${ui.language}`;$('replay').setAttribute('aria-label',`Replay ${ui.language} audio`);$('script-toggle').hidden=!chapter.reading;$('script-toggle').textContent=state.script==='katakana'?'ア':'あ';$('return-hub').hidden=code==='hub';
- $('continue').hidden=!state.character;$('begin').textContent=state.character?'Edit your character ↗':'Create your character ↗';$('save-status').textContent=`LOCAL SAVE · ${ui.language.toUpperCase()}`;$('status').textContent=ui.statusIdle;town.dinnerFood.visible=state.quest==='complete';$('sound').textContent=state.audio?'♫':'♩';
+ $('continue').hidden=!state.character;$('begin').textContent=state.character?'Edit your character ↗':'Create your character ↗';updateSaveStatus();$('status').textContent=ui.statusIdle;town.dinnerFood.visible=state.quest==='complete';$('sound').textContent=state.audio?'♫':'♩';
 }
-function leave(){closeDialogue();closeSheet();$('creator').hidden=true;town.enabled=false;sessionStarted=false;$('welcome').hidden=false;$('quest-hud').hidden=true;$('interaction').hidden=true;$('touch-controls').hidden=true;persist();selectWorld('hub')}
+// save=false is for the one case where persisting would be actively wrong: a
+// sign-in has just replaced the store with the account's own saves, and writing
+// the abandoned guest run over them would destroy real progress.
+function leave(save=true){closeDialogue();closeSheet();$('creator').hidden=true;town.enabled=false;sessionStarted=false;$('welcome').hidden=false;$('quest-hud').hidden=true;$('interaction').hidden=true;$('touch-controls').hidden=true;if(save)persist();selectWorld('hub')}
+
+function onSignedIn(){
+ closeAccount();clearTimeout(promptTimer);
+ const adopted=cloud.lastHydration?.adopted;
+ sharedCharacter=loadCharacter(storage,Object.keys(worlds));
+ if(!sessionStarted){selectWorld(lang||'hub');notify(adopted?'Your progress is saved to your account.':'Welcome back — your story is here.');return}
+ if(adopted){persist();notify('Saved. This chapter is yours now.');return}
+ // The account already had a story of its own. Step back to the welcome screen
+ // and let the player continue that one, rather than swapping it in mid-scene.
+ notify('Welcome back — we have loaded the story saved to your account.');
+ leave(false);
+}
+
+// ---------------------------------------------------------------- accounts
+// One panel, five modes. Guests can always close it and keep playing; nothing
+// here gates the town itself, only whether the evening survives the tab closing.
+let accountMode='signin';
+const MODES={
+ signin:{title:'Welcome back',eyebrow:'YOUR STORY, WAITING',submit:'Sign in →',secondary:'Create an account',blurb:'Sign in and your town, your words and your character come back exactly as you left them.'},
+ signup:{title:'Save your progress',eyebrow:'KEEP YOUR STORY',submit:'Create my account →',secondary:'I have an account',blurb:'Guests can wander freely, but only an account keeps your progress waiting for you next time.'},
+ forgot:{title:'Reset your password',eyebrow:'BACK IN A MOMENT',submit:'Email me a reset link →',secondary:'Back to sign in',blurb:"Tell us your email and we'll send a link to set a new password."},
+ reset:{title:'Choose a new password',eyebrow:'ALMOST THERE',submit:'Save my password →',secondary:'',blurb:'Pick something at least eight characters long.'},
+ pending:{title:'Check your email',eyebrow:'ONE LAST STEP',submit:'',secondary:'Close',blurb:''}
+};
+function openAccount(mode='signin',reason=''){
+ if(cloud.signedIn())mode='account';
+ accountMode=mode;
+ const m=MODES[mode];
+ $('dialogue').hidden=true;stopVoice();$('sheet').hidden=true;
+ if(town)lock(true);
+ $('account-modal').hidden=false;
+ const signedIn=mode==='account';
+ $('account-signed-in').hidden=!signedIn;
+ $('account-form').hidden=signedIn;
+ $('account-links').hidden=signedIn||mode==='pending'||mode==='reset';
+ if(signedIn){
+  $('account-eyebrow').textContent='YOUR ACCOUNT';$('account-title').textContent='Signed in';
+  $('account-blurb').textContent='';$('account-who').textContent=cloud.currentUser()?.email||'';
+  $('account-close').focus();return;
+ }
+ $('account-eyebrow').textContent=m.eyebrow;$('account-title').textContent=m.title;
+ $('account-blurb').textContent=reason||m.blurb;
+ $('account-submit').textContent=m.submit;$('account-submit').hidden=!m.submit;
+ $('account-secondary').textContent=m.secondary;$('account-secondary').hidden=!m.secondary;
+ $('field-name').hidden=mode!=='signup';
+ $('field-password').hidden=mode==='forgot'||mode==='pending';
+ $('account-email').closest('label').hidden=mode==='reset'||mode==='pending';
+ $('account-fields').hidden=mode==='pending';
+ $('account-password').autocomplete=mode==='signin'?'current-password':'new-password';
+ $('account-password').placeholder=mode==='signin'?'Your password':'At least 8 characters';
+ $('account-resend').hidden=mode!=='pending';
+ $('account-forgot').hidden=mode!=='signin';
+ setAccountMessage(mode==='pending'?"We've sent you a confirmation link. Open it and your progress will be saved to your new account.":'');
+ if(mode!=='pending')setTimeout(()=>(mode==='reset'?$('account-password'):$('account-email')).focus(),0);
+}
+function closeAccount(){$('account-modal').hidden=true;if(town)lock(false);if(!sessionStarted&&$('creator').hidden)$('welcome').hidden=false}
+function setAccountMessage(text,tone=''){const el=$('account-message');el.textContent=text;el.className=tone}
+function busy(on){$('account-submit').disabled=on;$('account-secondary').disabled=on}
+
+async function submitAccount(e){
+ e.preventDefault();
+ const email=$('account-email').value.trim(),password=$('account-password').value,name=$('account-name').value.trim();
+ busy(true);setAccountMessage('One moment…');
+ try{
+  if(accountMode==='signup'){
+   if(password.length<8){setAccountMessage('Passwords need at least eight characters.','bad');return}
+   const r=await cloud.signUp(email,password,name||state?.character?.name);
+   if(r.error){setAccountMessage(r.error,'bad');return}
+   if(r.pending){pendingEmail=email;openAccount('pending');return}
+   setAccountMessage('');closeAccount();notify('Your progress is saved to your account.');
+  }else if(accountMode==='signin'){
+   const r=await cloud.signIn(email,password);
+   if(r.error){setAccountMessage(/confirm/i.test(r.error)?'That email still needs confirming — check your inbox for the link.':r.error,'bad');if(/confirm/i.test(r.error)){pendingEmail=email;$('account-resend').hidden=false}return}
+   setAccountMessage('');closeAccount();
+  }else if(accountMode==='forgot'){
+   const r=await cloud.sendReset(email);
+   if(r.error){setAccountMessage(r.error,'bad');return}
+   setAccountMessage('If that email has an account, a reset link is on its way.','good');
+  }else if(accountMode==='reset'){
+   if(password.length<8){setAccountMessage('Passwords need at least eight characters.','bad');return}
+   const r=await cloud.setPassword(password);
+   if(r.error){setAccountMessage(r.error,'bad');return}
+   closeAccount();notify('Your new password is saved.');
+  }
+ }finally{busy(false)}
+}
+let pendingEmail='',promptTimer=0,bootDone=false;
+
 async function init(){try{await Promise.all([...Object.entries(worlds),['hub',HUB]].map(async([code,w])=>{const response=await fetch(w.file);if(!response.ok)throw Error(`The ${code} chapter could not be loaded`);chapters[code]=await response.json()}));
  try{const r=await fetch('audio/manifest.json');if(r.ok)ttsManifest=await r.json()}catch{} // optional — see scripts/generate-tts.mjs
+ // Resolve the account (and pull down its saves) before the first read, so a
+ // returning player's story is already in the store when selectWorld() runs.
+ cloud.onStatus(s=>{saveStatus=s;if(ui)updateSaveStatus()});
+ await cloud.init();
  sharedCharacter=loadCharacter(storage,Object.keys(worlds));
  // loadCharacter() only reads, falling back to a per-language character if no
  // shared record exists yet — commit that fallback immediately so migration
@@ -159,10 +267,27 @@ async function init(){try{await Promise.all([...Object.entries(worlds),['hub',HU
  }
  $('begin').onclick=()=>openCreator(!!state.character);$('continue').onclick=start;$('wardrobe').onclick=()=>openCreator(sessionStarted);$('creator-cancel').onclick=()=>{$('creator').hidden=true;lock(false);if(!sessionStarted)$('welcome').hidden=false};$('character-form').onsubmit=e=>{e.preventDefault();const name=$('character-name').value.trim();if(!name){$('character-name').focus();return}draft.name=name;state.character={...draft};sharedCharacter=state.character;saveCharacter(storage,sharedCharacter);$('creator').hidden=true;if(editing&&sessionStarted){town.setAvatar(state.character);lock(false);updateHud();persist();notify('Your new look is saved.')}else start()};
  for(const [id,key]of [['hair-style','style'],['body-style','body'],['eyes-style','eyes'],['accessory','accessory'],['hat','hat']])$(id).onchange=e=>{draft[key]=e.target.value;preview.set(draft)};
+ $('account').onclick=()=>openAccount(cloud.signedIn()?'account':'signin');
+ $('welcome-signin').onclick=()=>openAccount('signin');
+ $('account-close').onclick=closeAccount;$('account-form').onsubmit=submitAccount;
+ $('account-secondary').onclick=()=>{if(accountMode==='pending'){closeAccount();return}openAccount(accountMode==='signup'?'signin':accountMode==='forgot'?'signin':'signup')};
+ $('account-forgot').onclick=()=>openAccount('forgot');
+ $('account-resend').onclick=async()=>{const email=pendingEmail||$('account-email').value.trim();if(!email)return;const r=await cloud.resendConfirmation(email);setAccountMessage(r.error||'Sent — check your inbox again.',r.error?'bad':'good')};
+ $('account-signout').onclick=async()=>{closeAccount();await cloud.signOut()};
+ // A password-reset link lands the player back here holding a recovery session.
+ cloud.onAuth((session,event)=>{
+  if(event==='PASSWORD_RECOVERY'){openAccount('reset');return}
+  if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session&&bootDone){onSignedIn();return}
+  if(event==='SIGNED_OUT'&&sessionStarted){notify('Signed out. You are playing as a guest again.');leave()}
+ });
  $('journal').onclick=journal;$('help').onclick=help;$('sheet-close').onclick=closeSheet;$('close-dialogue').onclick=closeDialogue;$('interact').onclick=()=>town.near&&interact(town.near);$('translate').onclick=()=>{assisted=true;$('english-line').hidden=false;$('translate').hidden=true;$('learning-note').textContent=ui.noteHelped};$('replay').onclick=()=>{voiceReady=true;if(currentLine)speak(currentLine[L])};$('script-toggle').onclick=()=>{state.script=state.script==='katakana'?'hiragana':'katakana';persist();refreshScript()};$('sound').onclick=()=>{state.audio=!state.audio;voiceReady=true;if(!state.audio)stopVoice();persist();updateHud();notify(state.audio?ui.voiceOn:ui.voiceOff)};$('return-hub').onclick=()=>returnToHub();document.querySelector('.brand').onclick=e=>{e.preventDefault();if(!sessionStarted)return;if(lang==='hub')leave();else returnToHub()};
- window.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==='Escape'){if(!$('creator').hidden){$('creator').hidden=true;lock(false)}else if(!$('sheet').hidden)closeSheet();else if(!$('dialogue').hidden)closeDialogue()}if(e.key.toLowerCase()==='j'&&!e.repeat&&sessionStarted&&$('creator').hidden){if(!$('sheet').hidden)closeSheet();else journal()}});
- window.addEventListener('pagehide',persist);document.addEventListener('visibilitychange',()=>{if(document.hidden){town.keys.clear();persist();stopVoice()}});
+ window.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(!$('account-modal').hidden)closeAccount();else if(!$('creator').hidden){$('creator').hidden=true;lock(false)}else if(!$('sheet').hidden)closeSheet();else if(!$('dialogue').hidden)closeDialogue();return}
+  if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(e.key.toLowerCase()==='j'&&!e.repeat&&sessionStarted&&$('creator').hidden){if(!$('sheet').hidden)closeSheet();else journal()}});
+ window.addEventListener('pagehide',()=>{persist();cloud.flushNow()});document.addEventListener('visibilitychange',()=>{if(document.hidden){town.keys.clear();persist();cloud.flushNow();stopVoice()}});
  // Trap focus inside an open dialog, leaving the 3D controls inactive behind it.
- window.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const panel=!$('creator').hidden?$('creator'):!$('sheet').hidden?$('sheet'):!$('dialogue').hidden?$('dialogue'):null;if(!panel)return;const controls=[...panel.querySelectorAll('button,input,select')].filter(el=>!el.disabled&&el.getClientRects().length);if(!controls.length)return;const first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
+ window.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const panel=!$('account-modal').hidden?$('account-modal'):!$('creator').hidden?$('creator'):!$('sheet').hidden?$('sheet'):!$('dialogue').hidden?$('dialogue'):null;if(!panel)return;const controls=[...panel.querySelectorAll('button,input,select')].filter(el=>!el.disabled&&el.getClientRects().length);if(!controls.length)return;const first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
+ bootDone=true;
  }catch(e){$('loading').innerHTML='<div class="error-message"><h2>The town needs a moment.</h2><p>Your browser needs WebGL to explore the town. Try a current Chrome or Safari window with graphics acceleration enabled.</p><p>'+escape(e.message)+'</p><button class="primary" onclick="location.reload()">Try again</button></div>';console.error(e)}}
 init();

@@ -24,3 +24,24 @@ nav.toolbar{align-items:stretch}
 @media(max-width:800px){.tool{min-width:52px;padding:6px 7px}.tool-label{font-size:7px}#quest-hud.parchment{width:230px}}
 @media(max-width:560px){.tool-label{display:none}.tool{min-width:40px;border-radius:50%;padding:8px}#quest-hud.parchment{width:210px;top:78px}}
 
+
+/* Accounts. The panel borrows the creator's paper-and-ink treatment so signing
+   in reads as part of the town rather than a form bolted onto it. */
+.account-panel{position:relative;width:min(420px,92vw);max-height:88vh;overflow:auto;padding:30px 32px 26px;background:linear-gradient(170deg,#fbf6ea,#f3e8d0);border:1px solid #e6d8b6;border-radius:18px 10px 16px 12px;box-shadow:0 18px 60px #4a381828,inset 0 0 0 1px #fffaf0aa;color:var(--ink)}
+.account-panel h2{font-family:var(--serif);font-size:30px;line-height:1.1;margin:6px 0 10px}
+.account-panel p{font-size:14px;line-height:1.55;margin:0 0 16px;color:#5b5648}
+.account-panel label{display:block;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#6d6a5b;margin-bottom:12px}
+.account-panel input{display:block;width:100%;margin-top:5px;padding:10px 12px;font:inherit;font-size:15px;text-transform:none;letter-spacing:normal;color:var(--ink);background:#fffdf6;border:1px solid #e0d3b2;border-radius:9px}
+.account-panel input:focus{outline:2px solid #8a9c66;outline-offset:1px}
+.account-panel .form-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:nowrap;margin-top:4px}
+#account-secondary{flex:0 1 auto;background:none;border:none;box-shadow:none;padding:4px 0;font-size:13px;color:#5f6b4f;text-decoration:underline;text-underline-offset:3px}
+#account-secondary:hover{color:#3f4a33}
+#account-submit{flex:0 0 auto;white-space:nowrap}
+.account-panel .round.close{position:absolute;top:12px;right:12px}
+#account-message:empty{display:none}
+#account-message{font-size:13px;margin:0 0 12px;color:#6d6a5b}
+#account-message.bad{color:#9c4f3c}
+#account-message.good{color:#4f6b45}
+#account-links{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:12px;padding-top:12px;border-top:1px solid #e7dcc0}
+#save-status.unsaved{opacity:.85;color:#9c6b3c}
+@media(max-width:560px){.account-panel{padding:24px 20px 20px}.account-panel h2{font-size:25px}}
