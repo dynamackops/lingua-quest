@@ -9,25 +9,30 @@ const builders={es:valdeluz,ja:hinata,hub};
 export class Town{
  constructor(canvas,{theme='es',onNear,onInteract,onMove,onTravelFailed}={}){
  this.canvas=canvas;this.onNear=onNear;this.onInteract=onInteract;this.onMove=onMove;this.onTravelFailed=onTravelFailed;
- this.renderer=new T.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=T.PCFSoftShadowMap;this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.1;
- this.camera=new T.PerspectiveCamera(44,1,.1,180);this.keys=new Set();this.yaw=.22;this.pitch=.59;this.distance=15;this.enabled=false;this.blocked=false;this.time=0;this.target=new T.Vector3(0,1,5);this.focus=this.target.clone();this.ray=new T.Raycaster();this.pointer=new T.Vector2();this.ground=new T.Plane(new T.Vector3(0,1,0),0);
+ this.renderer=new T.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=T.PCFSoftShadowMap;this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.22;
+ this.camera=new T.PerspectiveCamera(44,1,.1,180);this.keys=new Set();this.yaw=.22;this.pitch=.48;this.distance=13;this.enabled=false;this.blocked=false;this.time=0;this.target=new T.Vector3(0,1,5);this.focus=this.target.clone();this.ray=new T.Raycaster();this.pointer=new T.Vector2();this.ground=new T.Plane(new T.Vector3(0,1,0),0);
  this.build(theme);this.bind();this.resize();this.last=performance.now();this.frame=requestAnimationFrame(t=>this.animate(t));
  }
  // Rebuild the whole scene for a world. Used when the player picks a different language on the welcome screen.
  build(theme){
- if(this.scene)this.scene.traverse(o=>{o.geometry?.dispose();o.material?.map?.dispose()});
+ if(this.scene)this.scene.traverse(o=>{
+  o.geometry?.dispose();
+  const mats=o.material?(Array.isArray(o.material)?o.material:[o.material]):[];
+  for(const m of mats){if(m?.map&&!m.map.userData.keep)m.map.dispose()}
+ });
  this.theme=theme;const w=builders[theme]||valdeluz;this.builder=w;this.scene=new T.Scene();this.scene.background=new T.Color(w.sky.background);this.scene.fog=new T.Fog(w.sky.background,...w.sky.fog);
  this.scene.add(new T.HemisphereLight(...w.sky.hemi));const light=new T.DirectionalLight(w.sky.sun[0],w.sky.sun[1]);light.position.set(...w.sky.sun[2]);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-38,right:38,top:35,bottom:-35,near:.5,far:90});light.shadow.normalBias=.045;this.scene.add(light);
+ const fill=new T.DirectionalLight('#ffd4a0',.55);fill.position.set(16,10,-12);this.scene.add(fill);
  this.obstacles=[];this.cameraBlockers=[];this.entities=[];this.water=[];this.path=[];this.destination=null;this.near=null;this.returnPos=null;this.room='town';this.doors=w.doors;
- w.town(this);w.rooms(this);const c=this.player?.userData.config;this.player=makeAvatar(c);this.player.userData.config=c;this.player.position.set(0,0,10);this.player.rotation.y=Math.PI;this.scene.add(this.player);this.buildLabels();this.onNear?.(null);
+ w.town(this);w.rooms(this);const c=this.player?.userData.config;this.player=makeAvatar({...c,player:true});this.player.userData.config=c;this.player.position.set(0,0,10);this.player.rotation.y=Math.PI;this.scene.add(this.player);this.buildLabels();this.onNear?.(null);
  }
  obstacle(x,z,w,d){this.obstacles.push({x,z,w:w/2+.36,d:d/2+.36})}
  addEntity(id,label,x,z,type='npc',y=2.8){const e={id,label,x,z,type,y};this.entities.push(e);return e}
  npc(id,label,x,z,c,parent=this.scene){const avatar=makeAvatar(c);avatar.position.set(x,0,z);parent.add(avatar);const e=this.addEntity(id,label,x,z);e.avatar=avatar;return e}
  buildLabels(){const root=document.getElementById('labels');root.replaceChildren();for(const e of this.entities){const b=document.createElement('button');b.className='world-label';b.textContent=(e.type==='npc'?'✦ ':'')+e.label;b.setAttribute('aria-label',e.label);b.addEventListener('click',()=>{if(!this.enabled||this.blocked)return;this.walkTo(e.x,e.z,e)});root.append(b);e.labelEl=b}}
- setAvatar(c){const pos=this.player.position.clone(),rot=this.player.rotation.y;this.scene.remove(this.player);this.disposeAvatar(this.player);this.player=makeAvatar(c);this.player.userData.config=c;this.player.position.copy(pos);this.player.rotation.y=rot;this.scene.add(this.player)}
+ setAvatar(c){const pos=this.player.position.clone(),rot=this.player.rotation.y;this.scene.remove(this.player);this.disposeAvatar(this.player);this.player=makeAvatar({...c,player:true});this.player.userData.config=c;this.player.position.copy(pos);this.player.rotation.y=rot;this.scene.add(this.player)}
  disposeAvatar(g){g.traverse(o=>{if(o.geometry)o.geometry.dispose()})}
- enter(room){this.room=room;this.homeRoom.visible=room==='home';this.cafeRoom.visible=room==='cafe';this.path=[];this.player.position.set(room==='town'?0:100,0,room==='town'?10:2);if(room!=='town'){this.returnPos=this.doors[room];if(this.roomSign)this.roomSign.visible=true}if(room==='town'&&this.returnPos)this.player.position.set(this.returnPos.x,0,this.returnPos.z);this.yaw=0;this.distance=room==='town'?15:10;this.focus.copy(this.player.position);this.focus.y=1;this.onMove?.(this.position())}
+ enter(room){this.room=room;this.homeRoom.visible=room==='home';this.cafeRoom.visible=room==='cafe';this.path=[];this.player.position.set(room==='town'?0:100,0,room==='town'?10:2);if(room!=='town'){this.returnPos=this.doors[room];if(this.roomSign)this.roomSign.visible=true}if(room==='town'&&this.returnPos)this.player.position.set(this.returnPos.x,0,this.returnPos.z);this.yaw=0;this.distance=room==='town'?13:10;this.focus.copy(this.player.position);this.focus.y=1;this.onMove?.(this.position())}
  position(){return{x:this.player.position.x,z:this.player.position.z,room:this.room}}
  restore(pos){if(!pos)return;if(pos.room&&pos.room!=='town'){this.enter(pos.room);return}if(Number.isFinite(pos.x)&&Number.isFinite(pos.z)&&!this.collides(pos.x,pos.z))this.player.position.set(pos.x,0,pos.z)}
  collides(x,z){if(this.room!=='town')return x<94.5||x>105.5||z<-4.5||z>4.5;return Math.abs(x)>29||z<-20||z>26||this.obstacles.some(o=>Math.abs(x-o.x)<o.w&&Math.abs(z-o.z)<o.d)}
@@ -44,7 +49,7 @@ export class Town{
  for(const e of this.entities){if(e.avatar){e.avatar.position.y=Math.sin(this.time*1.6+e.x)*.018;if(Math.hypot(p.x-e.x,p.z-e.z)<4)e.avatar.rotation.y=Math.atan2(p.x-e.x,p.z-e.z)}}
  for(let i=0;i<this.water.length;i++){const w=this.water[i];w.mesh.position.y=w.top-((this.time*.7+i*.13)%1)*w.fall}
  this.builder.tick?.(this,dt);
- const aim=this.enabled?new T.Vector3(p.x,1.1,p.z):new T.Vector3(0,1,0);this.focus.lerp(aim,1-Math.exp(-dt*5));const dist=this.enabled?this.distance:36;const yaw=this.enabled?this.yaw:.27;const pitch=this.enabled?this.pitch:.65;const offset=new T.Vector3(Math.sin(yaw)*Math.cos(pitch)*dist,Math.sin(pitch)*dist,Math.cos(yaw)*Math.cos(pitch)*dist);if(this.enabled&&this.room==='town'){this.ray.set(this.focus,offset.clone().normalize());this.ray.far=offset.length();const hits=this.ray.intersectObjects(this.cameraBlockers,false);if(hits.length)offset.setLength(Math.max(2.5,hits[0].distance-.5));this.ray.far=Infinity}this.camera.position.copy(this.focus).add(offset);this.camera.lookAt(this.focus);
+ const aim=this.enabled?new T.Vector3(p.x,1.25,p.z):new T.Vector3(0,1.2,0);this.focus.lerp(aim,1-Math.exp(-dt*5));const dist=this.enabled?this.distance:36;const yaw=this.enabled?this.yaw:.27;const pitch=this.enabled?this.pitch:.65;const offset=new T.Vector3(Math.sin(yaw)*Math.cos(pitch)*dist,Math.sin(pitch)*dist,Math.cos(yaw)*Math.cos(pitch)*dist);if(this.enabled&&this.room==='town'){this.ray.set(this.focus,offset.clone().normalize());this.ray.far=offset.length();const hits=this.ray.intersectObjects(this.cameraBlockers,false);if(hits.length)offset.setLength(Math.max(2.5,hits[0].distance-.5));this.ray.far=Infinity}this.camera.position.copy(this.focus).add(offset);this.camera.lookAt(this.focus);
  let near=null,nd=2.5;for(const e of this.entities){const same=((this.room==='town')===(e.x<80))&&(!e.room||e.room===this.room);const d=Math.hypot(p.x-e.x,p.z-e.z);if(same&&d<nd){near=e;nd=d}const v=new T.Vector3(e.x,e.y,e.z).project(this.camera);const visible=this.enabled&&!this.blocked&&same&&v.z<1&&Math.abs(v.x)<.96&&Math.abs(v.y)<.9&&d<20;e.labelEl.hidden=!visible;if(visible){e.labelEl.style.left=`${(v.x*.5+.5)*innerWidth}px`;e.labelEl.style.top=`${(-v.y*.5+.5)*innerHeight}px`}}
  if(near!==this.near){this.near=near;this.onNear?.(near)}this.renderer.render(this.scene,this.camera);this.frame=requestAnimationFrame(t=>this.animate(t));
  }

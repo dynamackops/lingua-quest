@@ -1,17 +1,13 @@
 // Hinata: a small Japanese town with a pond, a rice shop, a fish stall, a tea house, a torii on the east path, and tatami interiors.
 import * as T from '../../vendor/three.module.js';
-import {box,ball,cyl,sign,mat,mesh,signStyles,archway} from './parts.js';
+import {box,ball,cyl,sign,mesh,signStyles,archway,roundBox,ground,paved,blooms,vines,bush,glowBox,pitchedRoof} from './parts.js';
 const wood='#4a3a2c',tile='#4f5663',stone='#8f8a7c';
 const kanban=(p,text,x,y,z,w=2.5)=>sign(p,text,x,y,z,w,null,signStyles.ja);
 export const hinata={
- sky:{background:'#d8e2e4',fog:[45,120],hemi:['#f7f4ea','#7d8d7b',2],sun:['#fff4e0',2.9,[-14,30,16]]},
+ sky:{background:'#e6d4b4',fog:[40,118],hemi:['#fff1d8','#8a8068',1.95],sun:['#ffd8a8',2.05,[-14,22,16]]},
  doors:{home:{x:-15,z:10},cafe:{x:14,z:-4}},
  town(t){
- const s=t.scene;t.koi=[];t.lanterns=[];box(s,0,-.3,0,110,.5,110,'#98a97c');
- // A raked gravel courtyard with a few flat stepping stones, drawn once into a repeating texture.
- const cv=document.createElement('canvas');cv.width=cv.height=512;const cx=cv.getContext('2d');cx.fillStyle='#d5cfbd';cx.fillRect(0,0,512,512);for(let i=0;i<900;i++){const v=190+(i*37%28);cx.fillStyle=`rgb(${v+8},${v+4},${v-8})`;cx.fillRect((i*131)%512,(i*71)%512,3,3)}cx.fillStyle='#b5b0a1';for(let i=0;i<7;i++){cx.beginPath();cx.ellipse(70+(i*173)%400,60+(i*211)%420,34,24,i,0,7);cx.fill()}const tx=new T.CanvasTexture(cv);tx.wrapS=tx.wrapT=T.RepeatWrapping;tx.repeat.set(6,6);tx.colorSpace=T.SRGBColorSpace;
- const court=new T.Mesh(new T.BoxGeometry(37,.12,34),new T.MeshStandardMaterial({map:tx,roughness:1}));court.position.set(0,-.01,1);court.receiveShadow=true;s.add(court);
- box(s,0,-.025,23,8,.1,20,'#cbc5b2');box(s,26,-.02,4,24,.1,6,'#cbc5b2');box(s,-26,-.02,4,24,.1,6,'#cbc5b2');
+ const s=t.scene;t.koi=[];t.lanterns=[];ground(s);paved(s,0,1,38,35,'gravel');paved(s,0,23,8,20,'gravel');paved(s,26,4,24,6,'gravel');paved(s,-26,4,24,6,'gravel');
  house(t,-12,-9,7,5.4,5.5,'#efe5d0','#3f5a7a','こめや','shop');
  house(t,-3,-14,7,7,5,'#e8dcc6','#6a5a48','あおいのいえ');
  house(t,6,-14,7,6,5,'#ece2cf','#6a5a48','');
@@ -35,9 +31,10 @@ export const hinata={
  const stall=new T.Group();stall.position.set(10,0,3);s.add(stall);box(stall,0,.85,0,4,1.45,1.6,'#6b5340');box(stall,0,1.6,0,4.1,.1,1.7,'#c9b27a');for(const x of [-1.9,1.9])for(const z of [-.65,.65])cyl(stall,x,1.85,z,.055,.055,3.7,wood);for(let i=0;i<10;i++){const aw=box(stall,-2.025+i*.45,3.25,0,.45,.14,2.6,i%2?'#f1ece0':'#3f5a7a');aw.rotation.x=-.1;box(stall,-2.025+i*.45,3.05,1.25,.45,.32,.08,i%2?'#f1ece0':'#3f5a7a')}
  for(let i=0;i<3;i++){box(stall,-1.3+i*1.3,1.75,0,1.1,.2,1.05,'#c9b27a');for(let j=0;j<4;j++)ball(stall,-1.6+i*1.3+(j%2)*.55,1.92,Math.floor(j/2)*.45-.22,.14,'#eef2f2');for(let j=0;j<3;j++){const f=ball(stall,-1.55+i*1.3+j*.4,2.02,.05-(j%2)*.3,.13,['#7f93a3','#e08a7a','#a7b6bf'][i]);f.scale.set(1.6,.5,.7)}}kanban(stall,'さかなや',0,2.45,1,2.7);t.obstacle(10,3,4,1.8);
  pine(t,-7,5,1.2);pine(t,7,9,1.1);maple(t,-9,-3,.9);pine(t,18,10,1.2);pine(t,-20,-4,1.2);pine(t,19,-15,1.3);maple(t,-19,13,1.1);maple(t,14,16,.9);maple(t,-7,18,.85);
- for(const [x,z]of [[-5,-4],[5,-5],[-6,10],[16,6]])tsukubai(t,x,z);
+ for(const [x,z]of [[-5,-4],[5,-5],[-6,10],[16,6],[-12,12],[8,14]])tsukubai(t,x,z);
  bench(t,-4,4,.9);bench(t,4,-4,-.9);bench(t,-9,12,0);
  for(const [x,z]of [[-7,1],[7,-4],[-17,11],[18,0]])toro(t,x,z);
+ for(const [x,z]of [[-18,8],[17,12],[-8,16],[20,-8],[-3.4,3.4],[3.6,3]])bush(s,x,z,.8);
  for(const [x,z]of [[11,-3],[15,-2],[15,1]])teaBench(t,x,z);cyl(s,15,2.7,-.5,1.7,1.7,.04,'#b8412f',12);cyl(s,15,2.95,-.5,0,1.7,.5,'#c9503a',12);cyl(s,15,1.4,-.5,.04,.05,2.8,'#3b2f2b');
  // The shared low table with cushions: onigiri, salmon and tea appear when the chapter is complete.
  const dinner=new T.Group();dinner.position.set(-6,0,-6);s.add(dinner);box(dinner,0,.62,0,3.3,.12,1.6,'#8b6a48');for(const x of [-1.3,1.3])for(const z of [-.5,.5])box(dinner,x,.3,z,.14,.6,.14,'#6b4c3a');box(dinner,0,.69,0,.9,.02,1.5,'#f3e8cb');for(const x of [-1,0,1])for(const z of [-1.15,1.15])box(dinner,x,.05,z,.62,.09,.62,z<0?'#3f5a7a':'#b9873f');
@@ -70,28 +67,22 @@ export const hinata={
  },
  tick(t,dt){for(const k of t.koi){k.a+=dt*k.speed;k.mesh.position.set(Math.cos(k.a)*k.r,.24,Math.sin(k.a)*k.r);k.mesh.rotation.y=-k.a}for(const l of t.lanterns)l.position.x=l.userData.bx+Math.sin(t.time*1.1+l.userData.bx)*.05}
 };
-function house(t,x,z,w,h,d,wall,accent,label,entry=null,collision=true,roof=tile){const g=new T.Group();g.position.set(x,0,z);t.scene.add(g);box(g,0,.2,0,w+.2,.4,d+.2,'#8d887b');t.cameraBlockers.push(box(g,0,h/2,0,w,h,d,wall));
- // Timber frame over plaster: corner posts, a mid-height rail and the top beam.
+function house(t,x,z,w,h,d,wall,accent,label,entry=null,collision=true,roof=tile){const g=new T.Group();g.position.set(x,0,z);t.scene.add(g);roundBox(g,0,0,0,w+.22,.38,d+.22,'#8d887b',.16);t.cameraBlockers.push(roundBox(g,0,0,0,w,h,d,wall,.14));vines(g,w,h,d);blooms(g,w*.34,.16,d/2+.4,5,.22);
  for(const sx of [-1,1])for(const sz of [-1,1])box(g,sx*w/2,h/2,sz*d/2,.2,h,.2,wood);box(g,0,h-.12,d/2+.05,w+.2,.22,.12,wood);box(g,0,h*.52,d/2+.05,w+.2,.14,.1,wood);for(const sx of [-1,1])box(g,sx*w*.16,h/2,d/2+.04,.12,h,.1,wood);
- // A low-pitched hip of dark tiles with deep eaves, tile rows, and a heavy ridge.
- const roofGeo=new T.BufferGeometry();const a=w/2+.9,b=d/2+.9,r=1.15;const verts=[-a,0,-b,a,0,-b,0,r,-b,-a,0,b,0,r,b,a,0,b,-a,0,-b,0,r,-b,0,r,b,-a,0,-b,0,r,b,-a,0,b,a,0,-b,a,0,b,0,r,b,a,0,-b,0,r,b,0,r,-b];roofGeo.setAttribute('position',new T.Float32BufferAttribute(verts,3));roofGeo.computeVertexNormals();const rm=new T.Mesh(roofGeo,mat(roof));rm.position.y=h;rm.castShadow=true;g.add(rm);
- for(let k=0;k<Math.floor(2*b/.4)+1;k++){const zz=-b+k*.4;for(const side of [-1,1]){const row=box(g,side*a/2,h+r/2+.03,zz,Math.hypot(a,r),.07,.1,'#5b626f');row.rotation.z=-side*Math.atan2(r,a)}}
- box(g,0,h+r+.05,0,w*.72,.16,.34,'#3d434d');for(const sz of [-1,1])box(g,0,h+.03,sz*b,2*a,.12,.16,'#3d434d');for(const sx of [-1,1])box(g,sx*a,h+.03,0,.16,.12,2*b,'#3d434d');
+ pitchedRoof(g,w,d,h,'slate',1.25);
  if(h>5.8){const e=box(g,0,3.55,d/2+.6,w+.6,.09,1.3,roof);e.rotation.x=.12}
- // Sliding shoji door on a stone step, lattice windows.
  box(g,0,1.05,d/2+.03,1.4,2.1,.06,'#f5f0e2');for(const sx of [-.72,.72])box(g,sx,1.1,d/2+.06,.08,2.2,.08,wood);box(g,0,2.16,d/2+.06,1.52,.08,.08,wood);for(const sx of [-.47,-.235,0,.235,.47])box(g,sx,1.05,d/2+.065,.03,2.05,.03,wood);for(const yy of [.5,1.05,1.6])box(g,0,yy,d/2+.065,1.4,.03,.03,wood);box(g,0,.08,d/2+.45,1.6,.16,.7,'#a19b8c');
- for(const xx of [-w*.29,w*.29])for(const yy of (h>5.8?[1.65,4.7]:[2.8])){box(g,xx,yy,d/2+.04,1.3,1.3,.1,wood);box(g,xx,yy,d/2+.06,1.1,1.1,.04,'#f2ecdc');for(let i=0;i<8;i++)box(g,xx-.5+i*.143,yy,d/2+.1,.05,1.15,.05,wood);box(g,xx,yy-.7,d/2+.2,1.4,.08,.35,wood)}
- // Shops hang a split noren and a paper lantern under a small tiled awning.
+ for(const xx of [-w*.29,w*.29])for(const yy of (h>5.8?[1.65,4.55]:[2.8])){box(g,xx,yy,d/2+.04,1.3,1.3,.1,wood);glowBox(g,xx,yy,d/2+.07,1.05,1.05,.04);box(g,xx,yy,d/2+.08,1.1,1.1,.03,'#f2ecdc');for(let i=0;i<8;i++)box(g,xx-.5+i*.143,yy,d/2+.12,.05,1.15,.05,wood);box(g,xx,yy-.7,d/2+.2,1.4,.08,.35,wood)}
  if(entry==='shop'||entry==='cafe'){for(let i=0;i<3;i++)box(g,-.47+i*.47,1.95,d/2+.16,.44,.75,.03,accent);box(g,0,2.36,d/2+.16,1.6,.06,.06,wood);const aw=box(g,0,2.58,d/2+.62,2.7,.08,1.15,roof);aw.rotation.x=.14;chochin(t,g,w*.36,2.05,d/2+.4,'#f0e6d2')}
  if(entry==='home'){chochin(t,g,w*.36,2.05,d/2+.4,'#f0e6d2');cyl(g,-w*.36,.3,d/2+.7,.3,.24,.5,'#7a5b42');ball(g,-w*.36,.85,d/2+.7,.4,'#4f6b4a').scale.y=.7}
  if(label)kanban(g,label,0,2.95,d/2+.14,Math.min(w-1,3.1));
  if(collision)t.obstacle(x,z,w,d);return g;
 }
-function chochin(t,p,x,y,z,color){cyl(p,x,y+.3,z,.02,.02,.3,'#3b2f2b');const l=ball(p,x,y,z,.22,color,2);l.scale.set(1,1.35,1);l.userData.bx=x;t.lanterns.push(l);for(const dy of [-.3,.3])cyl(p,x,y+dy,z,.1,.1,.05,'#3b2f2b');if(color!=='#d9603f')cyl(p,x,y,z,.225,.225,.08,'#b8412f');return l}
+function chochin(t,p,x,y,z,color){cyl(p,x,y+.3,z,.02,.02,.3,'#3b2f2b');const l=new T.Mesh(new T.IcosahedronGeometry(.22,2),new T.MeshStandardMaterial({color,emissive:color==='#d9603f'?'#c44a2a':'#e8c57a',emissiveIntensity:.35,roughness:.7}));l.position.set(x,y,z);l.scale.set(1,1.35,1);l.userData.bx=x;p.add(l);t.lanterns.push(l);for(const dy of [-.3,.3])cyl(p,x,y+dy,z,.1,.1,.05,'#3b2f2b');if(color!=='#d9603f')cyl(p,x,y,z,.225,.225,.08,'#b8412f');return l}
 function pine(t,x,z,scale=1){const g=new T.Group();g.position.set(x,0,z);g.scale.setScalar(scale);t.scene.add(g);const trunk=cyl(g,.15,1.5,0,.14,.22,3,'#5e4a3a');trunk.rotation.z=.12;for(const [dx,y,r]of [[-.5,2.4,1.1],[.55,3.15,.95],[0,3.9,.75]]){const b=ball(g,dx,y,0,r,['#4f6b4a','#5a7a52','#46613f'][Math.round(y)%3],1);b.scale.set(1.35,.42,1.35)}t.obstacle(x,z,.9,.9)}
 function maple(t,x,z,scale=1){const g=new T.Group();g.position.set(x,0,z);g.scale.setScalar(scale);t.scene.add(g);cyl(g,0,1.3,0,.14,.2,2.6,'#6b5140');for(let i=0;i<5;i++){const a=i/5*Math.PI*2;ball(g,Math.cos(a)*.7,2.8+(i%2)*.4,Math.sin(a)*.7,1.05,['#c9573a','#d8743f','#b8452f'][i%3])}t.obstacle(x,z,.9,.9)}
 function bamboo(t,x,z){for(let i=0;i<5;i++){const dx=Math.cos(i*2.1)*.6,dz=Math.sin(i*2.1)*.6;cyl(t.scene,x+dx,2.6,z+dz,.06,.07,5.2,'#7ea36a',6);for(let k=1;k<5;k++)cyl(t.scene,x+dx,k*1.1,z+dz,.075,.075,.06,'#5f8450',6);for(let k=0;k<3;k++){const leaf=ball(t.scene,x+dx+Math.cos(k*2+i)*.35,3.6+k*.6,z+dz+Math.sin(k*2+i)*.35,.16,'#86ad6c');leaf.scale.set(1.8,.3,.6)}}t.obstacle(x,z,1.4,1.4)}
 function tsukubai(t,x,z){cyl(t.scene,x,.25,z,.45,.4,.5,stone,10);cyl(t.scene,x,.5,z,.32,.32,.03,'#6f9c98',16);ball(t.scene,x+.5,.2,z+.2,.28,'#5e7d4d');ball(t.scene,x-.4,.14,z-.35,.18,'#6f8f6a')}
 function bench(t,x,z,r){const g=new T.Group();g.position.set(x,0,z);g.rotation.y=r;t.scene.add(g);box(g,0,.5,0,2,.1,.7,'#a08055');box(g,0,.57,0,2,.04,.72,'#b23b3b');for(const xx of [-.8,.8])box(g,xx,.25,0,.1,.5,.6,'#63513f');t.obstacle(x,z,2,.7)}
 function teaBench(t,x,z){bench(t,x,z,0);box(t.scene,x-.5,.64,z,.5,.04,.35,'#3b2f2b');for(const dx of [-.62,-.38])cyl(t.scene,x+dx,.72,z,.07,.06,.1,'#eae1c9');t.obstacle(x,z,2.6,1.5)}
-function toro(t,x,z,p=t.scene){cyl(p,x,.15,z,.36,.4,.3,stone,8);cyl(p,x,.9,z,.12,.14,1.3,stone,8);box(p,x,1.62,z,.7,.14,.7,stone);box(p,x,1.95,z,.48,.52,.48,'#e8dcc2');cyl(p,x,2.4,z,.06,.62,.36,'#7a756a',4);ball(p,x,2.68,z,.1,stone)}
+function toro(t,x,z,p=t.scene){cyl(p,x,.15,z,.36,.4,.3,stone,8);cyl(p,x,.9,z,.12,.14,1.3,stone,8);box(p,x,1.62,z,.7,.14,.7,stone);glowBox(p,x,1.95,z,.48,.52,.48);cyl(p,x,2.4,z,.06,.62,.36,'#7a756a',8);ball(p,x,2.68,z,.1,stone)}
