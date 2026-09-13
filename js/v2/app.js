@@ -126,7 +126,7 @@ function fountainActivity(){
 // home/cafe door pattern), then a full theme switch via selectWorld() — the same
 // function the welcome screen already used, just called mid-session instead.
 function enterWorld(code){const line=chapter.lines[code==='es'?'doorEs':'doorJa'];showLine(line.who,line,{options:[line.option],onChoice:()=>{closeDialogue();selectWorld(code);start()}})}
-function returnToHub(){closeDialogue();closeSheet();selectWorld('hub');start()}
+function returnToHub(){closeDialogue();closeSheet();$('creator').hidden=true;selectWorld('hub');start()}
 function start(){sessionStarted=true;voiceReady=true;$('welcome').hidden=true;$('quest-hud').hidden=!chapter.questSteps;town.enabled=true;town.setAvatar(state.character);town.restore(state.position);lock(false);updateHud();persist();$('world').focus();$('touch-controls').hidden=!matchMedia('(pointer:coarse)').matches;}
 const HATS={none:'No hat',beret:'Beret',flowercrown:'Flower crown',sombrero:'Sombrero'};
 function renderHatOptions(){const owned=draft.hats||['none'];$('hat').replaceChildren(...owned.map(id=>{const o=document.createElement('option');o.value=id;o.textContent=HATS[id]||id;return o}));$('hat').value=owned.includes(draft.hat)?draft.hat:'none'}
