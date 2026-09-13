@@ -37,6 +37,12 @@ Names take **さん** (けんじさん), including the player’s own name in th
 
 The story is a welcome dinner where everyone makes onigiri together. It introduces いらっしゃいませ at the shop door, tea served with rice, the phrase いただきます before eating, and a small town with a pond, stone lanterns, a torii on the east path and a tea house with a noren.
 
+## Kana onboarding
+
+Players who cannot yet read hiragana meet the letters *before* the dinner task. Aoi’s first conversation walks through tonight’s focus words as large glyph cards with **romaji under every letter**, then one simple check: pick ごはん from ごはん / さけ / みず (still with romaji). Only after that does the existing dinner intro start. Romaji is forced on for this lesson. The letters taught are exactly the ones in the eight focus entries — not the full 46-kana chart.
+
+こんにちは is shown as こ・ん・に・ち・は, with は labelled *wa*. おちゃ treats ちゃ as one mora. テーブル is named as katakana so the loanword at the table is not a surprise.
+
 ## Backlog for later chapters
 
-Kana onboarding activities, counters, a katakana-heavy shopping scene (コンビニ), particles にand で contrasted in directions, and casual speech with a friend once the polite forms are familiar.
+Counters, a katakana-heavy shopping scene (コンビニ), particles に and で contrasted in directions, and casual speech with a friend once the polite forms are familiar.

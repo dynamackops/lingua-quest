@@ -16,10 +16,11 @@ Do not open index.html directly as a file: the chapter JSON needs a local server
 
 ## Voice quality (optional)
 
-By default every line is spoken with your browser's built-in `speechSynthesis` voice, which varies a lot between devices and can sound robotic. If you have an [ElevenLabs](https://elevenlabs.io) API key, `npm run tts` (or `node scripts/generate-tts.mjs`) pre-generates a premium recorded clip for every line of dialogue in both chapters and saves them as static `.mp3` files under `audio/`, plus a `audio/manifest.json` the game reads at startup. This is a one-time local build step, not something the game calls at runtime: your key only ever touches your own machine, never the repo or a live server.
+By default every line is spoken with your browser's built-in `speechSynthesis` voice, which varies a lot between devices and can sound robotic. Spanish usually fares better here than Japanese. If you have an [ElevenLabs](https://elevenlabs.io) API key, `npm run tts` (or `node scripts/generate-tts.mjs`) pre-generates a premium recorded clip for every line of dialogue in both chapters and saves them as static `.mp3` files under `audio/`, plus a `audio/manifest.json` the game reads at startup. Japanese uses **Morioki**, a Japanese woman's conversational voice, not the English default. This is a one-time local build step, not something the game calls at runtime: your key only ever touches your own machine, never the repo or a live server.
 
 ```sh
 ELEVENLABS_API_KEY=sk_... npm run tts        # both languages
+ELEVENLABS_API_KEY=sk_... node scripts/generate-tts.mjs ja   # Japanese only (Morioki)
 DRY_RUN=1 npm run tts                        # preview what would be generated, and its character count (ElevenLabs' billing unit), without calling the API
 ```
 
@@ -64,7 +65,7 @@ English introduces the story and new words. Short object-choice requests invite 
 
 ## Japanese chapter: みんなで おにぎり
 
-Meet Aoi by the pond. Get rice (ごはん) from Kenji at the rice shop, salmon (さけ) from Yui at the fish stall, and green tea (おちゃ) from Haruto inside the Kaede tea house. Bring the basket to the low table near the rice shop and follow Aoi's instructions. Onigiri and tea appear on the table when the chapter is complete.
+Meet Aoi by the pond. She first walks you through the hiragana in tonight’s words — large letter cards with romaji under each one — then a simple “which one is ごはん?” check. After that, get rice (ごはん) from Kenji at the rice shop, salmon (さけ) from Yui at the fish stall, and green tea (おちゃ) from Haruto inside the Kaede tea house. Bring the basket to the low table near the rice shop and follow Aoi's instructions. Onigiri and tea appear on the table when the chapter is complete.
 
 Lines are hiragana with spaces between words; loanwords such as テーブル keep their katakana. Romaji is always shown underneath so you can sound everything out, and can be hidden in Help. English fades exactly as in the Spanish world. Neighbours use the polite です / ます form. See `CURRICULUM_ja.md` for the reasoning.
 
@@ -87,4 +88,4 @@ The Spanish world uses `linguaquest_v2_es`, Japanese uses `linguaquest_v2_ja`, a
 - `vendor/`: Three.js 0.169.0 and its MIT license.
 - `tests/`: learning, save isolation and chapter validation tests. Run `npm test` or `node --test tests/*.test.js` with Node.js.
 
-Each world is one complete starter quest and two small interiors, using eight focus vocabulary entries (three are exercised throughout the main quest). The older 60-item Spanish curriculum remains in the legacy prototype; it is not all integrated into the 3D chapter yet. Additional chapters, rich relationships, broader curricula, kana onboarding activities, speech input and advanced character sculpting are future work. The characters and architecture are procedural stylized geometry, not imported production art.
+Each world is one complete starter quest and two small interiors, using eight focus vocabulary entries (three are exercised throughout the main quest). Hinata’s first conversation is a kana onboarding: the letters of those words, then a simple rice check, then dinner. The older 60-item Spanish curriculum remains in the legacy prototype; it is not all integrated into the 3D chapter yet. Additional chapters, rich relationships, broader curricula, speech input and advanced character sculpting are future work. The characters and architecture are procedural stylized geometry, not imported production art.

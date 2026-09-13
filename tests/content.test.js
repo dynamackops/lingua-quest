@@ -7,6 +7,16 @@ for(const lang of ['es','ja']){
  test(`${lang}: people, routes and engine lines are complete`,()=>{const hosts=Object.values(c.people).filter(p=>p.role==='host');assert.equal(hosts.length,1);for(const id of c.quest.items){const vendor=Object.entries(c.people).find(([,p])=>p.item===id);assert.ok(vendor,id);assert.equal(c.items[id].place,vendor[0])}for(const key of ['continue','correction','notYet','reviewIdle','reviewDone','tableEarly','hostReady','hostHint','cafeDoor','cafeGreeting','homeDoor','fountain'])assert.ok(c.lines[key],key);for(const key of ['cafeDoor','homeDoor'])assert.ok(c.lines[key].who&&c.lines[key].option,key);assert.equal(c.questSteps.length,4);for(const key of ['language','town','country','place','chapterEyebrow','talk','status','statusDone','statusIdle','questStart','chapterDone','added','homeTip','voiceOn','voiceOff','voiceNote','noteChallenge','noteSupport','noteFading','noteHelped','journalDone','canvasLabel'])assert.equal(typeof c.ui[key],'string',key);assert.equal(c.ui.routes.length,6);for(const [id]of c.ui.routes)assert.ok(c.people[id]||['cafe','table','home'].includes(id),id)});
 }
 test('the Japanese chapter is kana only, with hiragana as the default script and katakana reserved for loanwords',()=>{const c=load('ja');const visit=v=>{if(Array.isArray(v))v.forEach(visit);else if(v&&typeof v==='object'){if(typeof v.ja==='string')assert.doesNotMatch(v.ja,/[一-鿿]/,`kanji in ${v.ja}`);Object.values(v).forEach(visit)}};visit(c);assert.equal(c.items.teeburu.ja,'テーブル');assert.match(c.items.gohan.ja,/^[ぁ-ゖ]+$/)});
+test('the Japanese chapter teaches tonight’s hiragana before the dinner quest, with romaji on every letter',()=>{
+ const c=load('ja');assert.ok(c.kana?.intro?.length>=3);assert.ok(c.kana.check);
+ for(const line of c.kana.intro){
+  assert.equal(typeof line.ja,'string');assert.equal(typeof line.romaji,'string');assert.equal(typeof line.en,'string');
+  if(line.glyphs)for(const g of line.glyphs){assert.match(g.ja,/[ぁ-ゖァ-ヶー]/,g.ja);assert.equal(typeof g.romaji,'string')}
+ }
+ const k=c.kana.check;assert.equal(k.correct,'gohan');assert.ok(k.options.includes('gohan'));assert.equal(typeof k.romaji,'string');
+ for(const id of k.options)assert.ok(c.items[id],id);
+ assert.match(c.questSteps[0].ja,/ひらがな/);
+});
 test('the hub is a valid degenerate chapter (no quest, one guide, doors to every real world)',()=>{const h=JSON.parse(fs.readFileSync(new URL('../data/hub.json',import.meta.url)));assert.equal(h.language,'en');assert.deepEqual(h.quest.items,[]);
  const guides=Object.values(h.people).filter(p=>p.role==='guide');assert.equal(guides.length,1);
  assert.ok(Array.isArray(h.intro)&&h.intro.length>0);for(const line of h.intro){assert.equal(typeof line.en,'string');if(line.next)assert.equal(typeof line.nextEn,'string')}
